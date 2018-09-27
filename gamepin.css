@@ -1,0 +1,97 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+}
+
+.holder-v {
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+}
+
+.holder-h {
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.gamepin_input {
+    background-color: #a5f535;
+    padding: 5vmax;
+    text-align: center;
+    border-radius: 7px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+}
+
+.gamepin_input p {
+    font-size: 1.3em;
+}
+
+.input_text {
+    background: transparent;
+    border: 1px solid #a5f535;
+    font-size: 1.1em;
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 2px;
+    margin-right: 5px;
+    transition: background-color 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.input_text:hover {
+    background-color: #e6e032;
+    border-color: #e6e032;
+}
+
+.i_gp {
+    width: 8em;
+}
+
+.i_rn {
+    width: 15em;
+}
+
+.i_mn {
+    width: 15em;
+}
+
+.i_gc {
+    width: 8em;
+}
+
+.input_submit {
+    background-color: #41e632;
+    border: 1px solid #24EF12;
+    font-size: 1.1em;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.input_submit:hover {
+    background-color: #e6e032;
+    border-color: #e6e032;
+}
+
+.error {
+    color: #C02B2B;
+    font-size: 0.65em;
+    font-style: italic;
+}
+
+.addinfo {
+    color: #636363;
+    font-size: 0.65em;
+    font-style: italic;
+}
