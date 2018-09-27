@@ -1,0 +1,23 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.holder {
+    margin-left: 7vw;
+    margin-right: 7vw;
+}
+
+.top_banner {
+    background-color: #FFFF00;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.obj_holder {
+    border: 1px solid #000000;
+}
