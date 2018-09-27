@@ -2,22 +2,132 @@ html,
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+}
+
+.holder_top {
+    position: sticky;
+    top: 0px;
+    z-index: 20;
+    background-color: #00e62a;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
 }
 
 .holder {
     margin-left: 7vw;
     margin-right: 7vw;
+    margin-top: 3vh;
+    position: relative;
 }
 
 .top_banner {
-    background-color: #FFFF00;
     padding-top: 1em;
     padding-bottom: 1em;
     padding-left: 2em;
     padding-right: 2em;
+    margin-left: 7vw;
+    margin-right: 7vw;
+}
+
+.top_banner_title {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.top_stats {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin-left: 7vw;
+    margin-right: 7vw;
+}
+
+.stat {
+    margin-right: 1em;
 }
 
 .obj_holder {
-    border: 1px solid #000000;
+    border: 1px solid #FF00FF01;
+}
+
+.obj_certificate {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1em;
+    background-color: #e8e8e8;
+    border: 1px solid #dadada;
+    border-radius: 0.5em;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    transition: background-color 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.obj_certificate:hover {
+    background-color: #d3e600;
+}
+
+.obj_certificate_banner {
+    width: 9em;
+    height: 9em;
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    position: relative;
+    background-size: cover;
+}
+
+#c_groentefruit {
+    background-image: url("images/groentefruit.jpg");
+}
+
+#c_energie {
+    background-image: url("images/energie.jpg");
+}
+
+#c_smaak {
+    background-image: url("images/smaak.jpg");
+}
+
+#c_schijfvanvijf {
+    background-image: url("images/schijfvanvijf.jpg");
+}
+
+#c_suiker {
+    background-image: url("images/suiker.jpg");
+}
+
+#c_gezondongezond {
+    background-image: url("images/gezondongezond.jpg");
+}
+
+#c_eetcultuur {
+    background-image: url("images/eetcultuur.jpg");
+}
+
+.obj_certificate_name {
+    font-size: 1em;
+    position: absolute;
+    bottom: 0;
+    padding-top: 0.2em;
+    padding-bottom: 0.1em;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+    z-index: 5;
+    background-color: #FFFFFF99;
+    width: calc(100% - 0.2em);
+    text-align: center;
+    border-bottom-left-radius: 0.5em;
+}
+
+.obj_certificate_info {
+    position: relative;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.5em;
 }
