@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    if ($_SESSION["loginready"] == "1") {
+        //get the file
+        $json = file_get_contents($_SESSION["groupdir"]);
+        $data = json_decode($json,true);
+        //convert array data into variables for easy access
+        $restaurantname = $data["restaurantname"];
+    }
+    else {
+        //if something is wrong, redirect to the joinpage.
+        header("Location: joingame.php");
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -15,10 +31,13 @@
         <div class="top_banner">
             <div class="top_banner_resholder">
                 <span class="top_banner_res">Restaurant</span>
-                <span class="top_banner_resname">De olijke olijf</span>
+                <span class="top_banner_resname"><?php echo $restaurantname; ?></span>
             </div>
             <div class="top_banner_title">
                 <img src="images/logo.png" />
+                <form action="logoff.php" method="post" class="logoffform">
+                    <input type="submit" class="logoffbutton" value="&#8855;" tooltip="Uitloggen">
+                </form>
             </div>
         </div>
         <div class="top_stats">

@@ -39,11 +39,14 @@ else {
                         Type na iedere naam een komma.<br />Type na de komma geen spatie.<br />(Bijvoorbeel: Henk,Mien).
                     </span>
                 </p>
-                    <input type="text" name="restname" class="input_text i_mn" required maxlength="256" placeholder="Namen groepsleden">
+                    <input type="text" name="membernames" class="input_text i_mn" required maxlength="256" placeholder="Namen groepsleden">
                     <br />
                     <br />
                     <input type="submit" value="GO!" class="input_submit">
                 </form>
+                <?php
+                    echo "<p><span class='addinfo'>Gamepin: " . $_SESSION["gamepin"] . " | Groepcode: " . $_SESSION["gamegroup"] . "</span></p>";
+                ?>
             </div>
         </div>
     </div>

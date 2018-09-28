@@ -25,14 +25,14 @@ else {
     <div class="holder-v">
         <div class="holder-h">
             <div class="gamepin_input">
-            <form action="joingame.php" method="post">
+            <form action="getgroup.php" method="post">
                 <p>
                     Groepscode: <br />
                     <span class="addinfo">
                         Deze code heb je van de spelleider gekregen.<br />(Bijvoorbeeld: A9)
                     </span>
                 </p>
-                <input type="text" name="restname" class="input_text i_gc" required autofocus maxlength="2" placeholder="Groepscode">
+                <input type="text" name="groupcode" class="input_text i_gc" required autofocus maxlength="2" placeholder="Groepscode">
                 <input type="submit" value="GO!" class="input_submit">
                 </form>
             </div>

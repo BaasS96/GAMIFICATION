@@ -10,6 +10,7 @@ print ($gamepin);
 if (in_array($gamepin, $dirs)) {
     print(" : yes");
     $_SESSION["gamepin_location"] = $gamepin;
+    $_SESSION["gamepin"] = $_POST["gamepin"];
     $_SESSION["gamepin_correct"] = "1";
     header("Location: groupcode.php");
     exit();
