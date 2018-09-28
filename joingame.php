@@ -37,6 +37,7 @@ if (isset($_SESSION["loginready"])) {
         $myfile = fopen($gamegroup_post, "r+");
         $data_json = json_encode($obj);
         fwrite($myfile, $data_json);
+        fclose($myfile);
         //redirect to this page with ready tag 1
         $_SESSION["loginready"] = "1";
         header("Location: joingame.php");

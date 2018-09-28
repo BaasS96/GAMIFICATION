@@ -34,6 +34,7 @@ while ($i < $groupnum) {
     $data = array("groupcode" => $newgroupcode, "restaurantname" => "", "membernames" => array(""), "certificates" => array(""), "data" => array(""), "lastactive" => "");
     $data_json = json_encode($data);
     fwrite($myfile, $data_json);
+    fclose($myfile);
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $newgroupcode . " was created.";
     $i ++;
 } 
