@@ -12,6 +12,7 @@ if (isset($_SESSION["loginready"])) {
         $_SESSION["groupcode"] = $groupcode;
         $_SESSION["gamedir"] = $gamedir;
         $_SESSION["groupdir"] = $groupdir;
+        $_SESSION["loginready"] = "2";
         header("Location: index.php");
         exit();
     }
@@ -41,6 +42,10 @@ if (isset($_SESSION["loginready"])) {
         //redirect to this page with ready tag 1
         $_SESSION["loginready"] = "1";
         header("Location: joingame.php");
+        exit();
+    }
+    else if ($_SESSION["loginready"] == "2") {
+        header("Location: index.php");
         exit();
     }
     else {

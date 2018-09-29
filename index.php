@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if ($_SESSION["loginready"] == "1") {
+    if ($_SESSION["loginready"] == "2") {
         //get the file
         $json = file_get_contents($_SESSION["groupdir"]);
         $data = json_decode($json,true);

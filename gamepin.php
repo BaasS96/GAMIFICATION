@@ -1,6 +1,10 @@
 <?php 
 //session start
 session_start();
+if (isset($_SESSION["loginready"]) && $_SESSION["loginready"] == "2") {
+    header("Location: joingame.php");
+    exit();
+}
 if (isset($_SESSION["gamepin_correct"])) {
     $gamepin_correct = $_SESSION["gamepin_correct"];
 }
