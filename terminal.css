@@ -1,0 +1,31 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #a5f535;
+    font-family: 'Roboto', sans-serif;
+}
+
+.holder-v {
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+}
+
+.holder-h {
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.holder {
+    padding: 5vmax;
+    text-align: center;
+}
+
+.idletext {
+    font-size: 10em;
+    font-weight: 900;
+}
