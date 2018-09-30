@@ -6,8 +6,10 @@ if (!isset($_GET["gamepin"])) {
 else {
     $gamepin = $_GET["gamepin"];
     $groupnum = 0;
+    //back link
+    echo "<a href='newgame.html'>Back</a><br />---<br />";
     //get all existing groups within this game
-    $groups = array_filter(glob("games/" . $gamepin . "/*"), 'is_file');
+    $groups = array_filter(glob("games/" . $gamepin . "/group" . "/*"), 'is_file');
     foreach ($groups as $currentgroup) {
         $json = file_get_contents($currentgroup);
         $data = json_decode($json,true);
@@ -59,5 +61,6 @@ else {
     }
     echo "==================================================<br />";
     echo "Groups: $groupnum";
+    echo "<br />---<br /><a href='newgame.html'>Back</a>";
 }
 ?>

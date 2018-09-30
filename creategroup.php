@@ -2,7 +2,7 @@
 //get POST-values
 if (isset($_POST["gamepin"]) && isset($_POST["groupnum"])) {
     $gamepin = $_POST["gamepin"];
-    $gamedir = ("games/" . $gamepin);
+    $gamedir = ("games/" . $gamepin . "/group");
     $groupnum = $_POST["groupnum"];
 }
 else {
@@ -11,7 +11,7 @@ else {
 }
 //get all existing groups
 $groups = array_filter(glob($gamedir . "/*"), 'is_file');
-echo date("Y-m-d H:i:s") . " | Existing games: ";
+echo date("Y-m-d H:i:s") . " | Existing groups: ";
 print_r( $groups);
 //create random gamecode
 $i = 0;

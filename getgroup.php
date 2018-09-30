@@ -4,7 +4,7 @@ session_start();
 //list all groups
 $gamepin = $_SESSION["gamepin"];
 $gamegroup = $_POST["groupcode"];
-$gamedir = "games/" . $gamepin;
+$gamedir = "games/" . $gamepin . "/group";
 $gamegroup_post = $gamedir . "/" . $gamegroup . ".json";
 //get all existing groups
 $groups = array_filter(glob($gamedir . "/*"), 'is_file');

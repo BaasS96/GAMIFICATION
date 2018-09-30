@@ -8,7 +8,7 @@ if (isset($_SESSION["loginready"])) {
         $groupcode = $_SESSION["gamegroup"];
         unset($_SESSION["gamegroup"]);
         $gamedir = "games/" . $gamepin;
-        $groupdir = $gamedir . "/" . $groupcode . ".json";
+        $groupdir = $gamedir . "/group" . "/" . $groupcode . ".json";
         $_SESSION["groupcode"] = $groupcode;
         $_SESSION["gamedir"] = $gamedir;
         $_SESSION["groupdir"] = $groupdir;
@@ -27,7 +27,7 @@ if (isset($_SESSION["loginready"])) {
         $gamepin = $_SESSION["gamepin"];
         $gamegroup = $_SESSION["gamegroup"];
         $gamedir = "games/" . $gamepin;
-        $gamegroup_post = $gamedir . "/" . $gamegroup . ".json";
+        $gamegroup_post = $gamedir . "/group" . "/" . $gamegroup . ".json";
         $json = file_get_contents($gamegroup_post);
         $obj = json_decode($json,true);
         //modify data
