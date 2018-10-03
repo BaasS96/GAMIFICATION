@@ -34,14 +34,16 @@ $terminaldata = json_decode($terminaljson,true);
         <title>
             Terminal
         </title>
+        <script src="terminal.js"></script>
         <link rel="stylesheet" href="terminal.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     </head>
-    <body>
-        <div class="holder-v">
+    <body onLoad="setupData('<?php echo $_SESSION["terminaldir"]; ?>'); refreshpage();">
+        <div class="holder-v" onclick="unlockTerminal();">
             <div class="holder-h">
-                <div class="holder">
-                    <?php echo "<p class='idletext'>" . $terminaldata["idletext"] . "</p>"; ?>
+                <div class="holder" id="contentHolder">
+                    <p class="idletext">Loading...</p>
                 </div>
             </div>
         </div>
