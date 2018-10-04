@@ -44,6 +44,21 @@ body {
     color: #313131;
 }
 
+.input_holder {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 80vw;
+    margin-bottom: 5vmin;
+}
+
+.input_object {
+    padding: 2vmin;
+    max-width: 80vw;
+    flex: 1 1 auto;
+    font-size: 6vmin;
+}
+
 .miniclock {
     font-size: 12vmin;
     font-weight: 900;
@@ -75,6 +90,10 @@ body {
 .text-input:hover {
     background-color: #e6e032;
     border-color: #e6e032;
+}
+
+.radio-input {
+    max-width: 80vw;
 }
 
 .button {

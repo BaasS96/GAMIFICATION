@@ -39,7 +39,7 @@ $terminaldata = json_decode($terminaljson,true);
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     </head>
-    <body onLoad="setupData('<?php echo $_SESSION["terminaldir"]; ?>'); refreshpage();">
+    <body onLoad="setupData('<?php echo $_SESSION["terminaldir"] . "','" . $_SESSION["gamepin"]; ?>'); refreshpage();">
         <div class="holder-v" onclick="unlockTerminal();">
             <div class="holder-h">
                 <div class="holder" id="contentHolder">
