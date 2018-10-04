@@ -12,6 +12,9 @@ else {
     header("Location: newgame.html");
     exit();
 }
+//------------------------------------------//
+//FROM HERE, EVERYTHING IS STILL POSSIBLE...//
+//------------------------------------------//
 //get all existing groups
 $groups = array_filter(glob($gamedir . "/*"), 'is_file');
 echo date("Y-m-d H:i:s") . " | Existing groups: ";
