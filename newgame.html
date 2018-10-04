@@ -26,10 +26,20 @@
         <input type="submit" value="Watch game">
     </form>
     <br />
+    <p>Create a questiongroup:</p>
+    <form action="createquestiongroup.php" method="post">
+        <input type="text" name="gamepin" required placeholder="Gamepin" maxlength="4">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="longname" placeholder="Long name" required>
+        <input type="text" name="description" placeholder="Description" required>
+        <input type="file" name="image" required>
+        <input type="submit" value="Create questiongroup">
+    </form>
+    <br />
     <p>Create a new terminal:</p>
     <form action="createterminal.php" method="post">
         <input type="text" name="gamepin" required placeholder="Gamepin" maxlength="4">
-        <input type="text" name="certnum" placeholder="Certificate number" required>
+        <input type="text" name="certnum" placeholder="Questiongroup number" required>
         <input type="text" name="questnum" placeholder="Question number" required>
         <input type="text" name="idletext" placeholder="Idle text" required>
         <input type="submit" value="Create terminal">

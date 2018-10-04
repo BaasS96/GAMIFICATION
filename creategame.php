@@ -26,6 +26,14 @@
     $groupdir = $newgamecode_post . "/group";
     mkdir($groupdir, 0777, TRUE);
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $groupdir . " was created.";
+    //create questionsdir
+    $questionsdir = $newgamecode_post . "/questions";
+    mkdir($questionsdir, 0777, TRUE);
+    echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $questionsdir . " was created.";
+    //create questionsdir imagesdir
+    $questionsdir_img = $newgamecode_post . "/questions" . "/images";
+    mkdir($questionsdir_img, 0777, TRUE);
+    echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $questionsdir_img . " was created.";
     //READY
     echo "<br />" . date("Y-m-d H:i:s") . " | READY";
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: You can now use game #" . $newgamecode;
