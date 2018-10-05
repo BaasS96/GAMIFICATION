@@ -6,7 +6,7 @@ if (isset($_POST["gamepin"]) && isset($_POST["name"])) {
     $name = $_POST["name"];
     $longname = $_POST["longname"];
     $description = $_POST["description"];
-    $image = $_POST["image"];
+    $image = rawurlencode($_POST["image"]);
 }
 else {
     header("Location: newgame.html");
@@ -16,33 +16,37 @@ else {
 //FROM HERE, EVERYTHING IS STILL POSSIBLE...//
 //------------------------------------------//
 //get all existing groups
-$groups = array_filter(glob($gamedir . "/*"), 'is_file');
-echo date("Y-m-d H:i:s") . " | Existing groups: ";
+$groups = array_filter(glob($gamedir . "/questions/*"), 'is_dir');
+echo date("Y-m-d H:i:s") . " | Existing questiongroups: ";
 print_r( $groups);
+
 //create random gamecode
-$i = 0;
-while ($i < $groupnum) {
-    $newgroupcode = substr(md5(rand()), 0, 2);
-    echo "<br />" . date("Y-m-d H:i:s") . " | Groupcode: " . $newgroupcode;
-    $newgroupcode_post = $gamedir . "/" . $newgroupcode . ".json";
-    echo "<br />" . date("Y-m-d H:i:s") . " | Groupcode-post: " . $newgroupcode_post;
+    $num = 0;
+    $newgroupcode = sprintf("%02d", $num);
+    echo "<br />" . date("Y-m-d H:i:s") . " | Questiongroup-id: " . $newgroupcode;
+    $newgroupcode_post = $gamedir . "/questions" . "/" . $newgroupcode;
+    echo "<br />" . date("Y-m-d H:i:s") . " | Questiongroup-id-post: " . $newgroupcode_post;
     while (in_array($newgroupcode_post, $groups)) {
-        echo "<br />" . date("Y-m-d H:i:s") . " | ERROR: FAILED";
-        $newgroupcode = substr(md5(rand()), 0, 2);
-        echo "<br />" . date("Y-m-d H:i:s") . " | Groupcode: " . $newgroupcode;
-        $newgroupcode_post = $gamedir . "/" . $newgroupcode . ".json";
-        echo "<br />" . date("Y-m-d H:i:s") . " | Groupcode-post: " . $newgroupcode_post;
+        echo "<br />" . date("Y-m-d H:i:s") . " | Failed";
+        $num ++;
+        $newgroupcode = sprintf("%02d", $num);
+        echo "<br />" . date("Y-m-d H:i:s") . " | Questiongroup-id: " . $newgroupcode;
+        $newgroupcode_post = $gamedir . "/questions" . "/" . $newgroupcode;
+        echo "<br />" . date("Y-m-d H:i:s") . " | Questiongroup-id-post: " . $newgroupcode_post;
     }
+    //create dir
+    mkdir($newgroupcode_post, 0777, TRUE);
+    echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $newgroupcode_post . " was created.";
     //create file
-    $filename = $gamedir . "/" . $newgroupcode . ".json";
+    $filename = $newgroupcode_post . ".json";
+    echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename;
     $myfile = fopen($filename, "w");
     //write data to file
-    $data = array("groupcode" => $newgroupcode, "restaurantname" => "", "membernames" => array(""), "certificates" => array(""), "lastactive" => "");
+    $data = array("questiongroupid" => $newgroupcode, "name" => $name, "longname" => $longname, "description" => $description, "image" => $image);
     $data_json = json_encode($data);
     fwrite($myfile, $data_json);
     fclose($myfile);
-    echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $newgroupcode . " was created.";
-    $i ++;
-} 
+    echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename . " was created.";
+
 echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html'>Back</a>";
 ?>
