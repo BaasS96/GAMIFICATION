@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>
+        Help
+    </title>
+</head>
+
+<body>
+    <h1>Help page</h1>
+    <h2>Creating new games/game elements</h2>
+    <h3 id="createquestiongroup">Create questiongroup</h3>
+    <p>
+        The following elements are used to create a new question:
+        <ul>
+            <li><strong>Gamepin: </strong>The gamepin is used to determine which game the queston belongs in.</li>
+            <li><strong>Name: </strong>Used to display the short name for the questiongroup, preferably not longer than 20 characters.</li>
+            <li><strong>Long name: </strong>Long name of the group.</li>
+            <li><strong>Description: </strong>The description of the questiongroup.</li>
+            <li><strong>Image: </strong>URL for the image used as item-avatar for the questiongroup.</li>
+        </ul>
+    </p>
+    <h3 id="createquestion">Create question</h3>
+    <p>
+        The following elements are used to create a new question:
+        <ul>
+            <li><strong>Gamepin: </strong>The gamepin is used to determine which game the queston belongs in.</li>
+            <li><strong>Questiongroup-id: </strong>The questiongroup-id is used to determine in which question group the question should be placed.</li>
+            <li><strong>Title: </strong>The title contains the name the question gets, e.g.: "Maths: multiplication".</li>
+            <li><strong>Description: </strong>The description of the question. Could be used to for extra information. Supports the <a href="#markupsystem">markup system</a>.</li>
+            <li><strong>Image: </strong>URL for the image used for the question. May be empty.</li>
+            <li><strong>Question type: </strong>The type of question. Question types supported are: text, radio.</li>
+            <li><strong>Question: </strong>The question to answer.</li>
+            <li><strong>Answers: </strong>Possible answers to the question. Only used for questions of type radio. Enter as "question,question".</li>
+            <li><strong>Right answers: </strong>Possible right answers. Enter as "question,question".</li>
+            <li><strong>Use terminal: </strong>If checked, the terminal will be used.</li>
+        </ul>
+    </p>
+    <h2>Beautifying things</h2>
+    <h3 id="markupsystem">Markup system</h3>
+    <p>
+        In the marking system, most markup-tags are opened by [...] and closed by [/...]. They enclose text, which is marked up accordingly. They may be nested, but only like this: [b][i]...[/i][/b]. These tags are currently supported. An expamle of their uses
+        is given between curly brackets.
+        <ul>
+            <li><strong>[p][/p] </strong>Creates a paragraph. {[p](block of text)[/p]}</li>
+            <li><strong>[n] </strong>New line. {example text.[n]}</li>
+            <li><strong>[b][/b] </strong>Bold. {[b]<b>example text</b>[/b]}</li>
+            <li><strong>[i][/i] </strong>Italic. {[i]<i>example text</i>[/i]}</li>
+            <li><strong>[u][/u] </strong>Underlined. {[u]<u>example text</u>[/u]}</li>
+            <li><strong>[img("URL")] </strong>Insert an image. {[img("https://www.w3schools.com/w3css/img_lights.jpg")]}</li>
+            <li><strong>[a("URL")][/a] </strong>Creates a hyperlink. {[a("https://www.youtube.com/watch?v=dQw4w9WgXcQ")]<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">example text</a>[/a]} </li>
+        </ul>
+    </p>
+</body>
+
+</html>

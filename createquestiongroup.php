@@ -12,9 +12,6 @@ else {
     header("Location: newgame.html");
     exit();
 }
-//------------------------------------------//
-//FROM HERE, EVERYTHING IS STILL POSSIBLE...//
-//------------------------------------------//
 //get all existing groups
 $groups = array_filter(glob($gamedir . "/questions/*"), 'is_dir');
 echo date("Y-m-d H:i:s") . " | Existing questiongroups: ";
