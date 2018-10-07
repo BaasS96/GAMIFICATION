@@ -3,7 +3,7 @@
 session_start();
 //list all groups
 $gamepin = $_SESSION["gamepin"];
-$gamegroup = $_POST["groupcode"];
+$gamegroup = $newgroupcode = strtoupper($_POST["groupcode"]);
 $gamedir = "games/" . $gamepin . "/group";
 $gamegroup_post = $gamedir . "/" . $gamegroup . ".json";
 //get all existing groups
@@ -17,7 +17,7 @@ if (in_array($gamegroup_post, $groups)) {
     $json = file_get_contents($gamegroup_post);
     $obj = json_decode($json,true);
     print_r( $obj);
-    if (!empty($obj["restaurantname"]) && !empty($obj["membernames"])) {
+    if (!empty($obj["groupname"]) && !empty($obj["membernames"])) {
         $_SESSION["loginready"] = "1";
         header("Location: joingame.php");
         exit();

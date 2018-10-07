@@ -101,34 +101,7 @@ body {
     border-bottom-left-radius: 7px;
     position: relative;
     background-size: cover;
-}
-
-#c_groentefruit {
-    background-image: url("images/groentefruit.jpg");
-}
-
-#c_energie {
-    background-image: url("images/energie.jpg");
-}
-
-#c_smaak {
-    background-image: url("images/smaak.jpg");
-}
-
-#c_schijfvanvijf {
-    background-image: url("images/schijfvanvijf.jpg");
-}
-
-#c_suiker {
-    background-image: url("images/suiker.jpg");
-}
-
-#c_gezondongezond {
-    background-image: url("images/gezondongezond.jpg");
-}
-
-#c_eetcultuur {
-    background-image: url("images/eetcultuur.jpg");
+    background-position: center;
 }
 
 .obj_certificate_check {

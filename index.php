@@ -1,16 +1,33 @@
 <?php
     session_start();
     if ($_SESSION["loginready"] == "2") {
-        //get the file
-        $json = file_get_contents($_SESSION["groupdir"]);
-        $data = json_decode($json,true);
-        //convert array data into variables for easy access
-        $restaurantname = $data["restaurantname"];
+        //get the gamedata file
+        $gamejson = file_get_contents($_SESSION["gamedir"] . "/gamedata.json");
+        $gamedata = json_decode($gamejson,true);
+        //get the groupfile
+        $groupjson = file_get_contents($_SESSION["groupdir"]);
+        $groupdata = json_decode($groupjson,true);
+        //look for certificates in the games/questions directory
+        $questiongroups = array_filter(glob($_SESSION["gamedir"] . "/questions/*.json"), 'is_file');
+        //print_r( $questiongroups);
     }
     else {
         //if something is wrong, redirect to the joinpage.
         header("Location: joingame.php");
         exit();
+    }
+    require_once("markupsystem.php");
+    //prepare the logo image src
+    //decode img url string
+    $decodedlogourl = urldecode($gamedata["image"]);
+    if ($gamedata["imagelocation"] == "main") {
+        $decodedlogourl = "images/" . $decodedlogourl;
+    }
+    else if ($gamedata["imagelocation"] == "game") {
+        $decodedlogourl = $_SESSION["gamedir"] . "/" . "questions/" . "images/" . $decodedlogourl;
+    }
+    else if ($gamedata["imagelocation"] == "internet") {
+        $decodedlogourl = $decodedlogourl;
     }
 ?>
 
@@ -19,10 +36,11 @@
 
 <head>
     <title>
-        Test
+        <?php echo $gamedata["gamepin"] . " - " . $groupdata["groupcode"] ?>
     </title>
     <script src="functions.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="u_styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
@@ -30,77 +48,56 @@
     <div class="holder_top">
         <div class="top_banner">
             <div class="top_banner_resholder">
-                <span class="top_banner_res">Restaurant</span>
-                <span class="top_banner_resname"><?php echo $restaurantname; ?></span>
+                <span class="top_banner_res"><?php echo $gamedata["grouptitle"] ?></span>
+                <span class="top_banner_resname"><?php echo $groupdata["groupname"]; ?></span>
             </div>
             <div class="top_banner_title">
-                <img src="images/logo.png" />
+                <img src="<?php echo $decodedlogourl; ?>" />
                 <form action="logoff.php" method="post" class="logoffform">
                     <input type="submit" class="logoffbutton" value="&#8855;" tooltip="Uitloggen">
                 </form>
             </div>
         </div>
         <div class="top_stats">
-            <span class="stat">Te behalen certificaten: <em>7</em></span>
-            <span class="stat">Behaalde certificaten: <em>0</em></span>
+            <span class="stat">Afgeronde opdrachten: <em>7</em></span>
+            <span class="stat">Nog uit te voeren opdrachten: <em>0</em></span>
         </div>
     </div>
     <div class="holder">
-        <div class="obj_certificate obj_certificate-NGOT">
-            <div class="obj_certificate_banner" id="c_groentefruit">
-                <div class="obj_certificate_name">
-                    Groente & fruit
+        <?php
+        foreach ($questiongroups as $questiongroup) {
+            $questiongroupjson = file_get_contents($questiongroup);
+            $questiongroupdata = json_decode($questiongroupjson,true);
+            //print_r ( $questiongroupdata);
+            //decode img url string
+            $decodedimageurl = urldecode($questiongroupdata["image"]);
+            if ($questiongroupdata["imagelocation"] == "main") {
+                $decodedimageurl = "images/" . $decodedimageurl;
+            }
+            else if ($questiongroupdata["imagelocation"] == "game") {
+                $decodedimageurl = $_SESSION["gamedir"] . "/" . "questions/" . "images/" . $decodedimageurl;
+            }
+            else if ($questiongroupdata["imagelocation"] == "internet") {
+                $decodedimageurl = $decodedimageurl;
+            }
+            //decode markup of the description
+            $decodeddescription = musdecode($questiongroupdata["description"]);
+            echo "
+            <div class='obj_certificate obj_certificate-NGOT'>
+                <div class='obj_certificate_banner' id='qg_" . $questiongroupdata["questiongroupid"] . "' style='background-image: url(\"" . $decodedimageurl . "\");'>
+                    <div class='obj_certificate_name'>
+                        " . $questiongroupdata["name"] . "
+                    </div>
+                </div>
+                <div class='obj_certificate_info'>
+                    <h1>" . $questiongroupdata["longname"] . "</h1>
+                    <p>" . $decodeddescription . "</p>
                 </div>
             </div>
-            <div class="obj_certificate_info">
-                <h1>Certificaat <em>Groente & fruit</em></h1>
-                <p>Dit is een certificaat dat niet bestaat.</p>
-            </div>
-        </div>
-        <div class="obj_certificate obj_certificate-NGOT">
-            <div class="obj_certificate_banner" id="c_energie">
-                <div class="obj_certificate_name">
-                    Energie
-                </div>
-            </div>
-            <div class="obj_certificate_info">
-                <h1>Certificaat <em>Energie</em></h1>
-                <p>Dit is een certificaat dat niet bestaat.</p>
-            </div>
-        </div>
-        <div class="obj_certificate obj_certificate-NGOT">
-            <div class="obj_certificate_banner" id="c_smaak">
-                <div class="obj_certificate_name">
-                    Smaak
-                </div>
-            </div>
-            <div class="obj_certificate_info">
-                <h1>Certificaat <em>Smaak</em></h1>
-                <p>Dit is een certificaat dat niet bestaat.</p>
-            </div>
-        </div>
-        <div class="obj_certificate obj_certificate-NGOT">
-            <div class="obj_certificate_banner" id="c_schijfvanvijf">
-                <div class="obj_certificate_name">
-                    Schijf van vijf
-                </div>
-            </div>
-            <div class="obj_certificate_info">
-                <h1>Certificaat <em>Schijf van vijf</em></h1>
-                <p>Dit is een certificaat dat niet bestaat.</p>
-            </div>
-        </div>
-        <div class="obj_certificate obj_certificate-NGOT">
-            <div class="obj_certificate_banner" id="c_suiker">
-                <div class="obj_certificate_name">
-                    Suiker
-                </div>
-            </div>
-            <div class="obj_certificate_info">
-                <h1>Certificaat <em>Suiker</em></h1>
-                <p>Dit is een certificaat dat niet bestaat.</p>
-            </div>
-        </div>
+            ";
+        }
+        ?>
+        <!--
         <div class="obj_certificate obj_certificate-YGOT">
             <div class="obj_certificate_banner" id="c_gezondongezond">
                 <div class="obj_certificate_check">
@@ -126,6 +123,7 @@
                 <p>Dit is een certificaat dat niet bestaat.</p>
             </div>
         </div>
+        !-->
     </div>
     <!--
     <input type="text" id="codeInput1">

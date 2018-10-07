@@ -1,4 +1,16 @@
 <?php
+    //get POST-values
+    if (isset($_POST["creatorname"])) {
+        $creator = htmlspecialchars($_POST["creatorname"]);
+        $grouptitle = htmlspecialchars($_POST["grouptitle"]);
+        $image = rawurlencode($_POST["image"]);
+        $imagelocation = $_POST["image_location"];
+        $crtime = time();
+    }
+    else {
+        header("Location: newgame.html");
+        exit();
+    }
     //get all existing games
     $dirs = array_filter(glob('games/*'), 'is_dir');
     echo date("Y-m-d H:i:s") . " | Existing games: ";
@@ -34,6 +46,16 @@
     $questionsdir_img = $newgamecode_post . "/questions" . "/images";
     mkdir($questionsdir_img, 0777, TRUE);
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $questionsdir_img . " was created.";
+    //create gamedata file
+    $filename = $newgamecode_post . "/gamedata.json";
+    echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename;
+    $myfile = fopen($filename, "w");
+    //write data to file
+    $data = array("gamepin" => $newgamecode, "creatorname" => $creator, "grouptitle" => $grouptitle, "crtime" => $crtime, "image" => $image, "imagelocation" => $imagelocation);
+    $data_json = json_encode($data);
+    fwrite($myfile, $data_json);
+    fclose($myfile);
+    echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename . " was created.";
     //READY
     echo "<br />" . date("Y-m-d H:i:s") . " | READY";
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: You can now use game #" . $newgamecode;

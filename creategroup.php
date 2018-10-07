@@ -17,12 +17,14 @@ print_r( $groups);
 $i = 0;
 while ($i < $groupnum) {
     $newgroupcode = substr(md5(rand()), 0, 2);
+    $newgroupcode = strtoupper($newgroupcode);
     echo "<br />" . date("Y-m-d H:i:s") . " | Groupcode: " . $newgroupcode;
     $newgroupcode_post = $gamedir . "/" . $newgroupcode . ".json";
     echo "<br />" . date("Y-m-d H:i:s") . " | Groupcode-post: " . $newgroupcode_post;
     while (in_array($newgroupcode_post, $groups)) {
         echo "<br />" . date("Y-m-d H:i:s") . " | ERROR: FAILED";
         $newgroupcode = substr(md5(rand()), 0, 2);
+        $newgroupcode = strtoupper($newgroupcode);
         echo "<br />" . date("Y-m-d H:i:s") . " | Groupcode: " . $newgroupcode;
         $newgroupcode_post = $gamedir . "/" . $newgroupcode . ".json";
         echo "<br />" . date("Y-m-d H:i:s") . " | Groupcode-post: " . $newgroupcode_post;
@@ -31,7 +33,7 @@ while ($i < $groupnum) {
     $filename = $gamedir . "/" . $newgroupcode . ".json";
     $myfile = fopen($filename, "w");
     //write data to file
-    $data = array("groupcode" => $newgroupcode, "restaurantname" => "", "membernames" => array(""), "certificates" => array(""), "lastactive" => "");
+    $data = array("groupcode" => $newgroupcode, "groupname" => "", "membernames" => array(""), "certificates" => array(""), "lastactive" => "");
     $data_json = json_encode($data);
     fwrite($myfile, $data_json);
     fclose($myfile);

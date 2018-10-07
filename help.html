@@ -12,13 +12,14 @@
     <h2>Creating new games/game elements</h2>
     <h3 id="createquestiongroup">Create questiongroup</h3>
     <p>
-        The following elements are used to create a new question:
+        The following elements are used to create a new group of questions ("questiongroup"):
         <ul>
             <li><strong>Gamepin: </strong>The gamepin is used to determine which game the queston belongs in.</li>
             <li><strong>Name: </strong>Used to display the short name for the questiongroup, preferably not longer than 20 characters.</li>
             <li><strong>Long name: </strong>Long name of the group.</li>
-            <li><strong>Description: </strong>The description of the questiongroup.</li>
+            <li><strong>Description: </strong>The description of the questiongroup. Supports the <a href="#markupsystem">markup system</a>. It is recommended not to use images or to create a long text. Use the description in <a href="#createquestion">questions</a>                for this.</li>
             <li><strong>Image: </strong>URL for the image used as item-avatar for the questiongroup.</li>
+            <li><strong>Image location: </strong>The location of the image. If the image is on the internet, use the full URL (e.g.: "https://www.w3schools.com/w3css/img_lights.jpg"). Otherwise, only use the filename (e.g.: "image.jpg").</li>
         </ul>
     </p>
     <h3 id="createquestion">Create question</h3>
@@ -40,16 +41,18 @@
     <h2>Beautifying things</h2>
     <h3 id="markupsystem">Markup system</h3>
     <p>
-        In the marking system, most markup-tags are opened by [...] and closed by [/...]. They enclose text, which is marked up accordingly. They may be nested, but only like this: [b][i]...[/i][/b]. These tags are currently supported. An expamle of their uses
-        is given between curly brackets.
+        In the marking system, most markup-tags are opened by [...] and closed by [/...]. They enclose text, which is marked up accordingly. They may be nested, but only like this: [b][i]...[/i][/b].
+        <br /><em>Write your text in an external text editor (one you can save your text in). This editor does not save your input until you send it to the server!</em>
+        <br />These tags are currently supported. An expamle of their uses is given between curly brackets.
         <ul>
-            <li><strong>[p][/p] </strong>Creates a paragraph. {[p](block of text)[/p]}</li>
-            <li><strong>[n] </strong>New line. {example text.[n]}</li>
-            <li><strong>[b][/b] </strong>Bold. {[b]<b>example text</b>[/b]}</li>
-            <li><strong>[i][/i] </strong>Italic. {[i]<i>example text</i>[/i]}</li>
-            <li><strong>[u][/u] </strong>Underlined. {[u]<u>example text</u>[/u]}</li>
-            <li><strong>[img("URL")] </strong>Insert an image. {[img("https://www.w3schools.com/w3css/img_lights.jpg")]}</li>
-            <li><strong>[a("URL")][/a] </strong>Creates a hyperlink. {[a("https://www.youtube.com/watch?v=dQw4w9WgXcQ")]<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">example text</a>[/a]} </li>
+            <li><strong>[p]...[/p] </strong>Creates a paragraph. A paragraph will create a new line before and after itself! {[p](block of text)[/p]}</li>
+            <li><strong>[b]...[/b] </strong>Bold. {[b]<b>example text</b>[/b]}</li>
+            <li><strong>[i]...[/i] </strong>Italic. {[i]<i>example text</i>[/i]}</li>
+            <li><strong>[u]...[/u] </strong>Underlined. {[u]<u>example text</u>[/u]}</li>
+            <li><strong>[img(URL)(alternative)(tooltip)] </strong>Inserts an image. Alternative is the text shown if the image cannot be found. The tooltip will be displayed when hovering over the image. Aforementioned tags do not support brackets (). The
+                tags MUST be used. {[img(https://www.w3schools.com/w3css/img_lights.jpg)(Northern lights)(The Northern lights)]}</li>
+            <li><strong>[a(URL)(tooltip)]...[/a] </strong>Creates a hyperlink. The tooltip will be displayed when hovering over the image. This tag MUST be used. {[a(https://www.youtube.com/watch?v=dQw4w9WgXcQ)(Click me!)]<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    title="Click me!" target="_blank">example text</a>[/a]} </li>
         </ul>
     </p>
 </body>

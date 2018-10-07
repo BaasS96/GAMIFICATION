@@ -27,12 +27,12 @@ else {
             <div class="gamepin_input">
             <form action="joingame.php" method="post">
                 <p>
-                    Naam restaurant: <br />
+                    Groepsnaam: <br />
                     <span class="addinfo">
                         Deze naam komt op je certificaat te staan.
                     </span>
                 </p>
-                    <input type="text" name="restname" class="input_text i_rn" required autofocus maxlength="256" placeholder="Naam restaurant">
+                    <input type="text" name="groupname" class="input_text i_rn" required autofocus maxlength="256" placeholder="Groepsnaam">
                 <p>
                     Namen groepsleden:<br />
                     <span class="addinfo">

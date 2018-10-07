@@ -19,7 +19,7 @@ if (isset($_SESSION["loginready"])) {
     else if ($_SESSION["loginready"] == "0") {
         //data has to be written to file, so write to file and continue to this page with ready tag 1
         //get all POST data
-        $restaurantname = htmlspecialchars($_POST["restname"]);
+        $groupname = htmlspecialchars($_POST["groupname"]);
         $membernames = htmlspecialchars($_POST["membernames"]);
         //decode membernames into an array
         $membernames_array = (explode(",",$membernames));
@@ -31,7 +31,7 @@ if (isset($_SESSION["loginready"])) {
         $json = file_get_contents($gamegroup_post);
         $obj = json_decode($json,true);
         //modify data
-        $obj["restaurantname"] = $restaurantname;
+        $obj["groupname"] = $groupname;
         $obj["membernames"] = $membernames_array;
         print_r ($obj["membernames"]);
         //write data to file

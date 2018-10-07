@@ -3,10 +3,11 @@
 if (isset($_POST["gamepin"]) && isset($_POST["name"])) {
     $gamepin = $_POST["gamepin"];
     $gamedir = ("games/" . $gamepin);
-    $name = $_POST["name"];
-    $longname = $_POST["longname"];
-    $description = $_POST["description"];
+    $name = htmlspecialchars($_POST["name"]);
+    $longname = htmlspecialchars($_POST["longname"]);
+    $description = htmlspecialchars($_POST["description"]) . "[/b][/i][/u][/a][/p]";
     $image = rawurlencode($_POST["image"]);
+    $imagelocation = $_POST["image_location"];
 }
 else {
     header("Location: newgame.html");
@@ -39,7 +40,7 @@ print_r( $groups);
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename;
     $myfile = fopen($filename, "w");
     //write data to file
-    $data = array("questiongroupid" => $newgroupcode, "name" => $name, "longname" => $longname, "description" => $description, "image" => $image);
+    $data = array("questiongroupid" => $newgroupcode, "name" => $name, "longname" => $longname, "description" => $description, "image" => $image, "imagelocation" => $imagelocation);
     $data_json = json_encode($data);
     fwrite($myfile, $data_json);
     fclose($myfile);
