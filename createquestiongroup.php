@@ -5,7 +5,7 @@ if (isset($_POST["gamepin"]) && isset($_POST["name"])) {
     $gamedir = ("games/" . $gamepin);
     $name = htmlspecialchars($_POST["name"]);
     $longname = htmlspecialchars($_POST["longname"]);
-    $description = htmlspecialchars($_POST["description"]) . "[/b][/i][/u][/a][/p]";
+    $description = htmlspecialchars($_POST["description"]);
     $image = rawurlencode($_POST["image"]);
     $imagelocation = $_POST["image_location"];
 }

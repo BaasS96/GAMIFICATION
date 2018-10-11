@@ -83,7 +83,7 @@
             //decode markup of the description
             $decodeddescription = musdecode($questiongroupdata["description"]);
             echo "
-            <div class='obj_certificate obj_certificate-NGOT' onclick=\"toQuestionGroup(" . $questiongroupdata["questiongroupid"] . ");\" title='Naar vragengroep " . $questiongroupdata["name"] . "'>
+            <div class='obj_certificate obj_certificate-NGOT'>
                 <div class='obj_certificate_banner' id='qg_" . $questiongroupdata["questiongroupid"] . "' style='background-image: url(\"" . $decodedimageurl . "\");'>
                     <div class='obj_certificate_name'>
                         " . $questiongroupdata["name"] . "
@@ -97,33 +97,6 @@
             ";
         }
         ?>
-        <!--
-        <div class="obj_certificate obj_certificate-YGOT">
-            <div class="obj_certificate_banner" id="c_gezondongezond">
-                <div class="obj_certificate_check">
-                    &#10003;
-                </div>
-                <div class="obj_certificate_name">
-                    Gezond & ongezond
-                </div>
-            </div>
-            <div class="obj_certificate_info">
-                <h1>Certificaat <em>Gezond & ongezond</em></h1>
-                <p>Dit is een certificaat dat niet bestaat.</p>
-            </div>
-        </div>
-        <div class="obj_certificate obj_certificate-NGOT">
-            <div class="obj_certificate_banner" id="c_eetcultuur">
-                <div class="obj_certificate_name">
-                    Eetcultuur
-                </div>
-            </div>
-            <div class="obj_certificate_info">
-                <h1>Certificaat <em>Eetcultuur</em></h1>
-                <p>Dit is een certificaat dat niet bestaat.</p>
-            </div>
-        </div>
-        !-->
     </div>
 </body>
 
