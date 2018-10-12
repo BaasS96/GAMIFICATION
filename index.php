@@ -83,7 +83,7 @@
             //decode markup of the description
             $decodeddescription = musdecode($questiongroupdata["description"]);
             echo "
-            <div class='obj_certificate obj_certificate-NGOT' onclick=\"toQuestionGroup(" . $questiongroupdata["questiongroupid"] . ");\" title='Naar vragengroep " . $questiongroupdata["name"] . "'>
+            <div class='obj_certificate pointerhand obj_certificate-NGOT' onclick=\"toQuestionGroup('" . $questiongroupdata["questiongroupid"] . "');\" title='Naar vragengroep " . $questiongroupdata["name"] . "'>
                 <div class='obj_certificate_banner' id='qg_" . $questiongroupdata["questiongroupid"] . "' style='background-image: url(\"" . $decodedimageurl . "\");'>
                     <div class='obj_certificate_name'>
                         " . $questiongroupdata["name"] . "

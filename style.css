@@ -86,12 +86,16 @@ body {
     transition: background-color 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.obj_certificate:hover {
+.pointerhand:hover {
     cursor: pointer;
 }
 
 .obj_certificate-NGOT:hover {
     background-color: #e6e032;
+}
+
+.obj_certificate-YGOT {
+    background-color: #a0f298;
 }
 
 .obj_certificate-YGOT:hover {
@@ -178,4 +182,8 @@ h1 {
 .qglink {
     text-decoration: none;
     color: initial;
+}
+
+.question_img {
+    max-height: 8em;
 }

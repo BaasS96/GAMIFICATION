@@ -8,8 +8,9 @@
         $groupjson = file_get_contents($_SESSION["groupdir"]);
         $groupdata = json_decode($groupjson,true);
         //look for certificates in the games/questions directory
-        $questiongroups = array_filter(glob($_SESSION["gamedir"] . "/questions/*.json"), 'is_file');
-        //print_r( $questiongroups);
+        //print($_GET["qg"]);
+        $questions = array_filter(glob($_SESSION["gamedir"] . "/questions" . "/" . $_GET["qg"] . "/*.json"), 'is_file');
+        //print_r( $questions);
     }
     else {
         //if something is wrong, redirect to the joinpage.
@@ -65,33 +66,55 @@
     </div>
     <div class="holder">
         <?php
-        foreach ($questiongroups as $questiongroup) {
-            $questiongroupjson = file_get_contents($questiongroup);
-            $questiongroupdata = json_decode($questiongroupjson,true);
+        foreach ($questions as $question) {
+            $questionjson = file_get_contents($question);
+            $questiondata = json_decode($questionjson,true);
             //print_r ( $questiongroupdata);
-            //decode img url string
-            $decodedimageurl = urldecode($questiongroupdata["image"]);
-            if ($questiongroupdata["imagelocation"] == "main") {
-                $decodedimageurl = "images/" . $decodedimageurl;
-            }
-            else if ($questiongroupdata["imagelocation"] == "game") {
-                $decodedimageurl = $_SESSION["gamedir"] . "/" . "questions/" . "images/" . $decodedimageurl;
-            }
-            else if ($questiongroupdata["imagelocation"] == "internet") {
-                $decodedimageurl = $decodedimageurl;
-            }
             //decode markup of the description
-            $decodeddescription = musdecode($questiongroupdata["description"]);
+            $decodeddescription = musdecode($questiondata["description"]);
+            //if question is allready answered (check if the question allready exists in the groupfile AND if points are more than 0)
+            if (isset($groupdata["certificates"][$questiondata["questiongroup"]][$questiondata["questioncode"]]["points"]) && $groupdata["certificates"][$questiondata["questiongroup"]][$questiondata["questioncode"]]["points"] > "0") {
+                $questiongot = "obj_certificate-YGOT";
+                $gotquestion = "<em>Je hebt deze vraag al beantwoord!</em>";
+            }
+            else {
+                $questiongot = "obj_certificate-NGOT";
+            }
             echo "
-            <div class='obj_certificate obj_certificate-NGOT'>
-                <div class='obj_certificate_banner' id='qg_" . $questiongroupdata["questiongroupid"] . "' style='background-image: url(\"" . $decodedimageurl . "\");'>
-                    <div class='obj_certificate_name'>
-                        " . $questiongroupdata["name"] . "
-                    </div>
-                </div>
+            <div class='obj_certificate " . $questiongot . "'>
                 <div class='obj_certificate_info'>
-                    <h1>" . $questiongroupdata["longname"] . "</h1>
+                    <h1>" . $questiondata["title"] . "</h1>
                     <p>" . $decodeddescription . "</p>
+                    <p>
+            ";
+            //if the question is allready answered, display a text
+            if ($questiongot == "obj_certificate-YGOT") {
+                echo "<em>Je hebt deze vraag al beantwoord!</em>";
+            }
+            //else, display the question or the activation button for the terminal
+            else if ($questiongot == "obj_certificate-NGOT") {
+                if ($questiondata["useterminal"] == "false") {
+                    echo "Beantwoord deze vraag: <br /><em> " . $questiondata["question"] . " </em>";
+                    if ($questiondata["image"] !== "") {
+                        echo "<br /><a href='" . urldecode($questiondata["image"]) . "' title='Bekijk afbeelding' target='_blank'><img src='" . urldecode($questiondata["image"]) . "' class='question_img' /></a>";
+                    }
+                    echo "<form action='postquestion.php' method='post'>";
+                    if ($questiondata["qtype"] == "text") {
+                        echo "<input type='text' class='text-input' id='qanswer' focus placeholder='Antwoord'>";
+                    }
+                    else if ($questiondata["qtype"] == "radio") {
+                        foreach($questiondata["answers"] as $answer) {
+                            echo "<input type='radio' class='radio-input' name='qanswer' id='" . $answer . "' value='" . $answer . "'><label for='" . $answer . "'>" . $answer . "</label><br />";
+                        }
+                    }
+                    echo "<p><input type='button' class='button' onclick=\"checkQanswer();\"value='Go'></p></form>";
+                }
+                else if ($questiondata["useterminal"] == "true") {
+                    echo "Een terminal reserveren.";
+                }
+            }
+            echo "            
+                    </p>
                 </div>
             </div>
             ";
