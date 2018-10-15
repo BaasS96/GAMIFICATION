@@ -5,6 +5,7 @@
         $grouptitle = htmlspecialchars($_POST["grouptitle"]);
         $image = rawurlencode($_POST["image"]);
         $imagelocation = $_POST["image_location"];
+        $maxterminals = $_POST["maxterminals"];
         $crtime = time();
     }
     else {
@@ -51,7 +52,7 @@
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename;
     $myfile = fopen($filename, "w");
     //write data to file
-    $data = array("gamepin" => $newgamecode, "creatorname" => $creator, "grouptitle" => $grouptitle, "crtime" => $crtime, "image" => $image, "imagelocation" => $imagelocation);
+    $data = array("gamepin" => $newgamecode, "creatorname" => $creator, "grouptitle" => $grouptitle, "crtime" => $crtime, "image" => $image, "imagelocation" => $imagelocation, "maxterminals" => $maxterminals);
     $data_json = json_encode($data);
     fwrite($myfile, $data_json);
     fclose($myfile);
