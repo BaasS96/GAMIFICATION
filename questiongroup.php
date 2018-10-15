@@ -40,6 +40,7 @@
         <?php echo $gamedata["gamepin"] . " - " . $groupdata["groupcode"] ?>
     </title>
     <script src="functions.js"></script>
+    <script src="getdata.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="u_styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -110,7 +111,7 @@
                     echo "<p><input type='button' class='button' onclick=\"checkQanswer();\"value='Go'></p></form>";
                 }
                 else if ($questiondata["useterminal"] == "true") {
-                    echo "Een terminal reserveren.";
+                    echo "<a href='#' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "');\">Een terminal reserveren.</a>";
                 }
             }
             echo "            

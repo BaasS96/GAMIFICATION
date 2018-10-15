@@ -31,10 +31,23 @@ while (in_array($newterminalcode_post, $terminals)) {
 $filename = $gamedir . "/" . $newterminalcode . ".json";
 $myfile = fopen($filename, "w");
 //write data to file
-$data = array("terminalcode" => $newterminalcode, "certificatenumber" => $certnum, "questionnumber" => $questnum, "idletext" => $idletext, "activated" => "0", "inuse" => "0", "groupid" => "", "qcode" => "", "exptime" => "", "qtype" => "", "question" => "", "answers" => array(""), "ranswers" => array(""), "points" => "");
+$data = array("terminalcode" => $newterminalcode, "certificatenumber" => $certnum, "questionnumber" => $questnum, "idletext" => $idletext, "activated" => "0", "inuse" => "0", "groupid" => "", "qcode" => "", "exptime" => "", "qtype" => "", "question" => "", "answers" => array(), "ranswers" => array(), "points" => "");
 $data_json = json_encode($data);
 fwrite($myfile, $data_json);
 fclose($myfile);
 echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $newterminalcode . " was created.";
+//link this terminal to the question
+//get the questiondatafile
+$questionfile = "games/" . $gamepin . "/questions" . "/" . $certnum . "/" . $questnum . ".json";
+$questionjson = file_get_contents($questionfile);
+$questiondata_new = json_decode($questionjson,true);
+//modify the data
+$questiondata_new["terminalid"] = $newterminalcode;
+//write the modified data to the questiondatafile
+$myfile = fopen($questionfile, "r+");
+$data_json = json_encode($questiondata_new);
+fwrite($myfile, $data_json);
+fclose($myfile);
+echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $newterminalcode . " was linked to question " . $certnum . "/" . $questnum . ".";
 echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html'>Back</a>";
 ?>

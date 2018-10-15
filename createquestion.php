@@ -50,7 +50,7 @@ print_r( $questions);
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename;
     $myfile = fopen($filename, "w");
     //write data to file
-    $data = array("questioncode" => $newquestioncode, "questiongroup" => $questiongroup, "title" => $title, "description" => $description, "qtype" => $qtype, "question" => $question, "image" => $image, "answers" => $answers, "ranswers" => $ranswers, "useterminal" => $useterminal);
+    $data = array("questioncode" => $newquestioncode, "questiongroup" => $questiongroup, "title" => $title, "description" => $description, "qtype" => $qtype, "question" => $question, "image" => $image, "answers" => $answers, "ranswers" => $ranswers, "useterminal" => $useterminal, "terminalid" => "");
     $data_json = json_encode($data);
     fwrite($myfile, $data_json);
     fclose($myfile);

@@ -33,7 +33,7 @@ while ($i < $groupnum) {
     $filename = $gamedir . "/" . $newgroupcode . ".json";
     $myfile = fopen($filename, "w");
     //write data to file
-    $data = array("groupcode" => $newgroupcode, "groupname" => "", "membernames" => array(""), "certificates" => array(""), "terminals" => array(""), "lastactive" => "");
+    $data = array("groupcode" => $newgroupcode, "groupname" => "", "membernames" => array(), "certificates" => array(), "terminals" => array(), "lastactive" => "");
     $data_json = json_encode($data);
     fwrite($myfile, $data_json);
     fclose($myfile);
