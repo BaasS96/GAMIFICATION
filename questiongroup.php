@@ -111,7 +111,7 @@
                     echo "<p><input type='button' class='button' onclick=\"checkQanswer();\"value='Go'></p></form>";
                 }
                 else if ($questiondata["useterminal"] == "true") {
-                    echo "<a href='#' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "');\">Een terminal reserveren.</a>";
+                    echo "<a href='#' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "','" . $questiondata["qcode"] . "','" . $questiondata["timetillexp"] . "');\">Een terminal reserveren.</a>";
                 }
             }
             echo "            
@@ -121,6 +121,7 @@
             ";
         }
         ?>
+        <input type="button" onclick="makeHexCode();" value="maakhex">
     </div>
 </body>
 

@@ -33,7 +33,7 @@ while (in_array($newterminalcode_post, $terminals)) {
 $filename = $gamedir . "/" . $newterminalcode . ".json";
 $myfile = fopen($filename, "w");
 //write data to file
-$data = array("terminalcode" => $newterminalcode, "certificatenumber" => $certnum, "questionnumber" => $questnum, "idletext" => $idletext, "activated" => 0, "inuse" => 0, "groupid" => "", "qcode" => "", "exptime" => "", "qtype" => "", "question" => "", "answers" => array(), "ranswers" => array(), "points" => "");
+$data = array("terminalcode" => $newterminalcode, "certificatenumber" => $certnum, "questionnumber" => $questnum, "idletext" => $idletext, "activated" => 0, "inuse" => 0, "groupid" => "", "qcode" => "", "exptime" => "", "qtype" => "", "question" => "", "image" => "", "answers" => array(), "ranswers" => array(), "points" => "");
 $data_json = json_encode($data);
 fwrite($myfile, $data_json);
 fclose($myfile);

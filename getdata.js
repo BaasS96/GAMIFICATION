@@ -1,4 +1,4 @@
-function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questionID, terminalID) {
+function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questionID, terminalID, qcode, timetillexp) {
     console.log(gameID);
     console.log(maxTerminals);
     console.log(groupID);
@@ -35,10 +35,24 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
                             if (terminalData.activated == true && terminalData.inuse == false) {
                                 //if available reserve the terminal for the group
                                 console.log("JAAAA");
+                                //create a code for the terminal
+                                //can be static or dynamic: if dynamic, generate here, if static, get from question file.
+                                console.log(qcode);
+                                if (qcode == "") {
+                                    //dynamic
+                                    var qcodenew = makeHexCode();
+                                } else {
+                                    var qcodenew = qcode;
+                                }
+                                console.log("qcode = " + qcodenew);
+                                //create the timestamp for the exptime
+                                var currenttimestamp = new Date().getTime();
+                                console.log(currenttimestamp);
+                                var exptime = currenttimestamp + parseInt(timetillexp * 1000);
+                                console.log(exptime);
+                                //post the request, with the parameters as 'vars'
                                 var hr = new XMLHttpRequest();
-                                // Create some variables we need to send to our PHP file
-                                //!!!!!Which vars have to be sent to the php file????
-                                var vars = "gamepin=" + mGamePin + "&groupid=" + terminalData.groupid + "&certificate=" + terminalData.certificatenumber + "&question=" + terminalData.questionnumber + "&answer=" + mAnswer + "&timeleft=" + mTimeLeftU + "&points=" + terminalData.points;
+                                var vars = "gamepin=" + gameID + "&terminalID=" + terminalID + "&groupcode=" + groupID + "&qcode=" + qcodenew + "&exptime=" + exptime + "&qgroup=" + questionGroupID + "&qnum=" + questionID;
                                 console.log(vars);
                                 hr.open("POST", "reserveterminal.php", true);
                                 hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -47,15 +61,17 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
                                         if (hr.readyState == 4 && hr.status == 200) {
                                             var return_data = hr.responseText;
                                             console.log(return_data);
-                                            resetTerminal();
+                                            console.log(qcode);
                                         }
                                     }
                                     // Send the data to PHP now... and wait for response to update the status div
                                 hr.send(vars); // Actually execute the request
                             } else if (terminalData.activated == true && terminalData.inuse == true) {
                                 //the terminal is allready in use, return an error message with the maximum time until the terminal unlocks
+                                console.log("terminal not available: allready in use");
                             } else {
                                 //something went wrong, perhaps the terminal was not activated?
+                                console.log("terminal not avaiable: not activated");
                             }
                         }
                     };

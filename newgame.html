@@ -30,7 +30,7 @@
     <h3><a href="help.html#creategroup" target="_blank" title="Display help page">?</a> Create new group(s):</h3>
     <form action="creategroup.php" method="post">
         <input type="text" name="gamepin" required placeholder="Gamepin" maxlength="4">
-        <input type="number" name="groupnum" value="1">
+        <input type="number" name="groupnum" value="1" step="1" min="1">
         <br />
         <input type="submit" value="Create group(s)">
     </form>
@@ -71,6 +71,9 @@
         <input type="text" name="image" placeholder="Image URL">
         <input type="text" name="answers" placeholder="Answers">
         <input type="text" name="ranswers" placeholder="Right answers" required>
+        <input type="text" name="qcode" placeholder="Question password">
+        <input type="number" name="exptime" value="60" step="5" min="5" required>
+        <input type="number" name="points" value="1" step="1" min="0" required>
         <input type="checkbox" name="useterminal" id="useterminal" value="yes"><label for="useterminal">Use terminal</label>
         <br />
         <input type="submit" value="Create questiongroup">

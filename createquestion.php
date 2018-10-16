@@ -15,6 +15,9 @@ if (isset($_POST["gamepin"]) && isset($_POST["questiongroup"])) {
     $ranswers_pre = htmlspecialchars($_POST["ranswers"]);
     $ranswers_pre2 = strtoupper($ranswers_pre);
     $ranswers = (explode(",",$ranswers_pre2));
+    $qcode = strtoupper($_POST["qcode"]);
+    $timetillexp = $_POST["exptime"];
+    $points = $_POST["points"];
     if (isset($_POST["useterminal"])){
         $useterminal = "true";
     }
@@ -50,7 +53,7 @@ print_r( $questions);
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename;
     $myfile = fopen($filename, "w");
     //write data to file
-    $data = array("questioncode" => $newquestioncode, "questiongroup" => $questiongroup, "title" => $title, "description" => $description, "qtype" => $qtype, "question" => $question, "image" => $image, "answers" => $answers, "ranswers" => $ranswers, "useterminal" => $useterminal, "terminalid" => "");
+    $data = array("questioncode" => $newquestioncode, "questiongroup" => $questiongroup, "title" => $title, "description" => $description, "qtype" => $qtype, "question" => $question, "image" => $image, "answers" => $answers, "ranswers" => $ranswers, "points" => $points, "useterminal" => $useterminal, "terminalid" => "", "qcode" => $qcode, "timetillexp" => $timetillexp);
     $data_json = json_encode($data);
     fwrite($myfile, $data_json);
     fclose($myfile);
