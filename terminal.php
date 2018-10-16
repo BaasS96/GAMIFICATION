@@ -10,7 +10,7 @@ if (isset($_GET["deactivate"]) && $_GET["deactivate"] == "1b") {
     $terminaljson = file_get_contents($_SESSION["terminaldir"]);
     $terminaldata = json_decode($terminaljson,true);
     //register the terminal as deactivated
-    $terminaldata["activated"] = "0";
+    $terminaldata["activated"] = false;
     //write the modified data to the terminal file
     $myfile = fopen($_SESSION["terminaldir"], "r+");
     $data_json = json_encode($terminaldata);

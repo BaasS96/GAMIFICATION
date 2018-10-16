@@ -15,7 +15,7 @@ session_start();
         $terminaljson = file_get_contents($_SESSION["terminaldir"]);
         $terminaldata = json_decode($terminaljson,true);
         //register the terminal as activated
-        $terminaldata["activated"] = "1";
+        $terminaldata["activated"] = true;
         //write the modified data to the terminal file
         $myfile = fopen($_SESSION["terminaldir"], "r+");
         $data_json = json_encode($terminaldata);

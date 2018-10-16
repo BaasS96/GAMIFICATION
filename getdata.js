@@ -17,19 +17,51 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
                 console.log("yes");
                 //the group may still connect to a terminal
                 //check if the group is allready connected to the terminal linked to this question
-                //!!!!!something... to do this?
-                if (groupData.terminal.indexOf)
-                //check if the terminal is available
+                var tempTerminals = groupData.terminals;
+                console.log(tempTerminals);
+                if (tempTerminals.indexOf(terminalID) != -1) {
+                    //the group is allready connected to the terminal. Return an error message
+                    console.log("allready connected");
+                } else {
+                    //the group is not connected to the terminal
+                    console.log("not connected");
+                    //check if the terminal is available
                     var file = "games/" + gameID + "/terminal/" + terminalID + ".json?" + (new Date()).getTime();
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var terminalData = JSON.parse(this.responseText);
-                        console.log(terminalData);
-                    }
-                };
-                xmlhttp.open("GET", file, true)
-                xmlhttp.send();
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var terminalData = JSON.parse(this.responseText);
+                            console.log(terminalData);
+                            if (terminalData.activated == true && terminalData.inuse == false) {
+                                //if available reserve the terminal for the group
+                                console.log("JAAAA");
+                                var hr = new XMLHttpRequest();
+                                // Create some variables we need to send to our PHP file
+                                //!!!!!Which vars have to be sent to the php file????
+                                var vars = "gamepin=" + mGamePin + "&groupid=" + terminalData.groupid + "&certificate=" + terminalData.certificatenumber + "&question=" + terminalData.questionnumber + "&answer=" + mAnswer + "&timeleft=" + mTimeLeftU + "&points=" + terminalData.points;
+                                console.log(vars);
+                                hr.open("POST", "reserveterminal.php", true);
+                                hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                // Access the onreadystatechange event for the XMLHttpRequest object
+                                hr.onreadystatechange = function() {
+                                        if (hr.readyState == 4 && hr.status == 200) {
+                                            var return_data = hr.responseText;
+                                            console.log(return_data);
+                                            resetTerminal();
+                                        }
+                                    }
+                                    // Send the data to PHP now... and wait for response to update the status div
+                                hr.send(vars); // Actually execute the request
+                            } else if (terminalData.activated == true && terminalData.inuse == true) {
+                                //the terminal is allready in use, return an error message with the maximum time until the terminal unlocks
+                            } else {
+                                //something went wrong, perhaps the terminal was not activated?
+                            }
+                        }
+                    };
+                    xmlhttp.open("GET", file, true)
+                    xmlhttp.send();
+                }
             } else {
                 console.log("noooo");
             }
