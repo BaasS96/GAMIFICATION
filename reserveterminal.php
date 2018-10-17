@@ -21,6 +21,7 @@
         $terminaldata_new["ranswers"] = $questiondata["ranswers"];
         $terminaldata_new["points"] = $questiondata["points"];
         $terminaldata_new["image"] = $questiondata["image"];
+        $terminaldata_new["inuse"] = TRUE;
         //print_r( $terminaldata_new);
         //write the modified data to the terminalfile
         $myfile = fopen($terminalfile, "r+");
