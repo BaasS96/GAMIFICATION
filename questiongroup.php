@@ -30,6 +30,10 @@
     else if ($gamedata["imagelocation"] == "internet") {
         $decodedlogourl = $decodedlogourl;
     }
+    //get questiongroupdata
+    $questiongroupfile = $_SESSION["gamedir"] . "/questions" . "/" . $_GET["qg"] . ".json";
+    $questiongroupjson = file_get_contents($questiongroupfile);
+    $questiongroupdata = json_decode($questiongroupjson,true);
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +48,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="u_styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -56,7 +61,7 @@
             <div class="top_banner_title">
                 <img src="<?php echo $decodedlogourl; ?>" />
                 <form action="logoff.php" method="post" class="logoffform">
-                    <input type="submit" class="logoffbutton" value="&#8855;" tooltip="Uitloggen">
+                    <button class="logoffbutton" tooltip="Uitloggen"><i class='material-icons'>power_settings_new</i></button>
                 </form>
             </div>
         </div>
@@ -66,6 +71,7 @@
         </div>
     </div>
     <div class="holder">
+        <div class="breadcrumbs_holder"><a class="breadcrumbs" title="Terug naar het overzicht." href="index.php" target="_self">Game <em><?php echo($gamedata["gamepin"]); ?></em></a> - Vragengroep <em><?php echo($questiongroupdata["name"]); ?></em></div>
         <?php
         foreach ($questions as $question) {
             $questionjson = file_get_contents($question);
@@ -86,7 +92,7 @@
                 <div class='obj_certificate_info'>
                     <h1>" . $questiondata["title"] . "</h1>
                     <p>" . $decodeddescription . "</p>
-                    <p>
+                    <p class='question_divided'>
             ";
             //if the question is allready answered, display a text
             if ($questiongot == "obj_certificate-YGOT") {
@@ -108,10 +114,10 @@
                             echo "<input type='radio' class='radio-input' name='qanswer' id='" . $answer . "' value='" . $answer . "'><label for='" . $answer . "'>" . $answer . "</label><br />";
                         }
                     }
-                    echo "<p><input type='button' class='button' onclick=\"checkQanswer();\"value='Go'></p></form>";
+                    echo "<p><input type='button' class='input_submit' onclick=\"checkQanswer();\"value='Go'></p></form>";
                 }
                 else if ($questiondata["useterminal"] == "true") {
-                    echo "<a href='#' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "','" . $questiondata["qcode"] . "','" . $questiondata["timetillexp"] . "');\">Een terminal reserveren.</a>";
+                    echo "<span id='feedbackholder_" . $questiondata["questiongroup"] . "-" . $questiondata["questioncode"] . "'><button class='input_submit' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "','" . $questiondata["qcode"] . "','" . $questiondata["timetillexp"] . "');\">Om deze vraag te beantwoorden moet je een terminal reserveren. Klik hier.</button></span>";
                 }
             }
             echo "            
