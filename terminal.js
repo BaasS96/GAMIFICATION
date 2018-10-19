@@ -131,6 +131,8 @@ function submitAnswer() {
             if (hr.readyState == 4 && hr.status == 200) {
                 var return_data = hr.responseText;
                 console.log(return_data);
+                clearInterval(countdown);
+                mCountDownActive = "0";
                 resetTerminal();
             }
         }
