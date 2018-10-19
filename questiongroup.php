@@ -21,6 +21,11 @@
     //prepare the logo image src
     //decode img url string
     $decodedlogourl = urldecode($gamedata["image"]);
+    if ($gamedata["image"] == "logo") {
+        //random
+        $num = mt_rand(1,4);
+        $decodedlogourl = urldecode("logo" . $num . ".png");
+    }
     if ($gamedata["imagelocation"] == "main") {
         $decodedlogourl = "images/" . $decodedlogourl;
     }
@@ -43,10 +48,34 @@
     <script src="getdata.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="u_styles.css">
+    <link rel="stylesheet" href="style_aux.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body>
+    <div class="terminal_monitor">
+        <div class="terminal_monitor_header">
+            1 Actieve Terminal
+        </div>
+        <div class="terminal_monitor_element">
+            <div class="terminal_monitor_element_component">
+                <span>Vraag #0</span>
+                <span>IDK?</span>    
+            </div>
+            <div class="terminal_monitor_element_component">
+                <span>02:09</span>
+            </div>
+        </div>
+        <div class="terminal_monitor_element">
+            <div class="terminal_monitor_element_component">
+                <span>Vraag #0</span>
+                <span>IDK?</span>    
+            </div>
+            <div class="terminal_monitor_element_component">
+                <span>02:09</span>
+            </div>
+        </div>
+    </div>
     <div class="holder_top">
         <div class="top_banner">
             <div class="top_banner_resholder">

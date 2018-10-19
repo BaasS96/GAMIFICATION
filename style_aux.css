@@ -1,0 +1,21 @@
+.terminal_monitor {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    min-width: 25vw;
+    border-radius: 7px;
+    border: 2px #dadada solid;
+    margin-right: 2vw;
+    margin-bottom: 2vh;
+}
+
+.terminal_monitor_element {
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px black solid;
+}
+
+.terminal_monitor_element_component {
+    display: flex;
+    flex-direction: column;
+}

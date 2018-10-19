@@ -29,6 +29,11 @@
     else if ($gamedata["imagelocation"] == "internet") {
         $decodedlogourl = $decodedlogourl;
     }
+    if ($gamedata["image"] == "logo") {
+        //random
+        $num = mt_rand(1,4);
+        $decodedlogourl = urldecode("logo" . $num . ".png");
+    }
 ?>
 
 <!DOCTYPE html>
