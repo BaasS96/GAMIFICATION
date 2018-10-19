@@ -18,10 +18,13 @@
     $groupdata["certificates"][$certificate][$question]["timeleft"] = $timeleft;
     $groupdata["lastactive"] = time();
     //write the modified data to the groupfile
-    $myfile = fopen($groupfile, "r+");
+    var_dump($groupdata);
+    //$myfile = fopen($groupfile, "r+");
     $data_json = json_encode($groupdata);
-    fwrite($myfile, $data_json);
-    fclose($myfile);
+    var_dump($data_json);
+    //fwrite($myfile, $data_json);
+    //fclose($myfile);
+    file_put_contents($groupfile, $data_json);
     //return Done
     echo "terminalsaveanswer.php: Done.";
 ?>
