@@ -8,6 +8,16 @@
     $terminaljson = file_get_contents($terminalfile);
     $terminaldata = json_decode($terminaljson,true);
     //modify the data
+    $groupid = $terminaldata->groupid;
+
+    //modification of the group data
+    $groupfile = "games/" . $gamepin . "/group//" . $groupid . ".json";
+    $groupdata = file_get_contents($groupfile);
+    $terminals = $groupdata->terminals;
+    array_splice($terminals, $terminalid);
+    $groupdata->terminals = $terminals;
+    file_put_contents($groupfile, json_encode($groupdata));
+
     $active = $terminaldata["activated"];
     $certnum = $terminaldata["certificatenumber"];
     $questnum = $terminaldata["questionnumber"];
