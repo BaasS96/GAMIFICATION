@@ -121,7 +121,6 @@
             ";
         }
         ?>
-        <input type="button" onclick="makeHexCode();" value="maakhex">
     </div>
 </body>
 
