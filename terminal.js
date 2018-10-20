@@ -117,6 +117,12 @@ function autoClose() {
     }, 60000);
 }
 
+//function to close the feedback window
+function closeFeedback(type) {
+    var element = "feedbackholder-" + type;
+    document.getElementById(element).style.display = "none";
+}
+
 //function to submit the answer if it was correct
 function submitAnswer() {
     // Create our XMLHttpRequest object
@@ -131,9 +137,18 @@ function submitAnswer() {
             if (hr.readyState == 4 && hr.status == 200) {
                 var return_data = hr.responseText;
                 console.log(return_data);
-                clearInterval(countdown);
-                mCountDownActive = "0";
-                resetTerminal();
+                document.getElementById("feedbackholder-right").style.display = "block";
+                var closefeedback = setTimeout(function() { closeFeedback('right'); }, 5500)
+                var i = 4;
+                var countDownFeedback = setInterval(function() {
+                    document.getElementById("autoclosetime").innerHTML = i;
+                    i--;
+                }, 1000)
+                var delayReset = setTimeout(function() {
+                    clearInterval(countdown);
+                    mCountDownActive = "0";
+                    resetTerminal();
+                }, 5000);
             }
         }
         // Send the data to PHP now... and wait for response to update the status div
@@ -150,6 +165,9 @@ function checkQanswer() {
     if (terminalData.ranswers.indexOf(qAnswer.toUpperCase()) >= 0) {
         mAnswer = qAnswer;
         submitAnswer();
+    } else {
+        document.getElementById("feedbackholder-wrong").style.display = "block";
+        var closefeedback = setTimeout(function() { closeFeedback('wrong'); }, 5000)
     }
 }
 
