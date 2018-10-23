@@ -121,6 +121,7 @@
                 <div class='obj_certificate_info'>
                     <h1>" . $questiondata["title"] . "</h1>
                     <p>" . $decodeddescription . "</p>
+                    <div id='question_" . $questiondata["questioncode"] . "'>
                     <p class='question_divided'>
             ";
             //if the question is allready answered, display a text
@@ -134,23 +135,24 @@
                     if ($questiondata["image"] !== "") {
                         echo "<br /><a href='" . urldecode($questiondata["image"]) . "' title='Bekijk afbeelding' target='_blank'><img src='" . urldecode($questiondata["image"]) . "' class='question_img' /></a>";
                     }
-                    echo "<form action='postquestion.php' method='post'>";
+                    echo "</p><form action='postquestion.php' method='post'>";
                     if ($questiondata["qtype"] == "text") {
-                        echo "<input type='text' class='text-input' id='qanswer' focus placeholder='Antwoord'>";
+                        echo "<input type='text' class='text-input' id='qanswer_" . $questiondata["questioncode"] . "' focus placeholder='Antwoord'>";
                     }
                     else if ($questiondata["qtype"] == "radio") {
                         foreach($questiondata["answers"] as $answer) {
-                            echo "<input type='radio' class='radio-input' name='qanswer' id='" . $answer . "' value='" . $answer . "'><label for='" . $answer . "'>" . $answer . "</label><br />";
+                            echo "<input type='radio' class='radio-input' name='qanswer_" . $questiondata["questioncode"] . "' id='q_" . $questiondata["questioncode"] . "-" . $answer . "' value='" . $answer . "'><label for='q_" . $questiondata["questioncode"] . "-" . $answer . "'>" . $answer . "</label><br />";
                         }
                     }
-                    echo "<p><input type='button' class='input_submit' onclick=\"checkQanswer();\"value='Go'></p></form>";
+                    echo "<p><input type='button' class='input_submit' onclick=\"checkQanswer('" . $gamedata["gamepin"] . "','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $groupdata["groupcode"] . "');\"value='Go'></p></form>";
                 }
                 else if ($questiondata["useterminal"] == "true") {
-                    echo "<span id='feedbackholder_" . $questiondata["questiongroup"] . "-" . $questiondata["questioncode"] . "'><button class='input_submit' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "','" . $questiondata["qcode"] . "','" . $questiondata["timetillexp"] . "');\">Om deze vraag te beantwoorden moet je een terminal reserveren. Klik hier.</button></span>";
+                    echo "Om deze vraag te beantwoorden moet je een terminal reserveren. </p><p id='feedbackholder_" . $questiondata["questiongroup"] . "-" . $questiondata["questioncode"] . "'><button class='input_submit' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "','" . $questiondata["qcode"] . "','" . $questiondata["timetillexp"] . "');\">Reserveer een terminal</button></p>";
                 }
             }
             echo "            
-                    </p>
+                    </div>
+                    <p class='feedback' id='questionfeedback_" . $questiondata["questioncode"] . "'></p>
                 </div>
             </div>
             ";

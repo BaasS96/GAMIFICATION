@@ -218,9 +218,23 @@ h1 {
 }
 
 .breadcrumbs:hover {
-    color: #ff4f00;
+    color: #f55e35;
 }
 
 .breadcrumbs_holder {
     margin-bottom: 1em;
+}
+
+.feedback {
+    display: none;
+}
+
+.feedback-wrong {
+    display: block;
+    color: #f55e35;
+}
+
+.feedback-right {
+    display: block;
+    color: #246c08;
 }

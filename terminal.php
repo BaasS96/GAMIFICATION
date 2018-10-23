@@ -49,7 +49,7 @@ $terminaldata = json_decode($terminaljson,true);
                     <p class="feedback-menu">Dit scherm automatisch over <span id="autoclosetime">5</span></p>
                 </div>
                 <div class="feedback" id="feedbackholder-wrong">
-                    <p class="feedback-image feedback-wrong"><i class="material-icons em2">clear</i></p>
+                    <p class="feedback-image feedback-wrong"><i class="material-icons em2">warning</i></p>
                     <p class="feedback-text">Oeps, dat was niet goed.</p>
                     <p class="feedback-menu"><button class="input_submit" onclick="closeFeedback('wrong');"><i class="material-icons">replay</i> Probeer het opnieuw</button></p>
                 </div>

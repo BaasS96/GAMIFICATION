@@ -130,7 +130,7 @@ function submitAnswer() {
     // Create some variables we need to send to our PHP file
     var vars = "gamepin=" + mGamePin + "&groupid=" + terminalData.groupid + "&certificate=" + terminalData.certificatenumber + "&question=" + terminalData.questionnumber + "&answer=" + mAnswer + "&timeleft=" + mTimeLeftU + "&points=" + terminalData.points;
     console.log(vars);
-    hr.open("POST", "terminalsaveanswer.php", true);
+    hr.open("POST", "saveanswer.php", true);
     hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     // Access the onreadystatechange event for the XMLHttpRequest object
     hr.onreadystatechange = function() {
