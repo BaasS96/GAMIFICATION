@@ -60,5 +60,5 @@
     //READY
     echo "<br />" . date("Y-m-d H:i:s") . " | READY";
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: You can now use game #" . $newgamecode;
-    echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html'>Back</a>";
+    echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html#creategame'>Back</a>";
 ?>  

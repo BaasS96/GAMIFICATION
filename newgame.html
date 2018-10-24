@@ -10,7 +10,7 @@
 <body style="background-color: #d7d7d7;">
     <h1>Framework for Gamified Learning - FGL</h1>
     <h2>Configuration</h2>
-    <h3><a href="help.html#creategame" target="_blank" title="Display help page">?</a> Create a new game:</h3>
+    <h3 id="creategame"><a href="help.html#creategame" target="_blank" title="Display help page">?</a> Create a new game:</h3>
     <form action="creategame.php" method="post">
         <input type="text" name="creatorname" placeholder="Creator name" required>
         <input type="text" name="grouptitle" placeholder="Grouptitle" required>
@@ -27,7 +27,7 @@
         <input type="submit" value="Create game">
     </form>
     <br />
-    <h3><a href="help.html#creategroup" target="_blank" title="Display help page">?</a> Create new group(s):</h3>
+    <h3 id="creategroup"><a href="help.html#creategroup" target="_blank" title="Display help page">?</a> Create new group(s):</h3>
     <form action="creategroup.php" method="post">
         <input type="text" name="gamepin" required placeholder="Gamepin" maxlength="4">
         <input type="number" name="groupnum" value="1" step="1" min="1">
@@ -35,7 +35,7 @@
         <input type="submit" value="Create group(s)">
     </form>
     <br />
-    <h3><a href="help.html#createquestiongroup" target="_blank" title="Display help page">?</a> Create a questiongroup:</h3>
+    <h3 id="createquestiongroup"><a href="help.html#createquestiongroup" target="_blank" title="Display help page">?</a> Create a questiongroup:</h3>
     <form action="createquestiongroup.php" method="post">
         <input type="text" name="gamepin" required placeholder="Gamepin" maxlength="4">
         <input type="text" name="name" placeholder="Name" required>
@@ -54,7 +54,7 @@
         <input type="submit" value="Create questiongroup">
     </form>
     <br />
-    <h3><a href="help.html#createquestion" target="_blank" title="Display help page">?</a> Create a question:</h3>
+    <h3 id="createquestion"><a href="help.html#createquestion" target="_blank" title="Display help page">?</a> Create a question:</h3>
     <form action="createquestion.php" method="post">
         <input type="text" name="gamepin" required placeholder="Gamepin" maxlength="4">
         <input type="text" name="questiongroup" required placeholder="Questiongroup-id">
@@ -80,7 +80,7 @@
         <input type="submit" value="Create questiongroup">
     </form>
     <br />
-    <h3><a href="help.html#createterminal" target="_blank" title="Display help page">?</a> Create a new terminal:</h3>
+    <h3 id="createterminal"><a href="help.html#createterminal" target="_blank" title="Display help page">?</a> Create a new terminal:</h3>
     <form action="createterminal.php" method="post">
         <input type="text" name="gamepin" required placeholder="Gamepin" maxlength="4">
         <input type="text" name="certnum" placeholder="Questiongroup number" required>
@@ -90,7 +90,7 @@
         <input type="submit" value="Create terminal">
     </form>
     <br />
-    <h3><a href="help.html#watchgame" target="_blank" title="Display help page">?</a> Watch a game:</h3>
+    <h3 id="watchgame"><a href="help.html#watchgame" target="_blank" title="Display help page">?</a> Watch a game:</h3>
     <form action="gamewatcher.php" method="get">
         <input type="text" name="gamepin" required placeholder="Gamepin" maxlength="4">
         <br />

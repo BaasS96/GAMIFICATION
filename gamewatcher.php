@@ -7,7 +7,7 @@ else {
     $gamepin = $_GET["gamepin"];
     $groupnum = 0;
     //back link
-    echo "<a href='newgame.html'>Back</a><br />---<br />";
+    echo "<a href='newgame.html#watchgame'>Back</a><br />---<br />";
     //get all existing groups within this game
     $groups = array_filter(glob("games/" . $gamepin . "/group" . "/*"), 'is_file');
     foreach ($groups as $currentgroup) {

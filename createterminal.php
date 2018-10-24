@@ -51,5 +51,5 @@ $data_json = json_encode($questiondata_new);
 fwrite($myfile, $data_json);
 fclose($myfile);
 echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $newterminalcode . " was linked to question " . $certnum . "/" . $questnum . ".";
-echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html'>Back</a>";
+echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html#createterminal'>Back</a>";
 ?>

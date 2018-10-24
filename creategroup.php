@@ -40,5 +40,5 @@ while ($i < $groupnum) {
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $newgroupcode . " was created.";
     $i ++;
 } 
-echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html'>Back</a>";
+echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html#creategroup'>Back</a>";
 ?>

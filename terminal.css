@@ -30,15 +30,11 @@ body {
     padding-right: 3vmin;
     width: 80vmin;
     height: 80vmin;
-    margin-left: 10vmin;
-    margin-right: 10vmin;
     border-radius: 3vmin;
     z-index: 5;
     background-color: #f6ca00;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
 }
-
-.feedback-image {}
 
 .em2 {
     font-size: 30vmin !important;
@@ -169,4 +165,9 @@ body {
 .input_submit:hover {
     background-color: #e6e032;
     border-color: #e6e032;
+}
+
+.unlocked_img {
+    max-width: 80vmin;
+    max-height: 30vmin;
 }

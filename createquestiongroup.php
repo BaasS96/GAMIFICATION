@@ -46,5 +46,5 @@ print_r( $groups);
     fclose($myfile);
     echo "<br />" . date("Y-m-d H:i:s") . " | Message: " . $filename . " was created.";
 
-echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html'>Back</a>";
+echo "<br />" . date("Y-m-d H:i:s") . " | Link: <a href='newgame.html#createquestiongroup'>Back</a>";
 ?>

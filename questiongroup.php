@@ -33,6 +33,11 @@
     else if ($gamedata["imagelocation"] == "internet") {
         $decodedlogourl = $decodedlogourl;
     }
+    if ($gamedata["image"] == "logo") {
+        //random
+        $num = mt_rand(1,4);
+        $decodedlogourl = urldecode("images/logo" . $num . ".png");
+    }
     //get questiongroupdata
     $questiongroupfile = $_SESSION["gamedir"] . "/questions" . "/" . $_GET["qg"] . ".json";
     $questiongroupjson = file_get_contents($questiongroupfile);

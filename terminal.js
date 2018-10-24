@@ -171,6 +171,11 @@ function checkQanswer() {
     }
 }
 
+//function to decode the url
+function urldecode(url) {
+    return decodeURIComponent(url.replace(/\+/g, ' '));
+}
+
 //function to check the question code (and continue)
 function checkQcode() {
     var qCode = escapeHtml(document.getElementById("qcode").value);
@@ -180,8 +185,8 @@ function checkQcode() {
         document.getElementById("contentHolder").innerHTML += iClock;
         var iQuestion = "<p class='unlocked'>" + terminalData.question + "</p>";
         document.getElementById("contentHolder").innerHTML += iQuestion;
-        if (terminalData.qimage !== "") {
-            var iImage = "<img src='' class='unlocked_img' />";
+        if (terminalData.image !== "") {
+            var iImage = "<img src='" + urldecode(terminalData.image) + "' class='unlocked_img' />";
             document.getElementById("contentHolder").innerHTML += iImage;
         }
         document.getElementById("contentHolder").innerHTML += "<div class='input_holder' id='inputHolder'></div>";

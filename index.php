@@ -31,7 +31,7 @@
     if ($gamedata["image"] == "logo") {
         //random
         $num = mt_rand(1,4);
-        $decodedlogourl = urldecode("logo" . $num . ".png");
+        $decodedlogourl = urldecode("images/logo" . $num . ".png");
     }
 ?>
 
