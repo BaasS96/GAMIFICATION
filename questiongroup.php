@@ -35,6 +35,10 @@
     else if ($gamedata["imagelocation"] == "internet") {
         $decodedlogourl = $decodedlogourl;
     }
+    //get questiongroupdata
+    $questiongroupfile = $_SESSION["gamedir"] . "/questions" . "/" . $_GET["qg"] . ".json";
+    $questiongroupjson = file_get_contents($questiongroupfile);
+    $questiongroupdata = json_decode($questiongroupjson,true);
 ?>
 
 <!DOCTYPE html>
@@ -50,6 +54,7 @@
     <link rel="stylesheet" href="u_styles.css">
     <link rel="stylesheet" href="style_aux.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -85,7 +90,7 @@
             <div class="top_banner_title">
                 <img src="<?php echo $decodedlogourl; ?>" />
                 <form action="logoff.php" method="post" class="logoffform">
-                    <input type="submit" class="logoffbutton" value="&#8855;" tooltip="Uitloggen">
+                    <button class="logoffbutton" tooltip="Uitloggen"><i class='material-icons'>power_settings_new</i></button>
                 </form>
             </div>
         </div>
@@ -95,6 +100,7 @@
         </div>
     </div>
     <div class="holder">
+        <div class="breadcrumbs_holder"><a class="breadcrumbs" title="Terug naar het overzicht." href="index.php" target="_self">Game <em><?php echo($gamedata["gamepin"]); ?></em></a> - Vragengroep <em><?php echo($questiongroupdata["name"]); ?></em></div>
         <?php
         foreach ($questions as $question) {
             $questionjson = file_get_contents($question);
@@ -115,7 +121,8 @@
                 <div class='obj_certificate_info'>
                     <h1>" . $questiondata["title"] . "</h1>
                     <p>" . $decodeddescription . "</p>
-                    <p>
+                    <div id='question_" . $questiondata["questioncode"] . "'>
+                    <p class='question_divided'>
             ";
             //if the question is allready answered, display a text
             if ($questiongot == "obj_certificate-YGOT") {
@@ -128,29 +135,29 @@
                     if ($questiondata["image"] !== "") {
                         echo "<br /><a href='" . urldecode($questiondata["image"]) . "' title='Bekijk afbeelding' target='_blank'><img src='" . urldecode($questiondata["image"]) . "' class='question_img' /></a>";
                     }
-                    echo "<form action='postquestion.php' method='post'>";
+                    echo "</p><form action='postquestion.php' method='post'>";
                     if ($questiondata["qtype"] == "text") {
-                        echo "<input type='text' class='text-input' id='qanswer' focus placeholder='Antwoord'>";
+                        echo "<input type='text' class='text-input' id='qanswer_" . $questiondata["questioncode"] . "' focus placeholder='Antwoord'>";
                     }
                     else if ($questiondata["qtype"] == "radio") {
                         foreach($questiondata["answers"] as $answer) {
-                            echo "<input type='radio' class='radio-input' name='qanswer' id='" . $answer . "' value='" . $answer . "'><label for='" . $answer . "'>" . $answer . "</label><br />";
+                            echo "<input type='radio' class='radio-input' name='qanswer_" . $questiondata["questioncode"] . "' id='q_" . $questiondata["questioncode"] . "-" . $answer . "' value='" . $answer . "'><label for='q_" . $questiondata["questioncode"] . "-" . $answer . "'>" . $answer . "</label><br />";
                         }
                     }
-                    echo "<p><input type='button' class='button' onclick=\"checkQanswer();\"value='Go'></p></form>";
+                    echo "<p><input type='button' class='input_submit' onclick=\"checkQanswer('" . $gamedata["gamepin"] . "','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $groupdata["groupcode"] . "');\"value='Go'></p></form>";
                 }
                 else if ($questiondata["useterminal"] == "true") {
-                    echo "<a href='#' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "','" . $questiondata["qcode"] . "','" . $questiondata["timetillexp"] . "');\">Een terminal reserveren.</a>";
+                    echo "Om deze vraag te beantwoorden moet je een terminal reserveren. </p><p id='feedbackholder_" . $questiondata["questiongroup"] . "-" . $questiondata["questioncode"] . "'><button class='input_submit' onclick=\"requestTerminal('" . $gamedata["gamepin"] . "','" . $gamedata["maxterminals"] . "','" . $groupdata["groupcode"] ."','" . $questiondata["questiongroup"] . "','" . $questiondata["questioncode"] . "','" . $questiondata["terminalid"] . "','" . $questiondata["qcode"] . "','" . $questiondata["timetillexp"] . "');\">Reserveer een terminal</button></p>";
                 }
             }
             echo "            
-                    </p>
+                    </div>
+                    <p class='feedback' id='questionfeedback_" . $questiondata["questioncode"] . "'></p>
                 </div>
             </div>
             ";
         }
         ?>
-        <input type="button" onclick="makeHexCode();" value="maakhex">
     </div>
 </body>
 

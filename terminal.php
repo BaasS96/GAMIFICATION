@@ -37,11 +37,22 @@ $terminaldata = json_decode($terminaljson,true);
         <script src="terminal.js"></script>
         <link rel="stylesheet" href="terminal.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     </head>
     <body onLoad="setupData('<?php echo $_SESSION["terminaldir"] . "','" . $_SESSION["gamepin"]; ?>'); refreshpage();">
         <div class="holder-v" onclick="unlockTerminal();">
             <div class="holder-h">
+                <div class="feedback" id="feedbackholder-right">
+                    <p class="feedback-image feedback-right"><i class="material-icons em2">done</i></p>
+                    <p class="feedback-text">Je hebt de vraag goed beantwoord!</p>
+                    <p class="feedback-menu">Dit scherm automatisch over <span id="autoclosetime">5</span></p>
+                </div>
+                <div class="feedback" id="feedbackholder-wrong">
+                    <p class="feedback-image feedback-wrong"><i class="material-icons em2">warning</i></p>
+                    <p class="feedback-text">Oeps, dat was niet goed.</p>
+                    <p class="feedback-menu"><button class="input_submit" onclick="closeFeedback('wrong');"><i class="material-icons">replay</i> Probeer het opnieuw</button></p>
+                </div>
                 <div class="holder" id="contentHolder">
                     <p class="idletext">Loading...</p>
                 </div>

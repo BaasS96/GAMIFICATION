@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="u_styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -59,7 +60,7 @@
             <div class="top_banner_title">
                 <img src="<?php echo $decodedlogourl; ?>" />
                 <form action="logoff.php" method="post" class="logoffform">
-                    <input type="submit" class="logoffbutton" value="&#8855;" tooltip="Uitloggen">
+                    <button class="logoffbutton" tooltip="Uitloggen"><i class='material-icons'>power_settings_new</i></button>
                 </form>
             </div>
         </div>

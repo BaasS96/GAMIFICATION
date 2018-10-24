@@ -62,6 +62,9 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
                                             var return_data = hr.responseText;
                                             console.log(return_data);
                                             console.log(qcode);
+                                            //feedback to the user
+                                            var element = "feedbackholder_" + questionGroupID + "-" + questionID;
+                                            document.getElementById(element).innerHTML = "<i class='material-icons'>done</i><em>De terminal is gereserveerd. Gebruik deze code om in te loggen: <strong>" + qcode + "</strong></em>";
                                         }
                                     }
                                     // Send the data to PHP now... and wait for response to update the status div

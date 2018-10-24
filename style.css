@@ -163,16 +163,14 @@ h1 {
 }
 
 .logoffbutton {
-    background-color: #191919;
-    color: #FFFFFF;
-    font-size: 0.7em;
-    border: 1px solid #FFFFFF;
-    border-radius: 7px;
-    padding-left: 0.3em;
-    padding-right: 0.3em;
-    padding-top: 0em;
-    padding-bottom: 0.2em;
+    background: transparent;
+    border: none;
+    border-radius: 2em;
+    color: #000000;
     margin-top: 0;
+    font-size: 1em;
+    font-weight: 300;
+    padding-bottom: 0.3em;
 }
 
 .logoffbutton:hover {
@@ -186,4 +184,57 @@ h1 {
 
 .question_img {
     max-height: 8em;
+}
+
+.material-icons {
+    vertical-align: text-bottom;
+}
+
+.question_divided {
+    width: 100%;
+    border-top: 1px solid #191919;
+    padding-top: 0.2em;
+}
+
+.input_submit {
+    background-color: #41e632;
+    border: 1px solid #24EF12;
+    font-size: 1.1em;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.input_submit:hover {
+    background-color: #e6e032;
+    border-color: #e6e032;
+}
+
+.breadcrumbs {
+    color: #1c2345;
+}
+
+.breadcrumbs:hover {
+    color: #f55e35;
+}
+
+.breadcrumbs_holder {
+    margin-bottom: 1em;
+}
+
+.feedback {
+    display: none;
+}
+
+.feedback-wrong {
+    display: block;
+    color: #f55e35;
+}
+
+.feedback-right {
+    display: block;
+    color: #246c08;
 }
