@@ -3,13 +3,17 @@
     class Data {
         public $gpath;
         public $qpath;
+        public $gcode;
+        public $qgcode;
         public $questionsanswered;
         public $numberofquestions;
         public $updaterequired = false;
 
-        function __construct($gpath, $qpath) {
+        function __construct($gpath, $qpath, $gcode, $qgcode) {
             $this->gpath = $gpath;
             $this->qpath = $qpath;
+            $this->gcode = $gcode;
+            $this->qgcode = $qgcode;
             $this->resolve();
         }   
 
@@ -23,11 +27,9 @@
 
         function poll() {
             $data = json_decode(file_get_contents($this->gpath));
-            $certs = $data->certificates;
-            $newnum = 1;
-            if (gettype($certs) == "array") {
-                $newnum = count($certs);
-            }
+            $code = $this->qgcode;
+            $certs = $data->certificates->$code;
+            $newnum = count((array)$certs);
             $this->updaterequired = $newnum != $this->questionsanswered;
             $this->questionsanswered = $newnum;
         }
