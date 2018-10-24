@@ -95,8 +95,8 @@
             </div>
         </div>
         <div class="top_stats">
-            <span class="stat">Afgeronde opdrachten: <em>7</em></span>
-            <span class="stat">Nog uit te voeren opdrachten: <em>0</em></span>
+            <span class="stat" id="answered_questions">Afgeronde opdrachten: <em>7</em></span>
+            <span class="stat" id="questionsleft">Nog uit te voeren opdrachten: <em>0</em></span>
         </div>
     </div>
     <div class="holder">
@@ -159,6 +159,13 @@
         }
         ?>
     </div>
+    <?php
+    echo "
+        <script>
+            runStatusBarUpdater(" . $gamedata['gamepin'] . "," . $gamedata['groupcode'] . "," . $gamedata['questiongroup'] .");
+        </script
+    ";
+    ?>
 </body>
 
 </html>

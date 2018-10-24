@@ -90,3 +90,14 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
     xmlhttp.send();
     //check if the group allready is connected to the terminal
 }
+
+function runStatusbarUpdater(gameid, group, questiongroup) {
+    var source = new EventSource('statusbar/statusbar.php?game=' + gameid + '&group=' + group + '&qgroup=' + questiongroup + '&mode=single');
+    source.onmessage = updateStatusbar;
+}
+
+function updateStatusbar(data) {
+    data = data.data;
+    document.getElementById("answered_questions").innerHTML = "Afgeronde opdrachten: <em>" + data.questionsanswered + "</em>";
+    document.getElementById("questionsleft").innerHTML = "Nog uit te voeren opdrachten: <em>" + data.totalquestions + "</em>"
+}
