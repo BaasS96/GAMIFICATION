@@ -1,0 +1,14 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script>
+            var source = new EventSource('statusbar.php?game=9007&group=38&qgroup=00&mode=single');
+            source.addEventListener('message', (e) => {
+                console.log(e.data);
+            });
+        </script>
+        Source has been opened...
+    </body>
+</html>

@@ -16,6 +16,7 @@
         function resolve() {
             //to get num of questions
             $qs = scandir($this->qpath);
+            $qs = count($qs);
             $this->numberofquestions = $qs - 2;
             $this->poll();
         }
@@ -23,9 +24,12 @@
         function poll() {
             $data = json_decode(file_get_contents($this->gpath));
             $certs = $data->certificates;
-            $newnum = count($certs);
+            $newnum = 1;
+            if (gettype($certs) == "array") {
+                $newnum = count($certs);
+            }
             $this->updaterequired = $newnum != $this->questionsanswered;
-            $this->questionsanswered = newnum;
+            $this->questionsanswered = $newnum;
         }
     }
 
