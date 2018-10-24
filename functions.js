@@ -2,6 +2,16 @@
 mAnswer = "";
 mQuestionData = null;
 
+//display the stats in the statbar
+function loadStats(gamepin, group, qgroup) {
+    var source = new EventSource('statusbar/statusbar.php?game=' + gamepin + '&group=' + group + '&qgroup=' + qgroup + '&mode=single');
+    source.addEventListener('message', (e) => {
+        var newStats = JSON.parse(e.data);
+        document.getElementById("stat_q_done").innerHTML = newStats.totalquestions;
+        document.getElementById("stat_q_total").innerHTML = newStats.questionsanswered;
+    });
+}
+
 function toQuestionGroup(qestionGroupID) {
     var URL = "questiongroup.php?qg=" + qestionGroupID;
     window.open(URL, "_self");

@@ -9,7 +9,6 @@
         $groupdata = json_decode($groupjson,true);
         //look for certificates in the games/questions directory
         $questiongroups = array_filter(glob($_SESSION["gamedir"] . "/questions/*.json"), 'is_file');
-        //print_r( $questiongroups);
     }
     else {
         //if something is wrong, redirect to the joinpage.
@@ -50,7 +49,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body>
+<?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','00');\">"; ?>
     <div class="holder_top">
         <div class="top_banner">
             <div class="top_banner_resholder">
@@ -65,8 +64,10 @@
             </div>
         </div>
         <div class="top_stats">
-            <span class="stat">Afgeronde opdrachten: <em>7</em></span>
-            <span class="stat">Nog uit te voeren opdrachten: <em>0</em></span>
+            <!--
+            <span class="stat">Totaal aantal opdrachten: <span id="stat_q_total">N/A</span></span>
+            <span class="stat">Afgeronde opdrachten: <span id="stat_q_done">N/A</span></span>
+            !-->
         </div>
     </div>
     <div class="holder">
@@ -74,7 +75,6 @@
         foreach ($questiongroups as $questiongroup) {
             $questiongroupjson = file_get_contents($questiongroup);
             $questiongroupdata = json_decode($questiongroupjson,true);
-            //print_r ( $questiongroupdata);
             //decode img url string
             $decodedimageurl = urldecode($questiongroupdata["image"]);
             if ($questiongroupdata["imagelocation"] == "main") {
@@ -104,6 +104,7 @@
         }
         ?>
         <!--
+            Questiongroup layout
         <div class="obj_certificate obj_certificate-YGOT">
             <div class="obj_certificate_banner" id="c_gezondongezond">
                 <div class="obj_certificate_check">

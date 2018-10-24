@@ -8,9 +8,7 @@
         $groupjson = file_get_contents($_SESSION["groupdir"]);
         $groupdata = json_decode($groupjson,true);
         //look for certificates in the games/questions directory
-        //print($_GET["qg"]);
         $questions = array_filter(glob($_SESSION["gamedir"] . "/questions" . "/" . $_GET["qg"] . "/*.json"), 'is_file');
-        //print_r( $questions);
     }
     else {
         //if something is wrong, redirect to the joinpage.
@@ -57,7 +55,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<body>
+<?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','" . $_GET["qg"] . "');\">"; ?>
+    <!--
+        WIP Terminal monitor
     <div class="terminal_monitor">
         <div class="terminal_monitor_header">
             1 Actieve Terminal
@@ -81,6 +81,7 @@
             </div>
         </div>
     </div>
+    !-->
     <div class="holder_top">
         <div class="top_banner">
             <div class="top_banner_resholder">
@@ -95,8 +96,8 @@
             </div>
         </div>
         <div class="top_stats">
-            <span class="stat">Afgeronde opdrachten: <em>7</em></span>
-            <span class="stat">Nog uit te voeren opdrachten: <em>0</em></span>
+            <span class="stat">Totaal aantal opdrachten: <span id="stat_q_total">N/A</span></span>
+            <span class="stat">Afgeronde opdrachten: <span id="stat_q_done">N/A</span></span>
         </div>
     </div>
     <div class="holder">
@@ -105,7 +106,6 @@
         foreach ($questions as $question) {
             $questionjson = file_get_contents($question);
             $questiondata = json_decode($questionjson,true);
-            //print_r ( $questiongroupdata);
             //decode markup of the description
             $decodeddescription = musdecode($questiondata["description"]);
             //if question is allready answered (check if the question allready exists in the groupfile AND if points are more than 0)
