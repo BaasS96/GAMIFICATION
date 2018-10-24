@@ -34,6 +34,7 @@
     while(true) {
 
         if ($mode == "single") {
+            $datamanager->poll();
             if ($datamanager->updaterequired) {
                 $msg = json_encode(new Update($datamanager->numberofquestions, $datamanager->questionsanswered));
                 echo "data: $msg" . PHP_EOL;
