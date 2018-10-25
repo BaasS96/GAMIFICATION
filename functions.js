@@ -3,8 +3,8 @@ mAnswer = "";
 mQuestionData = null;
 
 //display the stats in the statbar
-function loadStats(gamepin, group, qgroup) {
-    var source = new EventSource('statusbar/statusbar.php?game=' + gamepin + '&group=' + group + '&qgroup=' + qgroup + '&mode=single');
+function loadStats(gamepin, group, qgroup, mode) {
+    var source = new EventSource('statusbar/statusbar.php?game=' + gamepin + '&group=' + group + '&qgroup=' + qgroup + '&mode=' + mode);
     source.addEventListener('message', (e) => {
         var newStats = JSON.parse(e.data);
         document.getElementById("stat_q_done").innerHTML = newStats.questionsanswered;

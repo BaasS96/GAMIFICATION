@@ -49,7 +49,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','00');\">"; ?>
+<?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','00','overview');\">"; ?>
     <div class="holder_top">
         <div class="top_banner">
             <div class="top_banner_resholder">
@@ -64,10 +64,8 @@
             </div>
         </div>
         <div class="top_stats">
-            <!--
             <span class="stat">Totaal aantal opdrachten: <span id="stat_q_total">N/A</span></span>
             <span class="stat">Afgeronde opdrachten: <span id="stat_q_done">N/A</span></span>
-            !-->
         </div>
     </div>
     <div class="holder">

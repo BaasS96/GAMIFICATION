@@ -60,7 +60,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','" . $_GET["qg"] . "');\">"; ?>
+<?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','" . $_GET["qg"] . "','single');\">"; ?>
     <!--
         WIP Terminal monitor
     <div class="terminal_monitor">
