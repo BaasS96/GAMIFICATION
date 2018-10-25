@@ -7,8 +7,8 @@ function loadStats(gamepin, group, qgroup) {
     var source = new EventSource('statusbar/statusbar.php?game=' + gamepin + '&group=' + group + '&qgroup=' + qgroup + '&mode=single');
     source.addEventListener('message', (e) => {
         var newStats = JSON.parse(e.data);
-        document.getElementById("stat_q_done").innerHTML = newStats.totalquestions;
-        document.getElementById("stat_q_total").innerHTML = newStats.questionsanswered;
+        document.getElementById("stat_q_done").innerHTML = newStats.questionsanswered;
+        document.getElementById("stat_q_total").innerHTML = newStats.totalquestions;
     });
 }
 
