@@ -69,6 +69,7 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
                                             //feedback to the user
                                             var element = "feedbackholder_" + questionGroupID + "-" + questionID;
                                             document.getElementById(element).innerHTML = "<i class='material-icons'>done</i><em>De terminal is gereserveerd. Gebruik deze code om in te loggen: <strong>" + qcodenew + "</strong></em>";
+                                            openConnection(gameID, groupID, questionGroupID, terminalID, qcodenew);
                                             //if (updater) updater.close();
                                             //openConnection(gameID, groupID, questionGroupID, terminalID, qcodenew);
                                         }
@@ -99,6 +100,8 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
 
 //TERMINAL OVERVIEW
 
+var terminals = [];
+
 function openConnection(gameid, groupid, questionGroupID, terminalID, terminalEntryCode) {
     terminalids.push(terminalID);
     terminalcodes[terminalID] = terminalEntryCode;
@@ -107,7 +110,8 @@ function openConnection(gameid, groupid, questionGroupID, terminalID, terminalEn
     updater = new EventSource(url);
     updater.addEventListener('message', (e) => {
         var newStats = JSON.parse(e.data);
-        updateOverviewHeader(newstats.numofterminals);
+        updateOverviewHeader(newStats.numofterminals);
+        updateContents(newStats.terminaldata);
     });
 }
 
@@ -126,17 +130,34 @@ function updateContents(terminaldata) {
         var tinseconds = data.timeleft;
         if (element) {
             if (desynchronized(element.childNodes[1].innerText, tinseconds)) {
+                terminals[data.qcode].timeleft = tinseconds;
+                clearInterval(terminals[data.qcode].timerID);
+                terminals[data.qcode].timerID = setInterval(terminalTimer.bind(data.qcode), 1000)
                 element.childNodes[1].innerText = secondsToProperNotation(seconds);
             }
         } else {
             //Create new entry
+            let entry = {
+                "timerID": 0,
+                "entry": null,
+                "timeleft": data.timeleft
+            };
             let newentry = newTerminalEntry(data.qcode, tinseconds, terminalcodes[data.terminalid]);
+            entry.entry = newentry;
+            terminals[data.qcode] = entry;
             document.getElementById("terminal_monitor").appendChild(newentry);
         }
     }
 }
 
-function terminalTimer() {}
+function terminalTimer() {
+    if (terminals[this].timeleft > 0) {
+    var element = document.getElementById("element_q" + this);
+    element.childNodes[1].innerText = secondsToProperNotation(--terminals[this].timeleft);
+    } else {
+        console.log("Terminal for qcode " + this + " expired");
+    }
+}
 
 function newTerminalEntry(questionnum, timeleft, entrycode) {
     let element = document.createElement("div");
@@ -149,7 +170,7 @@ function newTerminalEntry(questionnum, timeleft, entrycode) {
     component.innerHTML = "<span>" + secondsToProperNotation(timeleft) + "</span>";
     element.appendChild(component);
     //Start timer
-    setInterval(terminalTimer.bind(questionnum), timeleft * 1000);
+    terminals[questionnum].timerID = setInterval(terminalTimer.bind(questionnum), 1000);
     return element;
 }
 

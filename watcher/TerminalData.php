@@ -4,7 +4,7 @@
     class TerminalData extends Data { 
         
         protected $terminalid;
-        protected $inuse;
+        public $inuse;
         protected $activated;
         protected $timeleft;
         protected $questiongroup;

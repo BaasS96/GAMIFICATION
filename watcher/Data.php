@@ -1,6 +1,6 @@
 <?php
 
-class Type extends SplEnum {
+class Type {
     const FILE = ".json";
     const FOLDER = "/";
 }

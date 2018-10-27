@@ -20,7 +20,7 @@
         $terminals = array();
         $update["numofterminals"] = 0;
         $update["terminaldata"] = [];
-        foreach ($terminal as $terminals) {
+        foreach ($terminalid as $terminal) {
             $path = '../../games/' . $cgame . '/terminal/' . $terminal . '.json';
             $terminalc = new TerminalData(new Type(Type::FILE), $path, $cgame, $cgroup, $terminal);
             if ($terminalc->inuse) {

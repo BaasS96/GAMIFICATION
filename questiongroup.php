@@ -62,7 +62,7 @@
 
 <?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','" . $_GET["qg"] . "');\">"; ?>
     <div class="terminal_monitor">
-        <div class="terminal_monitor_header">
+        <div class="terminal_monitor_header" id="terminal_monitor_header">
             1 Actieve Terminal
         </div>
         <div class="terminal_monitor_element">
