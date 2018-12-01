@@ -1,0 +1,139 @@
+window.onload = function () {
+    document.getElementById("submit").addEventListener('click', function () {
+        checkGamePin();
+    });
+};
+var Stage;
+(function (Stage) {
+    Stage[Stage["GROUP"] = 0] = "GROUP";
+    Stage[Stage["GROUPCODE"] = 1] = "GROUPCODE";
+    Stage[Stage["GROUPNAME"] = 2] = "GROUPNAME";
+    Stage[Stage["GROUPMEMBERS"] = 3] = "GROUPMEMBERS";
+})(Stage || (Stage = {}));
+var currentstage = Stage.GROUP;
+var gamecode, groupcode, groupname;
+function checkGamePin() {
+    document.getElementById('submit').innerHTML = "<div class='dots'><div class='dot dot1'></div><div class='dot dot2'></div><div class='dot dot3'></div></div>";
+    var pin = document.getElementById("pin").value;
+    fetch('auth/checkpin.php?pin=' + pin)
+        .then(function (res) {
+        if (res.ok) {
+            return res.json();
+        }
+    })
+        .then(function (res) {
+        if (res.success) {
+            //Next step;
+            gamecode = pin;
+            document.title = "GROUPCODE";
+            setTimeout(nextStage, 100);
+        }
+        else {
+            document.getElementById('submit').innerHTML = "GO!";
+            document.getElementById('error').style.display = "inline-block";
+        }
+    });
+}
+function checkGroupCode() {
+    document.getElementById('submit').innerHTML = "<div class='dots'><div class='dot dot1'></div><div class='dot dot2'></div><div class='dot dot3'></div></div>";
+    var pin = document.getElementById("pin").value;
+    fetch('auth/checkcode.php?game=' + gamecode + '&code=' + pin)
+        .then(function (res) {
+        if (res.ok) {
+            return res.json();
+        }
+    })
+        .then(function (res) {
+        if (res.success) {
+            groupcode = pin;
+            document.title = "GROUPMEMBERS";
+            setTimeout(nextStage, 100);
+        }
+        else {
+            document.getElementById('submit').innerHTML = "GO!";
+            document.getElementById('error').style.display = "inline-block";
+        }
+    });
+}
+function nextStepSubmitGroupData() {
+    var pin = document.getElementById("pin").value;
+    groupname = pin;
+    setTimeout(nextStage, 100);
+}
+function submitGroupData() {
+    document.getElementById('submit').innerHTML = "<div class='dots'><div class='dot dot1'></div><div class='dot dot2'></div><div class='dot dot3'></div></div>";
+    var pin = document.getElementById("pin");
+    var members = pin.value;
+    fetch('auth/submitgroupdata.php?game=' + gamecode + '&group=' + groupcode + '&name=' + groupname + '&members=' + members)
+        .then(function (res) {
+        if (res.ok) {
+            return res.json();
+        }
+    })
+        .then(function (res) {
+        if (res.success) {
+            //Redirect
+            setTimeout(function () { location.href = "index.php"; }, 1000);
+        }
+        else {
+            alert("An error occurred! Please try again or contact an administrator...");
+        }
+    });
+}
+function nextStage() {
+    var newdiv = getNewDiv();
+    var olddivs = document.getElementById("lastholder");
+    var child = olddivs.children[0];
+    child.style.transition = "margin-left 1s";
+    var w = olddivs.offsetWidth.toString();
+    var h = olddivs.offsetHeight.toString();
+    olddivs.style.width = w + "px";
+    olddivs.style.height = h + "px";
+    olddivs.style.padding = "0px";
+    //olddivs.children[0].style.position = "absolute";
+    newdiv.style.marginTop = (parseInt(h) + 100).toString() + "px";
+    child.style.marginLeft = (parseInt(w) + 200).toString() + "px";
+    setTimeout(function (parent, newdiv) {
+        parent.removeChild(this);
+        parent.appendChild(newdiv);
+        newdiv.style.transition = "margin-top 1s";
+        setTimeout(function () {
+            this.style.marginTop = "0px";
+        }.bind(newdiv), 50);
+        document.getElementById("submit").addEventListener('click', function () {
+            if (currentstage == Stage.GROUPCODE) {
+                checkGroupCode();
+            }
+            else if (currentstage == Stage.GROUPNAME) {
+                nextStepSubmitGroupData();
+            }
+            else if (currentstage == Stage.GROUPMEMBERS) {
+                submitGroupData();
+            }
+        });
+    }.bind(child, olddivs, newdiv), 800);
+}
+function getNewDiv() {
+    var template;
+    if (currentstage == Stage.GROUP) {
+        currentstage = Stage.GROUPCODE;
+        template = document.getElementById("groupcode");
+    }
+    else if (currentstage == Stage.GROUPCODE) {
+        currentstage = Stage.GROUPNAME;
+        template = document.getElementById("groupname");
+    }
+    else if (currentstage == Stage.GROUPNAME) {
+        currentstage = Stage.GROUPMEMBERS;
+        template = document.getElementById("groupmembers");
+    }
+    else {
+        return null;
+    }
+    var fragment = template.content.cloneNode(true);
+    var div = document.createElement("div");
+    for (var i = 0; i < fragment.children.length; i++) {
+        var a = div.appendChild(fragment.children[i]);
+    }
+    return div.firstElementChild;
+}
