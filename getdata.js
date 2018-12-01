@@ -142,6 +142,7 @@ function updateContents(terminaldata) {
                 "entry": null,
                 "timeleft": data.timeleft
             };
+            terminals[data.qcode] = entry;
             let newentry = newTerminalEntry(data.qcode, tinseconds, terminalcodes[data.terminalid]);
             entry.entry = newentry;
             terminals[data.qcode] = entry;
@@ -167,10 +168,10 @@ function newTerminalEntry(questionnum, timeleft, entrycode) {
     component.className = "terminal_monitor_element_component";
     component.innerHTML = "<span>Vraag #" + questionnum + "</span><span>Code: " + entrycode + "</span>";
     element.appendChild(component);
-    component.innerHTML = "<span>" + secondsToProperNotation(timeleft) + "</span>";
+    component.innerHTML = "<span>" + secondsToProperNotation(timeleft / 1000) + "</span>";
     element.appendChild(component);
     //Start timer
-    terminals[questionnum].timerID = setInterval(terminalTimer.bind(questionnum), 1000);
+    //terminals[questionnum].timerID = setInterval(terminalTimer.bind(questionnum), 1000);
     return element;
 }
 
@@ -182,7 +183,7 @@ function desynchronized(local, remote) {
 
 function secondsToProperNotation(seconds) {
     let minutes = 0;
-    while (seconds >= 59) {
+    while (seconds > 59) {
         minutes++;
         seconds -= 60;
     }

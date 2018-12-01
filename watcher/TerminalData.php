@@ -21,7 +21,7 @@
             $this->inuse = $json->inuse;
             $this->activated = $json->activated;
             $this->questiongroup = $json->certificatenumber;
-            $this->question = $json->qcode;
+            $this->question = $json->questionnumber;
             if (isset($json->exptime)) {
                 $this->timeleft = $json->exptime - time();
             }
@@ -44,7 +44,7 @@
         }
 
         function getQGroup() {
-            return $this->question;
+            return $this->questiongroup;
         }
 
         function getQCode() {
