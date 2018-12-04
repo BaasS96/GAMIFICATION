@@ -1,5 +1,5 @@
-window.onload = function () {
-    document.getElementById("submit").addEventListener('click', function () {
+window.onload = () => {
+    document.getElementById("submit").addEventListener('click', () => {
         checkGamePin();
     });
 };
@@ -14,14 +14,14 @@ var currentstage = Stage.GROUP;
 var gamecode, groupcode, groupname;
 function checkGamePin() {
     document.getElementById('submit').innerHTML = "<div class='dots'><div class='dot dot1'></div><div class='dot dot2'></div><div class='dot dot3'></div></div>";
-    var pin = document.getElementById("pin").value;
+    let pin = document.getElementById("pin").value;
     fetch('auth/checkpin.php?pin=' + pin)
-        .then(function (res) {
+        .then(res => {
         if (res.ok) {
             return res.json();
         }
     })
-        .then(function (res) {
+        .then(res => {
         if (res.success) {
             //Next step;
             gamecode = pin;
@@ -36,14 +36,14 @@ function checkGamePin() {
 }
 function checkGroupCode() {
     document.getElementById('submit').innerHTML = "<div class='dots'><div class='dot dot1'></div><div class='dot dot2'></div><div class='dot dot3'></div></div>";
-    var pin = document.getElementById("pin").value;
+    let pin = document.getElementById("pin").value;
     fetch('auth/checkcode.php?game=' + gamecode + '&code=' + pin)
-        .then(function (res) {
+        .then(res => {
         if (res.ok) {
             return res.json();
         }
     })
-        .then(function (res) {
+        .then(res => {
         if (res.success) {
             groupcode = pin;
             document.title = "GROUPMEMBERS";
@@ -56,21 +56,21 @@ function checkGroupCode() {
     });
 }
 function nextStepSubmitGroupData() {
-    var pin = document.getElementById("pin").value;
+    let pin = document.getElementById("pin").value;
     groupname = pin;
     setTimeout(nextStage, 100);
 }
 function submitGroupData() {
     document.getElementById('submit').innerHTML = "<div class='dots'><div class='dot dot1'></div><div class='dot dot2'></div><div class='dot dot3'></div></div>";
-    var pin = document.getElementById("pin");
-    var members = pin.value;
+    let pin = document.getElementById("pin");
+    let members = pin.value;
     fetch('auth/submitgroupdata.php?game=' + gamecode + '&group=' + groupcode + '&name=' + groupname + '&members=' + members)
-        .then(function (res) {
+        .then(res => {
         if (res.ok) {
             return res.json();
         }
     })
-        .then(function (res) {
+        .then(res => {
         if (res.success) {
             //Redirect
             setTimeout(function () { location.href = "index.php"; }, 1000);
@@ -81,12 +81,12 @@ function submitGroupData() {
     });
 }
 function nextStage() {
-    var newdiv = getNewDiv();
-    var olddivs = document.getElementById("lastholder");
-    var child = olddivs.children[0];
+    let newdiv = getNewDiv();
+    let olddivs = document.getElementById("lastholder");
+    let child = olddivs.children[0];
     child.style.transition = "margin-left 1s";
-    var w = olddivs.offsetWidth.toString();
-    var h = olddivs.offsetHeight.toString();
+    let w = olddivs.offsetWidth.toString();
+    let h = olddivs.offsetHeight.toString();
     olddivs.style.width = w + "px";
     olddivs.style.height = h + "px";
     olddivs.style.padding = "0px";
@@ -100,7 +100,7 @@ function nextStage() {
         setTimeout(function () {
             this.style.marginTop = "0px";
         }.bind(newdiv), 50);
-        document.getElementById("submit").addEventListener('click', function () {
+        document.getElementById("submit").addEventListener('click', () => {
             if (currentstage == Stage.GROUPCODE) {
                 checkGroupCode();
             }
@@ -114,7 +114,7 @@ function nextStage() {
     }.bind(child, olddivs, newdiv), 800);
 }
 function getNewDiv() {
-    var template;
+    let template;
     if (currentstage == Stage.GROUP) {
         currentstage = Stage.GROUPCODE;
         template = document.getElementById("groupcode");
@@ -130,10 +130,10 @@ function getNewDiv() {
     else {
         return null;
     }
-    var fragment = template.content.cloneNode(true);
-    var div = document.createElement("div");
+    let fragment = template.content.cloneNode(true);
+    let div = document.createElement("div");
     for (var i = 0; i < fragment.children.length; i++) {
-        var a = div.appendChild(fragment.children[i]);
+        let a = div.appendChild(fragment.children[i]);
     }
     return div.firstElementChild;
 }

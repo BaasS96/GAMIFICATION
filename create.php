@@ -1,6 +1,7 @@
 <?php
     $post_data = file_get_contents('php://input');
     if (isset($post_data)) {
+        header('Content-Type: application/json');
         $data = json_decode($post_data)->data;
         $creationtype = $data->creationtype;
         switch ($creationtype) {
@@ -179,10 +180,12 @@
         $suffix = '';
         $suffixcounter = 0;
         $created = false;
-        $idpath = $basepath . createQGroupID($data->name, $suffix);
+        $id = createQGroupID($data->name, $suffix);
+        $idpath = $basepath . $id;
         while (!$created) {
             if (is_dir($idpath)) {
-                $idpath = $basepath . createQGroupID($data->name, $suffix);
+                $id = createQGroupID($data->name, $suffix);
+                $idpath = $basepath . $id;
                 $suffixcounter++;
                 $suffix = strval($suffixcounter);
             } else {
@@ -190,7 +193,13 @@
                 $created = true;
             }
         }
+        $qgroupdata['id'] = $id;
         if (file_put_contents($idpath . "/qgroup.json", json_encode($qgroupdata))) {
+            $oldgamejson = file_get_contents($basepath . 'game.json');
+            $oldgamejson = json_decode($oldgamejson);
+            $oldgamejson = (array)$oldgamejson;
+            array_push($oldgamejson['qgroups'], $idpath);
+            file_put_contents($basepath . 'game.json', json_encode($oldgamejson));
             sendBack('success', 'Succesfully create questiongroup: ' . $idpath);
         } else {
             sendBack('error', 'An error occurred while trying to create the questiongroup');
@@ -213,13 +222,15 @@
             "image" => $data->image,
             "imagelocation" => $data->imagelocation,
             "maxterminals" => $data->maxterminals,
-            "creationtime" => time()
+            "creationtime" => time(),
+            "qgroups" => []
         ];
         $newgamecode = mt_rand(0,9) . mt_rand(0,9) . mt_rand(0,9) . mt_rand(0,9);
         if (file_exists('games')) {
             try {
                 if (!file_exists('games/' . $newgamecode)) {
                     mkdir('games/' . $newgamecode);
+                    $gamedata['id'] = $newgamecode;
                     file_put_contents('games/' . $newgamecode . '/game.json', json_encode($gamedata));
                     sendBack('success', 'Succesfully created game: ' . $newgamecode);
                 } else {
