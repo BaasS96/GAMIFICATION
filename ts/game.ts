@@ -5,7 +5,7 @@ export function logoff() {
 }
 
 var questionanswered = "<em>Je hebt deze vraag al beantwoord!</em>",
-    reserveterminal = "Om deze vraag te beantwoorden moet je een terminal reserveren. </p><p id='feedbackholder'><button class='input_submit' onclick=''>Reserveer een terminal</button></p>";
+    reserveterminal = "Om deze vraag te beantwoorden moet je een terminal reserveren. </p><p id='feedbackholder'><button class='input_submit' id='bttn_id'>Reserveer een terminal</button></p>";
 
 export function openQGroup() {
     //This is bound to the id of the redirector
@@ -21,6 +21,7 @@ export function openQGroup() {
         question = Object.keys(questions);
     }
     createQuestionSimple(questions[question[0]], questiongroups[0]);
+    document.getElementById("request_terminal_" + questions[question[0]].id).addEventListener('click', reserveTerminal.bind(null, question, questiongroups[0]));
 }
 
 function goBack() {
@@ -60,7 +61,6 @@ function createQuestionSimple(question : Question, questiongroup : QuestionGroup
     if (!answered) {
         let parentdiv = raw.getElementById("question_");
         parentdiv.appendChild(createQuestionContents(hold, question));
-        parentdiv.querySelector("button .input_submit").addEventListener('click', reserveTerminal.bind(null, question, questiongroup));
     }
 
     let d = replaceSlots([title, description, feedback, hold], raw);
@@ -77,7 +77,7 @@ function createQuestionContents(holder : HTMLElement, question : Question) : HTM
     let slots = [];
 
     if (question.useterminal) {
-        holder.innerHTML = reserveterminal; 
+        holder.innerHTML = reserveterminal.replace("bttn_id", "request_terminal_" + question.id);
         return document.createElement("div");
     } else {
         if (question.image) {

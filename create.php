@@ -52,7 +52,7 @@
         $gamebasepath = 'games/' . $data->game . "/game.json";
         $qgroupbasepath = 'games/' . $data->game . "/" . $data->questiongroup . '/qgroup.json';
         $id = substr(md5(mt_rand(0, 10) . mt_rand(0, 10)), 0, 2);
-        if (file_exists($basepath)) {
+        if (file_exists($gamebasepath)) {
             if (file_exists($qgroupbasepath)) {
                 $gamedata = file_get_contents($gamebasepath);
                 $gamedata = json_decode($gamedata);
