@@ -43,52 +43,66 @@
 
     function createTerminal($data) {
         $terminaldata = [
-            'text' => $data->idletext
+            'text' => $data->idletext,
+            'activated' => false,
+            'inuse' => false,
+            'question' => 0,
+            'questiongroup' => 0
         ];
-        $basepath = 'games/' . $data->game . "/" . $data->questiongroup . '/qgroup.json';
+        $gamebasepath = 'games/' . $data->game . "/game.json";
+        $qgroupbasepath = 'games/' . $data->game . "/" . $data->questiongroup . '/qgroup.json';
         $id = substr(md5(mt_rand(0, 10) . mt_rand(0, 10)), 0, 2);
         if (file_exists($basepath)) {
-            $old = file_get_contents($basepath);
-            $old = json_decode($old);
-            if (isset($old->questions)) {
-                if (is_array($old->questions)) {
-                    if (isset($old->questions[$data->questionnum])) {
-                        if (is_array($old->questions[$data->questionnum]->terminals)) {
-                            if (isset($old->questions[$data->question]->terminals[$id])) {
-                                return createTerminal($data);
-                            } else {
-                                $old->questions[$data->question]->terminals[$id] = $terminaldata;
-                            }
-                        } else {
-                            $old->questions[$data->questionnum]->terminals->$id = $terminaldata;        
-                        }
-                    } else {
-                        sendBack('error', 'The specified questionnumber does note exist!');
-                    }
-                } else {
-                    $qnum = $data->questionnum;
-                    if (isset($old->questions->$qnum)) {
-                        if (is_array($old->questions->$qnum->terminals)) {
-                            if (isset($old->questions->$qnum->terminals[$id])) {
-                                return createTerminal($data);
-                            } else {
-                                $old->questions->$qnum->terminals[$id] = $terminaldata;
-                            }
-                        } else {
-                            $old->questions->$qnum->terminals->$id = $terminaldata;        
-                        } 
-                    } else {
-                        sendBack('error', 'The specified questionnumber does note exist!');
-                    }   
+            if (file_exists($qgroupbasepath)) {
+                $gamedata = file_get_contents($gamebasepath);
+                $gamedata = json_decode($gamedata);
+                $qgroupdata = file_get_contents($qgroupbasepath);
+                $qgroupdata = json_decode($qgroupdata);
+
+                $questions = $qgroupdata->questions;
+                if (!is_array($questions)) {
+                    $questions = (array)$questions;
                 }
-            } else {
-                sendBack('error', 'The specified questiongroup has no questions!');
+
+                if (!isset($questions[$data->questionnum])) {
+                    sendBack('error', "The specified question does not exist");
+                    return;
+                }
+
+                $gameterminals = $gamedata->terminals;
+                if (!is_array($gameterminals)) {
+                    $gameterminals = (array)$gameterminals;
+                }
+
+                $qgroupterminals = $questions[$data->questionnum]->terminals;
+                if (!is_array($qgroupterminals)) {
+                    $qgroupterminals = (array)$qgroupterminals;
+                }
+
+                if (array_search($id, $qgroupterminals)) {
+                    return createTerminal($data);
+                }
+
+                for ($i = 0; $i < count($gameterminals); $i++) {
+                    if ($gameterminals[$i]->id == $id) {
+                        return createTerminal($data);
+                    }
+                }
+
+                array_push($gameterminals, $terminaldata);
+                array_push($qgroupterminals, $id);
+                $gamedata->terminals = $gameterminals;
+                $questions[$data->questionnum]->terminals = $qgroupterminals;
+
+                file_put_contents($gamebasepath, json_encode($gamedata));
+                file_put_contents($qgroupbasepath, json_encode($qgroupdata));
+
+                sendBack('success', 'Succesfully created terminal ' . $id);
+            } else {    
+                sendBack('error', 'The specified questiongroup does not exist!');
             }
-            $new = json_encode($old);
-            file_put_contents($basepath, $new);
-            sendBack('success', 'Succesfully created terminal: ' . $id);
         } else {
-            sendBack('error', 'The specified quesitongroup or game does not exist!');
+            sendBack('error', 'The specified game does not exist!');
         }
     }
 

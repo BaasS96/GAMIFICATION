@@ -1,5 +1,6 @@
 //@ts-ignore
 import { Spinner } from "https://spin.js.org/spin.js";
+import { logoff, openQGroup } from '../js/game.js';
 var spinner;
 window.onload = function () {
     var target = document.body;
@@ -10,14 +11,16 @@ window.onload = function () {
 };
 var uifragments = [
     'game_header.html',
-    'qgroup.html'
+    'qgroup.html',
+    'question.html',
+    'questionbody.html'
 ];
-var game;
-var group;
-var groupdata, gamedata;
-var questiongroups = [];
+export var game;
+export var group;
+export var groupdata, gamedata;
+export var questiongroups = [];
 var dataready = -1, plusone;
-var uitemplates = new Map();
+export var uitemplates = new Map();
 function initializeCurentParameters() {
     fetch('game/currentsession.php')
         .then(res => { if (res.ok)
@@ -147,7 +150,7 @@ function buildQuestiongroupsUI() {
     setTimeout(() => {
         spinner.stop();
         holder.style.display = "block";
-    }, 1000);
+    }, 500);
 }
 function buildUI() {
     buildHeader();
@@ -201,7 +204,7 @@ function buildHeader() {
         document.body.prepend(e);
     }
 }
-function replaceSlots(replacees, targetdocument) {
+export function replaceSlots(replacees, targetdocument) {
     for (var i = 0; i < replacees.length; ++i) {
         let c = replacees[i];
         let id = c.slot;

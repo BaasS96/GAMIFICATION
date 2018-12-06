@@ -1,5 +1,6 @@
 //@ts-ignore
 import { Spinner } from "https://spin.js.org/spin.js";
+import {logoff, openQGroup} from '../js/game.js';
 
 var spinner;
 
@@ -13,10 +14,12 @@ window.onload = function () {
 
 var uifragments = [
     'game_header.html',
-    'qgroup.html'
+    'qgroup.html',
+    'question.html',
+    'questionbody.html'
 ];
 
-interface GameData {
+export interface GameData {
     creator : string,
     id : string,
     grouptitle : string,
@@ -27,7 +30,16 @@ interface GameData {
     qgroups : Array<string>
 }
 
-interface QuestionGroup {
+export interface GroupData {
+    name : string;
+    id : string;
+    members : string;
+    certificates : Array<string>;
+    terminals : Array<any>;
+    lastactive : number;
+}
+
+export interface QuestionGroup {
     name : string,
     longname : string,
     id : string,
@@ -38,16 +50,28 @@ interface QuestionGroup {
     imgurl? : string
 }
 
-interface Question {
-
+export interface Question {
+    id : string;
+    title : string;
+    description : string; 
+    qtype : string;
+    q_pswd : string;
+    image : string;
+    question : string;
+    answers : Array<string>;
+    right_answers : Array<string>;
+    points : number;
+    exptime : number;
+    useterminal : boolean;
+    terminals : Array<any>;
 }
 
-var game;
-var group;
-var groupdata, gamedata : GameData;
-var questiongroups : Array<QuestionGroup> = [];
+export var game;
+export var group;
+export var groupdata : GroupData, gamedata : GameData;
+export var questiongroups : Array<QuestionGroup> = [];
 var dataready = -1, plusone;
-var uitemplates = new Map<string, Document>();
+export var uitemplates = new Map<string, Document>();
 
 function initializeCurentParameters() {
     fetch('game/currentsession.php')
@@ -180,7 +204,7 @@ function buildQuestiongroupsUI() {
     setTimeout(() => {
         spinner.stop();
         holder.style.display = "block";
-    },1000);
+    },500);
 }
 
 function buildUI() {
@@ -238,7 +262,7 @@ function buildHeader() {
     }
 }
 
-function replaceSlots(replacees : Array<Element>, targetdocument : Document) : HTMLBodyElement{
+export function replaceSlots(replacees : Array<Element>, targetdocument : Document) : HTMLBodyElement{
     for (var i = 0; i < replacees.length; ++i) {
         let c = replacees[i];
         let id = c.slot;
