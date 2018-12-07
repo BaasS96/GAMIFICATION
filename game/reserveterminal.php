@@ -43,6 +43,7 @@
         'text' => $currentterminal->text,
         'questiongroup' => $qgid,
         'question' => $qid,
+        'group' => $gid,
         'activated' => true,
         'inuse' => true,
         'id' => $currentterminal->id

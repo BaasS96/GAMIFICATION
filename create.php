@@ -47,7 +47,8 @@
             'activated' => false,
             'inuse' => false,
             'question' => 0,
-            'questiongroup' => 0
+            'questiongroup' => 0,
+            'group' => 0
         ];
         $gamebasepath = 'games/' . $data->game . "/game.json";
         $qgroupbasepath = 'games/' . $data->game . "/" . $data->questiongroup . '/qgroup.json';
