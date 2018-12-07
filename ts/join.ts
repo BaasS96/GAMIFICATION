@@ -49,8 +49,12 @@ function checkGroupCode() {
         if (res.success) {
             groupcode = pin;
             document.title = "GROUPMEMBERS";
-            setTimeout(nextStage, 100);
+            setTimeout
+            (nextStage, 100);
         } else {
+            if (res.error) {
+                document.getElementById('error').innerHTML = res.error;
+            }
             document.getElementById('submit').innerHTML = "GO!";
             document.getElementById('error').style.display = "inline-block";
         }

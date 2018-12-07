@@ -50,6 +50,9 @@ function checkGroupCode() {
             setTimeout(nextStage, 100);
         }
         else {
+            if (res.error) {
+                document.getElementById('error').innerHTML = res.error;
+            }
             document.getElementById('submit').innerHTML = "GO!";
             document.getElementById('error').style.display = "inline-block";
         }
