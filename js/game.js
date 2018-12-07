@@ -1,4 +1,4 @@
-import { uitemplates, replaceSlots, questiongroups, gamedata, groupdata, getGroupData, getGameData } from './loadgame.js';
+import { uitemplates, replaceSlots, gamedata, groupdata, getGroupData, getGameData } from './loadgame.js';
 export function logoff() {
     location.href = "game/logoff.php";
 }
@@ -6,22 +6,28 @@ var questionanswered = "<em>Je hebt deze vraag al beantwoord!</em>", reserveterm
 export function openQGroup() {
     //This is bound to the id of the redirector
     var holder = document.getElementById("holder");
-    let frag = createBreadCrumb('Game ' + gamedata.id + ' - Vragengroup ' + this, goBack, 'game');
+    let frag = createBreadCrumb('Game ' + gamedata.id + ' - Vragengroup ' + this.id, goBack, 'game');
     holder.innerHTML = "";
     holder.appendChild(frag);
-    //Create questions
-    let questions = questiongroups[0].questions;
-    var question;
-    if (typeof questions === "object") {
-        question = Object.keys(questions);
+    var qs = this.questions;
+    if (typeof qs === "object") {
+        //@ts-ignore
+        let temp = Object.entries(this.questions);
+        qs = [];
+        for (var questiontemp of temp) {
+            qs.push(questiontemp[1]);
+        }
     }
-    createQuestionSimple(questions[question[0]], questiongroups[0]);
-    document.getElementById("request_terminal_" + questions[question[0]].id).addEventListener('click', reserveTerminal.bind(null, questions[question[0]], questiongroups[0]));
+    for (var i = 0; i < qs.length; i++) {
+        let question = qs[i];
+        createQuestionSimple(question);
+        document.getElementById("request_terminal_" + question.id).addEventListener('click', reserveTerminal.bind(null, question, this));
+    }
 }
 function goBack() {
     //This is bound to the thing to go back to
 }
-function createQuestionSimple(question, questiongroup) {
+function createQuestionSimple(question) {
     var title = document.createElement("h1");
     title.slot = "question_title";
     title.innerHTML = question.title;
@@ -35,7 +41,9 @@ function createQuestionSimple(question, questiongroup) {
     var hold = document.createElement("p");
     hold.slot = "question_body";
     hold.className = "question_divided";
-    let raw = uitemplates.get("question.html");
+    let r = uitemplates.get("question.html");
+    let raw = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);
+    raw.documentElement.appendChild(r.body.cloneNode(true));
     let answered = false;
     if (groupdata.certificates[this]) {
         //Question answered
