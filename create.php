@@ -89,6 +89,8 @@
                     }
                 }
 
+                $terminaldata['id'] = $id;
+
                 array_push($gameterminals, $terminaldata);
                 array_push($qgroupterminals, $id);
                 $gamedata->terminals = $gameterminals;

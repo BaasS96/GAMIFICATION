@@ -1,4 +1,4 @@
-import { uitemplates, replaceSlots, questiongroups, gamedata, groupdata } from './loadgame.js';
+import { uitemplates, replaceSlots, questiongroups, gamedata, groupdata, getGroupData, getGameData } from './loadgame.js';
 export function logoff() {
     location.href = "game/logoff.php";
 }
@@ -16,7 +16,7 @@ export function openQGroup() {
         question = Object.keys(questions);
     }
     createQuestionSimple(questions[question[0]], questiongroups[0]);
-    document.getElementById("request_terminal_" + questions[question[0]].id).addEventListener('click', reserveTerminal.bind(null, question, questiongroups[0]));
+    document.getElementById("request_terminal_" + questions[question[0]].id).addEventListener('click', reserveTerminal.bind(null, questions[question[0]], questiongroups[0]));
 }
 function goBack() {
     //This is bound to the thing to go back to
@@ -102,7 +102,7 @@ function createBreadCrumb(text, action, actionarg) {
     return docfrag.getRootNode();
 }
 function requestTerminal(questionGroup, question) {
-    let query = "reserveterminal.php?";
+    let query = "game/reserveterminal.php?";
     query += "gameid=" + gamedata.id;
     query += "&groupid=" + groupdata.id;
     query += "&qgroupid=" + questionGroup.id;
@@ -130,6 +130,8 @@ function reserveTerminal(question, questiongroup) {
         })
             .then(res => {
             if (res.success) {
+                getGroupData();
+                getGameData();
                 alert(res.terminal);
             }
             else {
@@ -142,9 +144,9 @@ function groupIsAlreadyUsingTerminal(inuse, assignable) {
     for (var i = 0; i < inuse.length; i++) {
         for (var j = 0; j < assignable.length; j++) {
             if (inuse[i] === assignable[j]) {
-                return false;
+                return true;
             }
         }
     }
-    return true;
+    return false;
 }

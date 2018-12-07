@@ -6,7 +6,7 @@
         $qid = $_GET['questionid'];
         $validterminals = $_GET['validterminals'];
 
-        $path = 'games/' . $game . '/game.json';
+        $path = '../games/' . $game . '/game.json';
         $gamefile = file_get_contents($path);
         $gamefile = json_decode($gamefile);
         $terminals = $gamefile->terminals;
@@ -16,7 +16,7 @@
         }
 
         $terminalavailable = false;
-        
+
         for ($i = 0; $i < count($terminals); $i++) {
             $currentterminal = $terminals[$i];
             if ($currentterminal->activated) {
@@ -34,7 +34,7 @@
         if ($terminalavailable) {
             goto okay;
         } else {
-            goto failure;
+            goto noterminal;
         }
     }
 
@@ -44,27 +44,42 @@
         'questiongroup' => $qgid,
         'question' => $qid,
         'activated' => true,
-        'inuse' => true
+        'inuse' => true,
+        'id' => $currentterminal->id
     ];
     $terminals[$i] = $terminal;
-    file_put_contents($path, json_encode($gamefile));
+    $gamefile->terminals = $terminals;
+    if (!file_put_contents($path, json_encode($gamefile))) {
+        goto failure;
+    }
 
-    $groupfile = 'games/' . $game . '/g_' . $gid . '.json';
+    $groupfile = '../games/' . $game . '/g_' . $gid . '.json';
     $gfile = file_get_contents($groupfile);
     $gfile = json_decode($gfile);
     $groupterminals = (array)$gfile->terminals;
     array_push($groupterminals, $currentterminal->id);
     $gfile->terminals = $groupterminals;
-    file_put_contents($groupfile, json_encode($gfile));
+    if (!file_put_contents($groupfile, json_encode($gfile))) {
+        goto failure;
+    }
 
     echo json_encode([
         "success" => true,
         "terminal" => $currentterminal->id
     ]);
+    exit;
+
+    noterminal:
+    echo json_encode([
+        "success" => false,
+        "error" => "No terminal is available"
+    ]);
+    exit;
 
     failure:
     echo json_encode([
         "success" => false,
         "error" => "SOMETHING BAD HAPPENED!"
     ]);
+    exit;
 ?>

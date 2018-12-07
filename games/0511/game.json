@@ -1,1 +1,1 @@
-{"creator":"Koen","grouptitle":"Game #1","image":"logo.png","imagelocation":"main","maxterminals":"1","creationtime":1544126886,"qgroups":["games\/0511\/GeF"],"id":"0511","terminals":[{"text":"Wachtende...","activated":false,"inuse":false,"question":0,"questiongroup":0}]}
+{"creator":"Koen","grouptitle":"Game #1","image":"logo.png","imagelocation":"main","maxterminals":"1","creationtime":1544126886,"qgroups":["games\/0511\/GeF"],"id":"0511","terminals":[{"text":"Wachtende...","questiongroup":"GeF","question":"66","activated":true,"inuse":true}]}

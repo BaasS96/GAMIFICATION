@@ -27,7 +27,7 @@ function initializeCurentParameters() {
         return res.json(); })
         .then(res => { game = res.game; group = res.group; document.title = game + ' - ' + group; getGameData(), getGroupData(); });
 }
-function getGroupData() {
+export function getGroupData() {
     fetch('game/groupdata.php?game=' + game + "&group=" + group)
         .then(res => {
         if (res.ok) {
@@ -36,9 +36,7 @@ function getGroupData() {
     })
         .then(res => {
         if (res.success) {
-            if (!dataready) {
-                dataready++;
-            }
+            dataready++;
             groupdata = JSON.parse(res.data);
         }
         else {
@@ -46,7 +44,7 @@ function getGroupData() {
         }
     });
 }
-function getGameData() {
+export function getGameData() {
     fetch('game/gamedata.php?game=' + game)
         .then(res => {
         if (res.ok) {
