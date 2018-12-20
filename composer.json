@@ -1,0 +1,6 @@
+{
+    "require": {
+        "igorw/event-source": "1.0.*",
+        "karriere/json-decoder": "^2.1"
+    }
+}

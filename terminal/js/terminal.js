@@ -7,7 +7,8 @@ var terminal;
 var params;
 var terminaldata, questiondata;
 var inuse = false, locked = true;
-var timeremaining, countdown;
+var timeremaining, countdown, countdownrunning = false;
+var givenanswer, answerright;
 function initializeTerminal() {
     params = window.location.search.substr(1);
     let looseparams = params.split("&");
@@ -73,10 +74,43 @@ function getQuestionData() {
         .then(res => {
         if (res !== null) {
             timeremaining = parseInt(res.exptime) * 1000;
+            countdownrunning = true;
             document.getElementById("countdown").innerHTML = secondsToTimeString(parseInt(res.exptime));
             questiondata = res;
         }
     });
+}
+function submitAnswer() {
+    let data = {
+        "qgroup": terminaldata.questiongroup,
+        "question": terminaldata.question,
+        "points": questiondata.points,
+        "answercorrect": answerright,
+        "answer": givenanswer,
+        "timeleft": timeremaining
+    };
+    fetch("submitquestion.php", {
+        "method": "POST",
+        "body": JSON.stringify(data)
+    })
+        .then(res => {
+        if (res.ok) {
+            return res.text();
+        }
+    })
+        .then(res => {
+        resetTerminal();
+    });
+}
+function resetTerminal() {
+    stopCountDown();
+    inuse = false;
+    locked = true;
+    createWaitingScreen();
+    questiondata = undefined;
+}
+function createWaitingScreen() {
+    document.getElementById("contentHolder").innerHTML = "<p class='idletext'>" + terminaldata.text + "</p>";
 }
 function setupAnswerEnvironment() {
     if (!questiondata) {
@@ -105,13 +139,37 @@ function setupAnswerEnvironment() {
                 holder.innerHTML += iInput;
             }
         }
-        var iButton = "<input type='button' class='button' onclick=\"checkQanswer();\"value='Go'>";
+        var iButton = "<input type='button' class='button' onclick=\"checkAnswer();\"value='Go'>";
         holder.innerHTML += iButton;
     }
     else {
         document.getElementById("qcode").value = "";
         document.getElementById("qcode").placeholder = "Try again";
     }
+}
+function checkAnswer() {
+    if (questiondata.qtype == "text") {
+        var qAnswer = document.getElementById("qanswer").value;
+    }
+    else if (questiondata.qtype == "radio") {
+        var qAnswer = document.querySelector('.radio-input:checked').value;
+    }
+    givenanswer = qAnswer;
+    answerright = false;
+    if (questiondata.right_answers.indexOf(qAnswer) > -1) {
+        answerright = true;
+        document.getElementById("feedbackholder-right").style.display = "block";
+        submitAnswer();
+        stopCountDown();
+    }
+    else {
+        document.getElementById("feedbackholder-wrong").style.display = "block";
+        var closefeedback = setTimeout(function () { closeFeedback('wrong'); }, 5000);
+    }
+}
+function closeFeedback(type) {
+    var element = "feedbackholder-" + type;
+    document.getElementById(element).style.display = "none";
 }
 function buildImageURI(uri) {
     return "../images/" + uri;
@@ -137,8 +195,11 @@ function toggleLockState() {
         }
     }
 }
+function stopCountDown() {
+    countdownrunning = false;
+}
 function countDown() {
-    if (timeremaining > 0) {
+    if (timeremaining > 0 && countdownrunning) {
         timeremaining -= 1000;
         document.getElementById("countdown").innerHTML = secondsToTimeString(Math.round(timeremaining / 1000));
     }

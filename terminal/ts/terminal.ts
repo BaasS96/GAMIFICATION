@@ -8,7 +8,7 @@ var terminal;
 var params;
 var terminaldata: Terminal, questiondata: Question;
 var inuse: boolean = false, locked: boolean = true;
-var timeremaining: number, countdown: number;
+var timeremaining: number, countdown: number, countdownrunning: boolean = false;
 var givenanswer, answerright : boolean;
 
 interface Terminal {
@@ -103,6 +103,7 @@ function getQuestionData() {
         .then(res => {
             if (res !== null) {
                 timeremaining = parseInt(res.exptime) * 1000;
+                countdownrunning = true;
                 document.getElementById("countdown").innerHTML = secondsToTimeString(parseInt(res.exptime));
                 questiondata = res;
             }
@@ -110,11 +111,38 @@ function getQuestionData() {
 }
 
 function submitAnswer() {
-
+    let data = {
+        "qgroup": terminaldata.questiongroup,
+        "question": terminaldata.question,
+        "points": questiondata.points,
+        "answercorrect": answerright,
+        "answer": givenanswer,
+        "timeleft": timeremaining
+    };
+    fetch("submitquestion.php", {
+        "method": "POST",
+        "body": JSON.stringify(data)
+    })
+    .then(res => {
+        if (res.ok) {
+            return res.text();
+        }
+    })
+    .then(res => {
+        resetTerminal();
+    });
 }
 
 function resetTerminal() {
-    
+    stopCountDown();
+    inuse = false;
+    locked = true;
+    createWaitingScreen();
+    questiondata = undefined;
+}
+
+function createWaitingScreen() {
+    document.getElementById("contentHolder").innerHTML = "<p class='idletext'>" + terminaldata.text + "</p>"
 }
 
 function setupAnswerEnvironment() {
@@ -163,6 +191,7 @@ function checkAnswer() {
         answerright = true;
         document.getElementById("feedbackholder-right").style.display = "block";
         submitAnswer();
+        stopCountDown();
     } else {
         document.getElementById("feedbackholder-wrong").style.display = "block";
         var closefeedback = setTimeout(function() { closeFeedback('wrong'); }, 5000);
@@ -202,8 +231,12 @@ function toggleLockState() {
     }
 }
 
+function stopCountDown() {
+    countdownrunning = false;
+}
+
 function countDown() {
-    if (timeremaining > 0) {
+    if (timeremaining > 0 && countdownrunning) {
         timeremaining -= 1000;
         document.getElementById("countdown").innerHTML = secondsToTimeString(Math.round(timeremaining / 1000));
     }
