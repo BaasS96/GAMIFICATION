@@ -27,7 +27,7 @@ export interface GameData {
     imagelocation : string,
     maxterminals : number,
     creationtime : number,
-    qgroups : Array<string>
+    terminals : Array<Terminal>
 }
 
 export interface GroupData {
@@ -64,6 +64,16 @@ export interface Question {
     exptime : number;
     useterminal : boolean;
     terminals : Array<any>;
+}
+
+export interface Terminal {
+    text : string, 
+    questiongroup: string,
+    question : string,
+    group : string,
+    activated : boolean,
+    inuse : boolean,
+    id : string
 }
 
 export var game;

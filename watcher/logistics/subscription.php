@@ -2,8 +2,8 @@
     namespace TheRealKS\Watchdog\Logistics;
 
     require_once('../data/poller.php');
+    require_once('update.php');
 
-    use TheRealKS\Watchdog\Data\QGroup;
     use TheRealKS\Watchdog\Data\Poller;
 
     require_once("../../vendor/autoload.php");
@@ -23,6 +23,8 @@
         private $data;
 
         private $poller;
+
+        private $previousupdate;
 
         function __construct($jsondata) {
             $this->jsondata = $jsondata;
@@ -57,8 +59,24 @@
             $this->poller->poll();
         }
 
-        function createUpdate() {
+        function createUpdate($updates) {
+            if ($this->data->type == 'statusbar') {
+                $update;
+                if (count($updates) > 1) {
+                    //Both are updated
+                    
+                } else {
+                    //Only one
+                    if (str_pos($updates[0], 'qgroup')) {
+                        //Qgroup
+                    } else {
+                        //Group
 
+                    }
+                }
+            } else {
+
+            }
         }
     }
 

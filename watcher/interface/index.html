@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="game.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="palette.css" />
+    <script type="module" src="js/init.js"></script>
+</head>
+
+<body>
+    <div class="header default-primary-color primary-text-color" id="header">
+        <span id="header_txt">Game </span> <input type="text" id="gameinput" class="gameinput" />
+        <i class="gamevalid" id="gameinput_feedback">This game doesn't exist!</i>
+        <div class="game_menu" id="menu">
+            <div class="menu_entry noexpand">
+                Game
+                <i class="material-icons">ss</i>
+            </div>
+            <div class="menu_entry" expandable>
+                <div class="menu_entry_button">
+                    Terminals
+                    <i class="material-icons">expand_more</i>
+                </div>
+                <div class="menu_item_entries" id="menu_terminals">
+                </div>
+            </div>
+            <div class="menu_entry" expadable>
+                <div class="menu_entry_button">
+                    Groups
+                    <i class="material-icons">expand_more</i>
+                </div>
+                <div class="menu_item_entries">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </div>
+            </div>
+            <div class="menu_entry" expandable>
+                <div class="menu_entry_button">
+                    Questiongroups
+                    <i class="material-icons">expand_more</i>
+                </div>
+                <div class="menu_item_entries" id="menu_qgroups">
+                </div>
+            </div>
+        </div>
+        <div class="material-icons logout" title="Change game" onclick="switchGame();">swap_horiz</div>
+    </div>
+    <div class="titlebar">
+        Gamedata
+        <span class="lastupdate">Last updated: 12:22</span>
+    </div>
+    <div class="content" id="content">
+        <div class="gameholder">
+            <div class="holder_labels">
+                <span>Created by:</span>
+                <span>Created by:</span>
+                <span>Created by:</span>
+            </div>
+            <div class="holder_info">
+                    <span>Created by:</span>
+                    <span>Created by:</span>
+                    <span>Created by:</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

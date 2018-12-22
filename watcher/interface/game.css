@@ -1,0 +1,40 @@
+.gameholder {
+    border: 1px solid black;
+    min-width: 20vw;
+    border-radius: 3px;
+    font-family: 'Aleo', sans-serif;
+    display: flex;
+    flex-direction: row;
+}
+
+.holder_labels {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.holder_labels span {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;    
+    padding: 0.2rem; 
+}
+
+.holder_labels:last-child {
+    border-bottom: none;
+}
+
+.holder_info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.holder_info span {
+    border-bottom: 1px solid black;
+    padding: 0.2rem;  
+    text-align: right;
+}
+
+.holder_info:last-child {   
+    border-bottom: none;
+}

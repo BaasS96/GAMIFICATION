@@ -9,6 +9,12 @@
 
     use Karriere\JsonDecoder\JsonDecoder;
 
+    class PollResult {
+        public $group;
+        public $qgroup;
+        public $game;
+    }
+
     class Poller {
         private $path = "../../games/";
 
