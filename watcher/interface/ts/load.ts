@@ -1,7 +1,7 @@
 import {GameData} from '../../../js/loadgame';
 import {Game} from './game'
 
-export var gamepin;
+export var gamepin = "";
 
 export function setGamePin(newpin) {
     gamepin = newpin;

@@ -1,6 +1,7 @@
 //@ts-ignore
 import { Spinner } from "https://spin.js.org/spin.js";
 import {logoff, openQGroup} from '../js/game.js';
+import { decode } from "./game.js";
 
 var spinner;
 
@@ -100,6 +101,7 @@ export function getGroupData() {
             if (res.success) {
                 dataready++;
                 groupdata = JSON.parse(res.data);
+                groupdata.name = decode(groupdata.name);
             } else {
                 alert("Error!");
             }
@@ -117,6 +119,8 @@ export function getGameData() {
             if (res.success) {
                 dataready++;
                 gamedata = JSON.parse(res.data);
+                gamedata.creator = decode(gamedata.creator);
+                gamedata.grouptitle = decode(gamedata.grouptitle);
             } else {
                 alert("Error!");
             }
@@ -244,7 +248,11 @@ function buildQuestiongroups() {
             })
             .then(res => {
                 dataready += plusone;
-                questiongroups.push(<QuestionGroup><unknown>res);
+                let qgroup : QuestionGroup = <QuestionGroup><unknown>res;
+                qgroup.description = decode(qgroup.description);
+                qgroup.name = decode(qgroup.description);
+                qgroup.longname = decode(qgroup.longname);
+                questiongroups.push(qgroup);
             });
         }
         waitForFetch_2();

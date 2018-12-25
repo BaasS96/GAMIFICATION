@@ -10,7 +10,13 @@ window.onload = function() {
     });
     document.getElementById("gameinput").addEventListener('input', function(ev) {
         let target = ev.target;
-        let newchar = ev.data;
+        let newchar  = '';
+        if (ev.data) {
+            newchar = ev.data;
+        } else {
+            let val : string = target.value;
+            newchar = val.slice(-1);
+        }
         if (isNaN(newchar)) {
             target.value = gamepin;
             ev.stopPropagation();

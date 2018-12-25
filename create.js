@@ -36,7 +36,7 @@ function submitData(ev) {
     for (var i = 0; i < inputs.length; i++) {
         let node = inputs[i];
         if (node.nodeName === "INPUT" || node.nodeName === "TEXTAREA" || node.nodeName === "SELECT") {
-            o[node.name] = node.type === "checkbox" ? node.checked : node.value;
+            o[node.name] = node.type === "checkbox" ? node.checked : encodeURIComponent(encodeURI(node.value));
         }
     }
     if (o.creationtype !== "game") {

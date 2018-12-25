@@ -39,10 +39,12 @@ function goBack() {
 function createQuestionSimple(question : Question) {
     var title = document.createElement("h1");
     title.slot = "question_title";
+    question.title = decode(question.title);
     title.innerHTML = question.title;
 
     var description = document.createElement("p");
     description.slot = "question_description";
+    question.description = decode(question.description);
     description.innerHTML = question.description;
 
     var feedback = document.createElement("p");
@@ -82,8 +84,8 @@ function createQuestionSimple(question : Question) {
 
 function createQuestionContents(holder : HTMLElement, question : Question) : HTMLDivElement {
     let q = document.createElement("em");
+    question.question = decode(question.question);
     q.innerHTML = question.question;
-
     let slots = [];
 
     if (question.useterminal) {
@@ -193,3 +195,7 @@ function groupIsAlreadyUsingTerminal(inuse : Array<string>, assignable : Array<s
     }
     return false;
 }
+
+export function decode(raw : string) : string {
+    return decodeURI(decodeURIComponent(raw));
+} 
