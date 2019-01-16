@@ -46,7 +46,7 @@ $terminaldata = json_decode($terminaljson,true);
                 <div class="feedback" id="feedbackholder-right">
                     <p class="feedback-image feedback-right"><i class="material-icons em2">done</i></p>
                     <p class="feedback-text">Je hebt de vraag goed beantwoord!</p>
-                    <p class="feedback-menu">Dit scherm automatisch over <span id="autoclosetime">5</span></p>
+                    <p class="feedback-menu">Dit scherm sluit automatisch over <span id="autoclosetime">5</span></p>
                 </div>
                 <div class="feedback" id="feedbackholder-wrong">
                     <p class="feedback-image feedback-wrong"><i class="material-icons em2">warning</i></p>

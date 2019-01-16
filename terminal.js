@@ -90,7 +90,7 @@ function getTerminalData() {
                 }
                 terminalInUse = "1";
                 document.getElementById("contentHolder").innerHTML = "<div id='countdown' class='countdown'>" + mTimeLeft + "</div>";
-                document.getElementById("contentHolder").innerHTML += "<p><span class='restext'>Gereserveerd voor groep " + terminalData.groupid + "</span><br /><span class='unlocktip'>Tik op het scherm om te ontgrendelen</span></p>";
+                document.getElementById("contentHolder").innerHTML += "<p><span class='restext'>Gereserveerd voor groep " + terminalData.groupid + "</span><br /><span class='unlocktip'>Klik of tik op het scherm om te ontgrendelen</span></p>";
             } else {
                 clearInterval(countdown);
                 if (mCountDownActive == "1") {
