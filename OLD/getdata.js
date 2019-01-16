@@ -1,3 +1,7 @@
+var updater;
+var terminalids = [];
+var terminalcodes = [];
+
 function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questionID, terminalID, qcode, timetillexp) {
     console.log(gameID);
     console.log(maxTerminals);
@@ -65,6 +69,9 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
                                             //feedback to the user
                                             var element = "feedbackholder_" + questionGroupID + "-" + questionID;
                                             document.getElementById(element).innerHTML = "<i class='material-icons'>done</i><em>De terminal is gereserveerd. Gebruik deze code om in te loggen: <strong>" + qcodenew + "</strong></em>";
+                                            openConnection(gameID, groupID, questionGroupID, terminalID, qcodenew);
+                                            //if (updater) updater.close();
+                                            //openConnection(gameID, groupID, questionGroupID, terminalID, qcodenew);
                                         }
                                     }
                                     // Send the data to PHP now... and wait for response to update the status div
@@ -89,4 +96,107 @@ function requestTerminal(gameID, maxTerminals, groupID, questionGroupID, questio
     xmlhttp.open("GET", file, true)
     xmlhttp.send();
     //check if the group allready is connected to the terminal
+}
+
+//TERMINAL OVERVIEW
+
+var terminals = [];
+
+function openConnection(gameid, groupid, questionGroupID, terminalID, terminalEntryCode) {
+    terminalids.push(terminalID);
+    terminalcodes[terminalID] = terminalEntryCode;
+    let terminals = terminalids.join(",");
+    let url = "watcher/group/terminalwatcher.php?game=" + gameid + "&group=" + groupid + "&qgroup=" + questionGroupID + "&terminals=" + terminals;
+    updater = new EventSource(url);
+    updater.addEventListener('message', (e) => {
+        var newStats = JSON.parse(e.data);
+        updateOverviewHeader(newStats.numofterminals);
+        updateContents(newStats.terminaldata);
+    });
+}
+
+function updateOverviewHeader(quantity) {
+    let box = document.getElementById('terminal_monitor_header');
+    if (quantity === 1) {
+        box.innerText = "1 Actieve Terminal";
+    } else {
+        box.innerText = quantity + " Actieve Terminals";
+    }
+}
+
+function updateContents(terminaldata) {
+    for (var data of terminaldata) {
+        var element = document.getElementById("element_q" + data.qcode);
+        var tinseconds = data.timeleft;
+        if (element) {
+            if (desynchronized(element.childNodes[1].innerText, tinseconds)) {
+                terminals[data.qcode].timeleft = tinseconds;
+                clearInterval(terminals[data.qcode].timerID);
+                terminals[data.qcode].timerID = setInterval(terminalTimer.bind(data.qcode), 1000)
+                element.childNodes[1].innerText = secondsToProperNotation(seconds);
+            }
+        } else {
+            //Create new entry
+            let entry = {
+                "timerID": 0,
+                "entry": null,
+                "timeleft": data.timeleft
+            };
+            terminals[data.qcode] = entry;
+            let newentry = newTerminalEntry(data.qcode, tinseconds, terminalcodes[data.terminalid]);
+            entry.entry = newentry;
+            terminals[data.qcode] = entry;
+            document.getElementById("terminal_monitor").appendChild(newentry);
+        }
+    }
+}
+
+function terminalTimer() {
+    if (terminals[this].timeleft > 0) {
+    var element = document.getElementById("element_q" + this);
+    element.childNodes[1].innerText = secondsToProperNotation(--terminals[this].timeleft);
+    } else {
+        console.log("Terminal for qcode " + this + " expired");
+    }
+}
+
+function newTerminalEntry(questionnum, timeleft, entrycode) {
+    let element = document.createElement("div");
+    element.className = "terminal_monitor_element";
+    element.id = "element_q" + questionnum;
+    let component = document.createElement("div");
+    component.className = "terminal_monitor_element_component";
+    component.innerHTML = "<span>Vraag #" + questionnum + "</span><span>Code: " + entrycode + "</span>";
+    element.appendChild(component);
+    component.innerHTML = "<span>" + secondsToProperNotation(timeleft / 1000) + "</span>";
+    element.appendChild(component);
+    //Start timer
+    //terminals[questionnum].timerID = setInterval(terminalTimer.bind(questionnum), 1000);
+    return element;
+}
+
+function desynchronized(local, remote) {
+    let split = local.split(":");
+    seconds = 60 * split[0] + split[1];
+    return seconds > remote - 2 && seconds < remote + 2;
+}
+
+function secondsToProperNotation(seconds) {
+    let minutes = 0;
+    while (seconds > 59) {
+        minutes++;
+        seconds -= 60;
+    }
+    let returnstring = "";
+    if (minutes < 10) {
+        returnstring += "0" + minutes;
+    } else {
+        returnstring += minutes;
+    }
+    if (seconds < 10) {
+        returnstring += "0" + seconds;
+    } else {
+        returnstring += seconds;
+    }
+    return returnstring;
 }

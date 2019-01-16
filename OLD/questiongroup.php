@@ -60,11 +60,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','" . $_GET["qg"] . "','single');\">"; ?>
-    <!--
-        WIP Terminal monitor
-    <div class="terminal_monitor">
-        <div class="terminal_monitor_header">
+<?php echo "<body onload=\"loadStats('" . $gamedata["gamepin"] . "','" . $groupdata["groupcode"] . "','" . $_GET["qg"] . "');\">"; ?>
+    <div class="terminal_monitor" id="terminal_monitor">
+        <div class="terminal_monitor_header" id="terminal_monitor_header">
             1 Actieve Terminal
         </div>
         <div class="terminal_monitor_element">
@@ -86,7 +84,6 @@
             </div>
         </div>
     </div>
-    !-->
     <div class="holder_top">
         <div class="top_banner">
             <div class="top_banner_resholder">

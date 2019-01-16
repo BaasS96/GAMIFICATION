@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>
+        GAMEPIN
+    </title>
+    <link rel="stylesheet" href="gamepin.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="js/join.js"></script>
+</head>
+
+<body>
+    <div class="holder-h">
+        <div class="holder" id="lastholder">
+            <div class="gamepin_input">
+                <p>Welkom! Voer je gamepin in:</p>
+                <span id="error" class='error'>Die gamepin bestaat niet. Probeer het nog eens.</span><br>
+                <div class="input">
+                    <input id="pin" type="text" length="4" name="gamepin" class="input_text i_gp" required autofocus
+                        maxlength="4" placeholder="GAMEPIN">
+                    <div class="input_submit" id="submit">GO!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template id="groupcode">
+        <div class="gamepin_input">
+            <p>
+                Groepscode: <br />
+                <span class="addinfo">
+                    Deze code heb je van de spelleider gekregen.<br />(Bijvoorbeeld: A9)
+                </span>
+            </p>
+            <span id="error" class='error'>Die groepscode bestaat niet. Probeer het nog eens.</span>
+            <div class="input">
+                <input id="pin" type="text" name="groupcode" class="input_text i_gc" required autofocus maxlength="2"
+                    placeholder="Groepscode">
+                <div id="submit" class="input_submit">GO!</div>
+            </div>
+        </div>
+    </template>
+    <template id="groupname">
+        <div class="gamepin_input">
+            <p>
+                Groepsnaam: <br />
+                <span class="addinfo">
+                    Deze naam komt op je certificaat te staan.
+                </span>
+            </p>
+            <div class="input">
+                <input id="pin" type="text" name="groupname" class="input_text i_rn" required autofocus maxlength="256" placeholder="Groepsnaam">
+                <div id="submit" class="input_submit">GO!</div>
+            </div>
+        </div>
+    </template>
+    <template id="groupmembers">
+        <div class="gamepin_input">
+            <p>
+                Namen groepsleden:<br />
+                <span class="addinfo">
+                    Type na iedere naam een komma.<br />Type na de komma geen spatie.<br />(Bijvoorbeel:
+                    Henk,Mien).
+                </span>
+            </p>
+            <div class="input">
+                <input id='pin'type="text" name="membernames" class="input_text i_mn" required maxlength="256" placeholder="Namen groepsleden"><br>
+                <div id="submit" class="input_submit">GO!</div>
+            </div>
+        </div>
+    </template>
+</body>
+
+</html>

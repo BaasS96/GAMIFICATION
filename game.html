@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>QGROUP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://spin.js.org/spin.css">
+    <script type="module" src="js/game.js"></script>
+    <script type="module" src="js/loadgame.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="u_styles.css">
+    <link rel="stylesheet" href="style_aux.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head> 
+<body>
+    <div id="holder" class="holder" style="display: none;">
+    </div>
+</body>
+<template id="error">
+    <div class="error">
+        <i class="material-icons e_icon">warning</i>
+        <span id="e_text" class="e_text"></span>
+        <button class="e_retry" onclick="window.location.reload();">Opnieuw proberen</button>
+    </div>
+</template>
+<template id="breadcrumb">
+    <div class="breadcrumbs_holder">
+        <a id="text_bread" class="breadcrumbs" title="Terug naar het overzicht." href="index.php" target="_self"></a>
+    </div>
+</template>
+</html>

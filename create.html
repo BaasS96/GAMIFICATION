@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Create Stuff</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="create.js"></script>
+</head>
+
+<body>
+    <h1>Create Stuff:</h1>
+    <div id="selection">
+        <h3>I'm creating:</h3>
+        <input type="radio" id="game_select" name="select" value="game"><label for="game_select">A game</label><br>
+        <input type="radio" id="group_select" name="select" value="group"><label for="group_select">A group</label><br>
+        <input type="radio" id="questiongroup_select" name="select" value="questiongroup"><label for="questiongroup_select">A
+            questiongroup</label><br>
+        <input type="radio" id="question_select" name="select" value="question"><label for="question_select">A question</label><br>
+        <input type="radio" id="terminal_select" name="select" value="terminal"><label for="terminal_select">A terminal</label><br>
+        For game: <br>
+        <input type="text" id='game_num' disabled> Or <input type="checkbox" id='game_num_available' checked>I don't know yet
+    </div>
+    <br>
+    <div id="game" style="display: none">
+        <input type="text" name="creatorname" placeholder="Creator name" required>
+        <input type="text" name="grouptitle" placeholder="Grouptitle" required>
+        <input type="text" name="image" placeholder="Logo image URL" required>
+        <select name="image_location" required>
+            <option value="main" disabled selected>Image location </option>
+            <option value="main">Main images folder (only filename.extension)</option>
+            <option value="game">Game images folder (only filename.extension)</option>
+            <option value="internet">Internet (whole URL)</option>
+        </select>
+        <br />
+        <label for="maxterminals">Number of terminals a group can use at once: </label><input type="number" id="maxterminals"
+            name="maxterminals" value="1">
+        <br />
+        <input type="submit" value="Create game">
+    </div>
+    <div id="group" style="display: none">
+        <input type="number" name="groupnum" value="1" step="1" min="1">
+        <br />
+        <input type="submit" value="Create group(s)">
+    </div>
+    <div id="questiongroup" style="display: none">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="longname" placeholder="Long name" required>
+        <br />
+        <textarea name="description" rows="2" colls="800" style="min-width: 40em;" required placeholder="description"></textarea>
+        <br />
+        <input type="text" name="image" placeholder="Image URL" required>
+        <select name="imagelocation" required>
+            <option value="main" disabled selected>Image location </option>
+            <option value="main">Main images folder (only filename.extension)</option>
+            <option value="game">Game images folder (only filename.extension)</option>
+            <option value="internet">Internet (whole URL)</option>
+        </select>
+        <br />
+        <input type="submit" value="Create questiongroup">
+    </div>
+    <div id="question" style="display: none">
+        <input type="text" name="questiongroup" required placeholder="Questiongroup-id">
+        <input type="text" name="title" placeholder="Title" required>
+        <select name="qtype" required>
+            <option value="text" disabled selected>Question type</option>
+            <option value="text">Text</option>
+            <option value="radio">Radio</option>
+        </select>
+        <br />
+        <textarea name="description" rows="2" colls="800" style="min-width: 40em;" required placeholder="description"></textarea>
+        <br />
+        <input type="text" name="question" placeholder="Question title" required>
+        <input type="text" name="image" placeholder="Image URL">
+        <input type="text" name="answers" placeholder="Answers">
+        <input type="text" name="ranswers" placeholder="Right answers" required>
+        <br />
+        <input type="text" name="qcode" placeholder="Question password">
+        <input type="number" name="exptime" value="60" step="5" min="5" required>
+        <input type="number" name="points" value="1" step="1" min="0" required>
+        <input type="checkbox" name="useterminal" id="useterminal" value="yes"><label for="useterminal">Use terminal</label>
+        <br />
+        <input type="submit" value="Create question">
+    </div>
+    <div id="terminal" style="display: none">
+        <input type="text" name="questiongroup" placeholder="Questiongroup number" required>
+        <input type="text" name="questionnum" placeholder="Question number" required>
+        <input type="text" name="idletext" placeholder="Idle text" required>
+        <br />
+        <input type="submit" value="Create terminal">
+    </div>
+    <br>
+    <div id="status">Idle</div>
+</body>
+
+</html>
