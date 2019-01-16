@@ -1,0 +1,114 @@
+{
+    "name": "Proeven",
+    "longname": "Certificaat Proeven",
+    "description": "Om dit certificaat te verdienen moet je kennis hebben over het proeforgaan",
+    "image": "smaak.jpg",
+    "imagelocation": "main",
+    "id": "P",
+    "questions": {
+        "20": {
+            "id": "20",
+            "title": "Vraag 5",
+            "description": "Je tong. Een veelzijdige spier.",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Wat kun je naast proeven nog meer met je tong?",
+            "answers": [
+                "Met je tong kun je praten.",
+                "Je kunt met je tong eten verplaatsen in je mond.",
+                "Je kunt met je tong je elleboog aanraken."
+            ],
+            "right_answers": [
+                "Je kunt met je tong eten verplaatsen in je mond."
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": true,
+            "terminals": []
+        },
+        "89": {
+            "id": "89",
+            "title": "Introductie & vraag 1",
+            "description": "Klik eerst op deze link: [a(https://schooltv.nl/files/PROGRAMMA/Basisonderwijs/DeBuitendienst/Proeven_van_smaken.pdf)(Over proeven van smaken)]klik hier![/a].",
+            "qtype": "text",
+            "q_pswd": "",
+            "image": "",
+            "question": "Welk orgaan heb je nodig om te proeven?",
+            "answers": [
+                "Neus",
+                "Tong",
+                "Teen",
+                "Maag"
+            ],
+            "right_answers": [
+                "Tong"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "ef": {
+            "id": "ef",
+            "title": "Vraag 2",
+            "description": "Voer de antwoorden in op alfabetische volgorde.",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Welke smaken kunnen we onderscheiden?",
+            "answers": [
+                ""
+            ],
+            "right_answers": [
+                "zuur bitter zout zoet unami"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "7f": {
+            "id": "7f",
+            "title": "Vraag 3",
+            "description": "Waar proef je smaken?",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "waarproefjedesmaak.jpg",
+            "question": "Waar proef je de smaken?",
+            "answers": [
+                "A - Zuur, B - Zoet, C - Bitter, D - Zout",
+                "A - Bitter, B - Zuur, C - Zout, D - Zoet",
+                "A - Zoet, B - Unami, C - Bitter, D - Zout"
+            ],
+            "right_answers": [
+                "A - Bitter, B - Zuur, C - Zout, D - Zoet"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "be": {
+            "id": "be",
+            "title": "Vraag 4",
+            "description": "[img(https://zwangerinfo.com/wp-content/uploads/2016/03/Je-baby-leren-proeven-1.jpg)(Oh, oh helaas)(Klik op mij!)]",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Hoe kunnen we verschillen ervaren tussen twee zoete etenswaren?",
+            "answers": [
+                "We gebruiken onze ogen en oren en neus ook bij het proeven.",
+                "We zien het verschil en proeven het daardoor ook.",
+                "Sommige etenswaren proeven we links op onze tong en sommige rechts."
+            ],
+            "right_answers": [
+                "We gebruiken onze ogen en oren en neus ook bij het proeven."
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        }
+    }
+}

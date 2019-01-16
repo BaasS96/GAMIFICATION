@@ -1,6 +1,10 @@
 <div>
-    Beantwoord deze vraag: <br /><slot id="question_txt"></slot>
-    <br /><a id="question_img_txt" title='Bekijk afbeelding' target='_blank'><slot id="question_img" class='question_img'></slot>
+    Beantwoord deze vraag: <br />
+    <slot id="question_txt"></slot>
+    <br />
+    <a id="question_img_txt" title='Bekijk afbeelding' target='_blank'>
+        <slot id="question_img" class='question_img'></slot>
 </div>
 <input type='text' class='text-input' id='qanswer_text' focus placeholder='Antwoord'>
 <input type='radio' class='radio-input' id='qanswer_mc' value=''><label id="q_label" for='q_'></label>
+<p id="submit_bttn"><input type='button' class='input_submit' value='Go' \></p>

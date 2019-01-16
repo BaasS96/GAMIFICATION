@@ -1,1 +1,73 @@
-{"name":"Groente en Fruit","longname":"Certificaat Groente en Fruit","description":"Om dit certificaat te verdienen moet je vragen beantwoorden die gaan over de energie die je krijgt van voeding.","image":"energie.jpg","imagelocation":"main","id":"GeF"}
+{
+    "name": "Groente en Fruit",
+    "longname": "Certificaat Groente en Fruit",
+    "description": "Om dit certificaat te verdienen moet je vragen beantwoorden die gaan over groente en fruit.",
+    "image": "groentefruit.jpg",
+    "imagelocation": "main",
+    "id": "GeF",
+    "questions": {
+        "89": {
+            "id": "89",
+            "title": "Introductie & vraag 1",
+            "description": "Bij de vragen die je moet beantwoorden om dit certificaat te behalen te kunnen beantwoorden, gebruik je [a(https://willemwever.kro-ncrv.nl/vraag_antwoord)(Klik op mij!)]deze website[/a].",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Wat is het verschil tussen groente en fruit?",
+            "answers": [
+                "Groente is altijd de vrucht met zaadjes van een plant, terwijl fruit ook een ander deel kan zijn, bijvoorbeeld de wortel, knol, stengel of het blad.",
+                "Fruit is altijd de vrucht met zaadjes van een plant, terwijl groente ook een ander deel kan zijn, bijvoorbeeld de wortel, knol, stengel of het blad.",
+                "Er is geen verschil het is allebei gezond."
+            ],
+            "right_answers": [
+                "Fruit is altijd de vrucht met zaadjes van een plant, terwijl groente ook een ander deel kan zijn, bijvoorbeeld de wortel, knol, stengel of het blad."
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "ef": {
+            "id": "ef",
+            "title": "Vraag 2",
+            "description": "Gebruik bij deze vraag weer de website.",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Hoort een olijf bij de groentes of de fruitsoorten?",
+            "answers": [
+                "Groente, want het is een steenvrucht. Deze zijn niet zoet en suikerhoudend.",
+                "Fruit, want het is een vrucht met een pit.",
+                "Geen van beide."
+            ],
+            "right_answers": [
+                "Groente, want het is een steenvrucht. Deze zijn niet zoet en suikerhoudend."
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "7f": {
+            "id": "7f",
+            "title": "Vraag 3",
+            "description": "Gebruik bij deze vraag weer de website.\nLet op! Je hebt bij deze vraag een terminal nodig!",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Waarom is fruit gezond?",
+            "answers": [
+                "Er zit geen suiker in, dus het is een goed tussendoortje.",
+                "Er zitten heel veel vitaminen in en vitaminen zorgen ervoor dat je lichaam goed functioneert.",
+                "Fruit bevat veel koolhydraten."
+            ],
+            "right_answers": [
+                "Er zitten heel veel vitaminen in en vitaminen zorgen ervoor dat je lichaam goed functioneert."
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": true,
+            "terminals": []
+        }
+    }
+}

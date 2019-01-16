@@ -1,0 +1,120 @@
+{
+    "name": "Eetcultuur",
+    "longname": "Certificaat Eetcultuur",
+    "description": "Om dit certificaat te verdienen maak je kennis met verschillende eetculturen.",
+    "image": "eetcultuur.jpg",
+    "imagelocation": "main",
+    "id": "E1",
+    "questions": {
+        "20": {
+            "id": "20",
+            "title": "Vraag 5",
+            "description": "[img(https://chickslovefood.com/wp-content/uploads/sites/4/2018/04/loempia-met-garnalen-close-chickslovefood.jpg)(De loempia is al opgegeten!)(Klik op mij!)]",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Waar komt de loempia oorspronkelijk vandaan?? ",
+            "answers": [
+                "Vietnam",
+                "Thailand",
+                "Indonesië",
+                "China"
+            ],
+            "right_answers": [
+                "China"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "b2": {
+            "id": "b2",
+            "title": "Vraag 1",
+            "description": "Typisch Nederlands?",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Wat is GEEN typische Nederlandse snack die vaak wordt gegeten bij de friet?",
+            "answers": [
+                "Frikandel",
+                "Kroket",
+                "Mexicano",
+                "Bitterballen"
+            ],
+            "right_answers": [
+                "Mexicano"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "ef": {
+            "id": "ef",
+            "title": "Vraag 2",
+            "description": "Typisch Italiaans...",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Wat voor soort maaltijd is bekend uit Italië?",
+            "answers": [
+                "Stamppot",
+                "Pasta",
+                "Biefstuk",
+                "Paella"
+            ],
+            "right_answers": [
+                "Pasta"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "7f": {
+            "id": "7f",
+            "title": "Vraag 3",
+            "description": "Sushi is een bekende vorm van verschillende soorten vis met rijst.",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Uit welk land komt sushi oorspronkelijk? ",
+            "answers": [
+                "China",
+                "Japan",
+                "Noord-Korea",
+                "Taiwan"
+            ],
+            "right_answers": [
+                "Japan"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "be": {
+            "id": "be",
+            "title": "Vraag 4",
+            "description": "[img(https://static.ah.nl/static/recepten/img_003507_1600x560_JPG.jpg)(Oeps! Geen paella vandaag!)(Klik op mij!)]",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "In welk land wordt vaak paella gegeten? ",
+            "answers": [
+                "Spanje",
+                "Turkije",
+                "Griekenland",
+                "Bulgarije"
+            ],
+            "right_answers": [
+                "Spanje"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        }
+    }
+}

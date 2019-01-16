@@ -18,8 +18,7 @@
         <input type="radio" id="questiongroup_select" name="select" value="questiongroup"><label for="questiongroup_select">A
             questiongroup</label><br>
         <input type="radio" id="question_select" name="select" value="question"><label for="question_select">A question</label><br>
-        <input type="radio" id="terminal_select" name="select" value="terminal"><label for="terminal_select">A terminal</label><br>
-        For game: <br>
+        <input type="radio" id="terminal_select" name="select" value="terminal"><label for="terminal_select">A terminal</label><br> For game: <br>
         <input type="text" id='game_num' disabled> Or <input type="checkbox" id='game_num_available' checked>I don't know yet
     </div>
     <br>
@@ -34,8 +33,7 @@
             <option value="internet">Internet (whole URL)</option>
         </select>
         <br />
-        <label for="maxterminals">Number of terminals a group can use at once: </label><input type="number" id="maxterminals"
-            name="maxterminals" value="1">
+        <label for="maxterminals">Number of terminals a group can use at once: </label><input type="number" id="maxterminals" name="maxterminals" value="1">
         <br />
         <input type="submit" value="Create game">
     </div>
@@ -73,8 +71,8 @@
         <br />
         <input type="text" name="question" placeholder="Question title" required>
         <input type="text" name="image" placeholder="Image URL">
-        <input type="text" name="answers" placeholder="Answers">
-        <input type="text" name="ranswers" placeholder="Right answers" required>
+        <textarea name="answers" placeholder="Answers" rows="2" colls="800" style="min-width: 40em;"></textarea>
+        <textarea name="ranswers" placeholder="Right answers" rows="2" colls="800" style="min-width: 40em;" required></textarea>
         <br />
         <input type="text" name="qcode" placeholder="Question password">
         <input type="number" name="exptime" value="60" step="5" min="5" required>

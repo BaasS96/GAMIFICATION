@@ -2,7 +2,8 @@ import { uitemplates, replaceSlots, gamedata, groupdata, getGroupData, getGameDa
 export function logoff() {
     location.href = "game/logoff.php";
 }
-var questionanswered = "<em>Je hebt deze vraag al beantwoord!</em>", reserveterminal = "Om deze vraag te beantwoorden moet je een terminal reserveren. </p><p id='feedbackholder'><button class='input_submit' id='bttn_id'>Reserveer een terminal</button></p>";
+var questionanswered = "<em>Je hebt deze vraag al beantwoord!</em>",
+    reserveterminal = "Om deze vraag te beantwoorden moet je een terminal reserveren. </p><p id='feedbackholder'><button class='input_submit' id='bttn_id'>Reserveer een terminal</button></p>";
 export function openQGroup() {
     //This is bound to the id of the redirector
     var holder = document.getElementById("holder");
@@ -21,12 +22,15 @@ export function openQGroup() {
     for (var i = 0; i < qs.length; i++) {
         let question = qs[i];
         createQuestionSimple(question);
-        document.getElementById("request_terminal_" + question.id).addEventListener('click', reserveTerminal.bind(null, question, this));
+        if (question.useterminal)
+            document.getElementById("request_terminal_" + question.id).addEventListener('click', reserveTerminal.bind(null, question, this));
     }
 }
+
 function goBack() {
     //This is bound to the thing to go back to
 }
+
 function createQuestionSimple(question) {
     var title = document.createElement("h1");
     title.slot = "question_title";
@@ -62,6 +66,7 @@ function createQuestionSimple(question) {
         holder.appendChild(e);
     }
 }
+
 function createQuestionContents(holder, question) {
     let q = document.createElement("em");
     q.innerHTML = question.question;
@@ -69,8 +74,7 @@ function createQuestionContents(holder, question) {
     if (question.useterminal) {
         holder.innerHTML = reserveterminal.replace("bttn_id", "request_terminal_" + question.id);
         return document.createElement("div");
-    }
-    else {
+    } else {
         if (question.image) {
             let image = document.createElement("img");
             image.className = "question_image";
@@ -86,22 +90,25 @@ function createQuestionContents(holder, question) {
     let inputholder = document.createElement("div");
     if (question.qtype === "text") {
         inputholder.appendChild(raw.getElementById("qanswer_text"));
-    }
-    else if (question.qtype === "radio") {
+    } else if (question.qtype === "radio") {
         for (var i = 0; i < question.answers.length; i++) {
             let answerlabel = raw.getElementById("q_label").cloneNode();
             answerlabel.htmlFor = "q_" + i.toString();
             answerlabel.id = "q_label_" + i.toString();
-            let radio = raw.getElementById("qanswer_mc");
-            radio.name = "q_" + i.toString();
+            answerlabel.innerHTML = question.answers[i];
+            let radio = raw.getElementById("qanswer_mc").cloneNode();
+            radio.name = "q_" + question.question;
             radio.id = "q_" + i.toString();
             inputholder.appendChild(radio);
             inputholder.appendChild(answerlabel);
             inputholder.innerHTML += "<br>";
         }
     }
+    let submit = raw.getElementById("submit_bttn").cloneNode(true);
+    inputholder.appendChild(submit);
     return inputholder;
 }
+
 function createBreadCrumb(text, action, actionarg) {
     let crumbtemplate = document.getElementById("breadcrumb");
     let docfrag = crumbtemplate.content.cloneNode(true);
@@ -109,6 +116,7 @@ function createBreadCrumb(text, action, actionarg) {
     docfrag.getRootNode().addEventListener('click', action.bind(actionarg));
     return docfrag.getRootNode();
 }
+
 function requestTerminal(questionGroup, question) {
     let query = "game/reserveterminal.php?";
     query += "gameid=" + gamedata.id;
@@ -124,30 +132,30 @@ function requestTerminal(questionGroup, question) {
     }
     return { fetchpromise: fetch(query) };
 }
+
 function reserveTerminal(question, questiongroup) {
     let initial = requestTerminal(questiongroup, question);
     if (initial.success !== undefined) {
         alert(initial.resulttext);
-    }
-    else {
+    } else {
         initial.fetchpromise
             .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+                if (res.ok) {
+                    return res.json();
+                }
+            })
             .then(res => {
-            if (res.success) {
-                getGroupData();
-                getGameData();
-                alert(res.terminal);
-            }
-            else {
-                alert(res.error);
-            }
-        });
+                if (res.success) {
+                    getGroupData();
+                    getGameData();
+                    alert(res.terminal);
+                } else {
+                    alert(res.error);
+                }
+            });
     }
 }
+
 function groupIsAlreadyUsingTerminal(inuse, assignable) {
     for (var i = 0; i < inuse.length; i++) {
         for (var j = 0; j < assignable.length; j++) {

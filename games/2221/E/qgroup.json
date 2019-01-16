@@ -1,1 +1,90 @@
-{"name":"Energie","longname":"Certificaat Energie","description":"Om dit certificaat te verdienen moet je vragen beantwoorden die gaan over de energie die je krijgt van voeding.","image":"energie.jpg","imagelocation":"main","id":"E"}
+{
+    "name": "Energie",
+    "longname": "Certificaat Energie",
+    "description": "Om dit certificaat te verdienen moet je vragen beantwoorden die gaan over de energie die je krijgt van voeding.",
+    "image": "energie.jpg",
+    "imagelocation": "main",
+    "id": "E",
+    "questions": {
+        "89": {
+            "id": "89",
+            "title": "Introductie & vraag 1",
+            "description": "Bekijk eerst dit filmpje: [a(https://schooltv.nl/video/voeding-voor-sporters-veel-koolhydraten/#q=voeding%20energie)(Kijk naar mij!)]filmpje[/a].",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Waarom eten we?",
+            "answers": [
+                "Omdat we honger hebben.",
+                "In eten zit veel water, dat heb je nodig om te leven.",
+                "Uit eten halen we brandstof en daar krijgen we energie van."
+            ],
+            "right_answers": [
+                "Uit eten halen we brandstof en daar krijgen we energie van."
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "7f": {
+            "id": "7f",
+            "title": "Vraag 3",
+            "description": "Zoek eventueel op.",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Wat zijn calorieën?",
+            "answers": [
+                "In eten zitten voedingsstoffen. Hoeveel voedingstoffen er in een kilo eten zitten, wordt uitgedrukt in calorieën.",
+                "In alles wat je eet zit energie. Die energie wordt \"gemeten\" in kilocalorieën.",
+                "Calorieën zijn diertjes in je eten."
+            ],
+            "right_answers": [
+                "In alles wat je eet zit energie. Die energie wordt \"gemeten\" in kilocalorieën."
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        },
+        "ef": {
+            "id": "ef",
+            "title": "Vraag 2",
+            "description": "[i]Let op! Bij deze vraag heb je een terminal nodig![/i]\nMeisjes van elf of twaalf jaar hebben per dag ongeveer 2200 kcal nodig. Jongens hebben ongeveer 2350 kcal nodig. Een boterham is ongeveer 85 kcal.\nStel dat je de hele dag alleen maar boterhammen eet. Hoeveel boterhammen moet een meisje van elf of twaalf jaar ongeveer op een dag eten? Rond af naar [b]boven[/b].",
+            "qtype": "text",
+            "q_pswd": "",
+            "image": "",
+            "question": "Hoeveel boterhammen?",
+            "answers": [
+                ""
+            ],
+            "right_answers": [
+                "26"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": true,
+            "terminals": []
+        },
+        "be": {
+            "id": "be",
+            "title": "Vraag 4",
+            "description": "Een gevulde koek is ongeveer 260kcal. 280 Kilocalorieën verbranden staat gelijk aan ongeveer 1 uur wandelen!\nHoe lang moet je wandelen om een gevulde koek te verbranden? Rond af op een heel getal. Geef je antwoord in [u]minuten[/u].\n[i]Tip: gebruik een verhoudingstabel[/i]",
+            "qtype": "text",
+            "q_pswd": "",
+            "image": "",
+            "question": "Hoe lang moet je wandelen? ... minuten",
+            "answers": [
+                ""
+            ],
+            "right_answers": [
+                "56"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        }
+    }
+}

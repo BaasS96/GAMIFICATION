@@ -110,8 +110,8 @@
     }
 
     function createQuestion($data) {
-        $answers = explode(', ', $data->answers);
-        $ranswers = explode(', ', $data->ranswers);
+        $answers = preg_split('/\r\n|\r|\n/', $data->answers);
+        $ranswers = preg_split('/\r\n|\r|\n/', $data->ranswers);
         $code = substr(md5($data->title), 0, 2);
         $questiondata = [
             'id' => $code,
