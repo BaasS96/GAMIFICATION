@@ -28,7 +28,8 @@ export function openQGroup() {
     for (var i = 0; i < qs.length; i++) {
         let question = qs[i];
         createQuestionSimple(question);
-        document.getElementById("request_terminal_" + question.id).addEventListener('click', reserveTerminal.bind(null, question, this));
+        if (question.useterminal)
+            document.getElementById("request_terminal_" + question.id).addEventListener('click', reserveTerminal.bind(null, question, this));
     }
 }
 
@@ -99,7 +100,9 @@ function createQuestionContents(holder : HTMLElement, question : Question) : HTM
         }
     }
 
-    let raw = uitemplates.get("questionbody.html");
+    let r = uitemplates.get("questionbody.html");
+    let raw = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);
+    raw.documentElement.appendChild(r.body.cloneNode(true));
     let d = replaceSlots(slots, raw);
     let holderdiv = d.children[0];
 
@@ -107,15 +110,16 @@ function createQuestionContents(holder : HTMLElement, question : Question) : HTM
 
     let inputholder = document.createElement("div");
     if (question.qtype === "text") {
-        inputholder.appendChild(raw.getElementById("qanswer_text"));
+        inputholder.appendChild(raw.getElementById("qanswer_text").cloneNode());
     } else if (question.qtype === "radio") {
         for (var i = 0; i < question.answers.length; i++) {
             let answerlabel = <HTMLLabelElement>raw.getElementById("q_label").cloneNode();
             answerlabel.htmlFor = "q_" + i.toString();
             answerlabel.id = "q_label_" + i.toString();
+            answerlabel.innerHTML = question.answers[i];
 
-            let radio = <HTMLInputElement>raw.getElementById("qanswer_mc");
-            radio.name = "q_" + i.toString();
+            let radio = <HTMLInputElement>raw.getElementById("qanswer_mc").cloneNode();
+            radio.name = "q_" + question.question;
             radio.id = "q_" + i.toString();
 
             inputholder.appendChild(radio);
@@ -123,7 +127,7 @@ function createQuestionContents(holder : HTMLElement, question : Question) : HTM
             inputholder.innerHTML += "<br>";
         }
     }
-
+    inputholder.appendChild(raw.getElementById("submit_bttn"));
     return inputholder;
 }
 

@@ -75,7 +75,12 @@ export var uitemplates = new Map<string, Document>();
 function initializeCurentParameters() {
     fetch('game/currentsession.php')
         .then(res => { if (res.ok) return res.json() })
-        .then(res => { game = res.game; group = res.group; document.title = game + ' - ' + group; 
+        .then(res => { 
+            if (res.error) {
+                displayError("Er is een probleem opgetreden: <i>No session set</i>");
+                throw new Error("No session set");
+            }
+            game = res.game; group = res.group; document.title = game + ' - ' + group; 
             getGameData();
     });
 }
@@ -142,10 +147,11 @@ function initUI(further : Function) {
             return Promise.all(promises);
         })
         .then(texts => {
-            for (var i = 0; i < texts.length-1; i+=2) {
+            texts.unshift(undefined);
+            for (var i = 1; i < texts.length; i+=2) {
                 uitemplates.set(texts[i+1], stringToDom(texts[i]));
-                initUI(buildUI);
             }
+            initUI(buildUI);
         });
     }
 }
