@@ -7,7 +7,6 @@ window.onload = function () {
     console.log(Spinner);
     spinner = new Spinner().spin(target);
     initializeCurentParameters();
-    waitForFetch();
 };
 var uifragments = [
     'game_header.html',
@@ -25,7 +24,12 @@ function initializeCurentParameters() {
     fetch('game/currentsession.php')
         .then(res => { if (res.ok)
         return res.json(); })
-        .then(res => { game = res.game; group = res.group; document.title = game + ' - ' + group; getGameData(), getGroupData(); });
+        .then(res => {
+        game = res.game;
+        group = res.group;
+        document.title = game + ' - ' + group;
+        getGameData();
+    });
 }
 export function getGroupData() {
     fetch('game/groupdata.php?game=' + game + "&group=" + group)
@@ -36,8 +40,8 @@ export function getGroupData() {
     })
         .then(res => {
         if (res.success) {
-            dataready++;
             groupdata = JSON.parse(res.data);
+            initUI(buildUI);
         }
         else {
             alert("Error!");
@@ -53,29 +57,13 @@ export function getGameData() {
     })
         .then(res => {
         if (res.success) {
-            dataready++;
             gamedata = JSON.parse(res.data);
+            getGroupData();
         }
         else {
             alert("Error!");
         }
     });
-}
-function waitForFetch() {
-    if (dataready < 1) {
-        setTimeout(waitForFetch, 10);
-    }
-    else {
-        initUI(buildUI);
-    }
-}
-function waitForFetch_2() {
-    if (dataready < 1) {
-        setTimeout(waitForFetch_2, 10);
-    }
-    else {
-        buildQuestiongroupsUI();
-    }
 }
 function initUI(further) {
     if (!(uitemplates.size === 0)) {
