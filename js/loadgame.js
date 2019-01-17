@@ -25,6 +25,10 @@ function initializeCurentParameters() {
         .then(res => { if (res.ok)
         return res.json(); })
         .then(res => {
+        if (res.error) {
+            displayError("Er is een probleem opgetreden: <i>No session set</i>");
+            throw new Error("No session set");
+        }
         game = res.game;
         group = res.group;
         document.title = game + ' - ' + group;

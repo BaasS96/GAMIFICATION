@@ -75,7 +75,12 @@ export var uitemplates = new Map<string, Document>();
 function initializeCurentParameters() {
     fetch('game/currentsession.php')
         .then(res => { if (res.ok) return res.json() })
-        .then(res => { game = res.game; group = res.group; document.title = game + ' - ' + group; 
+        .then(res => { 
+            if (res.error) {
+                displayError("Er is een probleem opgetreden: <i>No session set</i>");
+                throw new Error("No session set");
+            }
+            game = res.game; group = res.group; document.title = game + ' - ' + group; 
             getGameData();
     });
 }
