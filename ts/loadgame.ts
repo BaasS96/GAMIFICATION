@@ -9,7 +9,6 @@ window.onload = function () {
     console.log(Spinner);
     spinner = new Spinner().spin(target);
     initializeCurentParameters();
-    waitForFetch();
 };
 
 var uifragments = [
@@ -76,7 +75,9 @@ export var uitemplates = new Map<string, Document>();
 function initializeCurentParameters() {
     fetch('game/currentsession.php')
         .then(res => { if (res.ok) return res.json() })
-        .then(res => { game = res.game; group = res.group; document.title = game + ' - ' + group; getGameData(), getGroupData(); });
+        .then(res => { game = res.game; group = res.group; document.title = game + ' - ' + group; 
+            getGameData();
+    });
 }
 
 export function getGroupData() {
@@ -87,9 +88,9 @@ export function getGroupData() {
             }
         })
         .then(res => {
-            if (res.success) {
-                dataready++;
+            if (res.success) {  
                 groupdata = JSON.parse(res.data);
+                initUI(buildUI);
             } else {
                 alert("Error!");
             }
@@ -105,59 +106,47 @@ export function getGameData() {
         })
         .then(res => {
             if (res.success) {
-                dataready++;
                 gamedata = JSON.parse(res.data);
+                getGroupData();
             } else {
                 alert("Error!");
             }
         })
 }
 
-function waitForFetch() {
-    if (dataready < 1) {
-        setTimeout(waitForFetch, 10);
-    } else {
-        initUI(buildUI);
-    }
-}
-
-function waitForFetch_2() {
-    if (dataready < 1) {
-        setTimeout(waitForFetch_2, 10);
-    } else {
-        buildQuestiongroupsUI();
-    }
-}
-
 function initUI(further : Function) {
     if (!(uitemplates.size === 0)) {
         further();
     } else {
-        dataready = -1;
-        plusone = Math.ceil(2 / uifragments.length);
-        uifragments.forEach(i =>  {
-            fetch('game/' + i)
-                .then(res => {
-                    if (res.ok) {
-                        if (res.status !== 200) {
-                            dataready = -1;
-                            displayError("Niet alles kon worden geladen...");
-                            throw new Error("Something went wrong");
-                        } else {
-                            return res.text();
-                        }
-                    } else {
-                        dataready = -1;
+        let fragments = [];
+        for (var fragment of uifragments) {
+            fragments.push(fetch('game/' + fragment));
+        }
+        Promise.all(fragments)
+        .then(response => {
+            let promises = [];
+            response.forEach(res => {
+                if (res.ok) {
+                    if (res.status !== 200) {
                         displayError("Niet alles kon worden geladen...");
                         throw new Error("Something went wrong");
+                    } else {
+                        let url = res.url.substr(res.url.lastIndexOf('/') + 1);
+                        promises.push(res.text(), url);
                     }
-                })
-                .then(res => {
-                    dataready += plusone;
-                    uitemplates.set(i, stringToDom(res));
-                });
+                } else {
+                    displayError("Niet alles kon worden geladen...");
+                    throw new Error("Something went wrong");    
+                }
+            });
+            return Promise.all(promises);
+        })
+        .then(texts => {
+            for (var i = 0; i < texts.length-1; i+=2) {
+                uitemplates.set(texts[i+1], stringToDom(texts[i]));
+                initUI(buildUI);
+            }
         });
-        waitForFetch();
     }
 }
 
@@ -193,7 +182,12 @@ function buildQuestiongroupsUI() {
             let bttn = raw.getElementById("obj_certificate");
             bttn.title = "Naar vragengroep:"  + qgroup.name;
             bttn.addEventListener('click', openQGroup.bind(qgroup));
-            raw.getElementById("obj_certificate_banner").style.backgroundImage = "url(" + imgurl + ")";
+            let size = raw.getElementById("obj_certificate_banner");
+            let ninem = parseFloat(getComputedStyle(size).width);
+            let image = new Image();
+            image.src = imgurl;
+            image.className = "obj_certificate_banner_img";
+            size.appendChild(image);
             let d = replaceSlots([name, longname, description], raw);
             for (var e of d.children) {
                 holder.appendChild(e);
@@ -212,32 +206,35 @@ function buildUI() {
 
 function buildQuestiongroups() {
     if (gamedata.qgroups.length > 0) {
-        dataready = -1; 
-        plusone = Math.ceil(2 / gamedata.qgroups.length);
+        let promises = [];
         for (var i = 0; i < gamedata.qgroups.length; i++) {
             let url = gamedata.qgroups[i] + "/qgroup.json";
-            fetch(url)
-            .then(res => {
+            promises.push(fetch(url));
+        }
+        Promise.all(promises)
+        .then(response => {
+            let promises = [];
+            response.forEach(res => {
                 if (res.ok) {
                     if (res.status !== 200) {
-                        dataready = -1;
                         displayError("Niet alles kon worden geladen...");
                         throw new Error("Something went wrong");
                     } else {
-                        return res.json();
+                        promises.push(res.json());
                     }
                 } else {
-                    dataready = -1;
                     displayError("Niet alles kon worden geladen...");
-                    throw new Error("Something went wrong");
+                    throw new Error("Something went wrong");    
                 }
-            })
-            .then(res => {
-                dataready += plusone;
-                questiongroups.push(<QuestionGroup><unknown>res);
             });
-        }
-        waitForFetch_2();
+            return Promise.all(promises);
+        })
+        .then(json => {
+            for (var i = 0; i < json.length; i++) {
+                questiongroups.push(<QuestionGroup><unknown>json[i]);
+            }
+            buildQuestiongroupsUI();
+        });
     }
 }
 
@@ -253,6 +250,7 @@ function buildHeader() {
     group.innerHTML = groupdata.name;
 
     let raw = uitemplates.get('game_header.html');
+    console.log(raw.body);
     raw.getElementById("logoffbutton").addEventListener('click', logoff);
     let d = replaceSlots([game, group], raw);
     for (var e of d.children) {
