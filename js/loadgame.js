@@ -96,10 +96,11 @@ function initUI(further) {
             return Promise.all(promises);
         })
             .then(texts => {
-            for (var i = 0; i < texts.length - 1; i += 2) {
+            texts.unshift(undefined);
+            for (var i = 1; i < texts.length; i += 2) {
                 uitemplates.set(texts[i + 1], stringToDom(texts[i]));
-                initUI(buildUI);
             }
+            initUI(buildUI);
         });
     }
 }
