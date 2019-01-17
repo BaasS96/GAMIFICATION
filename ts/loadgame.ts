@@ -193,7 +193,12 @@ function buildQuestiongroupsUI() {
             let bttn = raw.getElementById("obj_certificate");
             bttn.title = "Naar vragengroep:"  + qgroup.name;
             bttn.addEventListener('click', openQGroup.bind(qgroup));
-            raw.getElementById("obj_certificate_banner").style.backgroundImage = "url(" + imgurl + ")";
+            let size = raw.getElementById("obj_certificate_banner");
+            let ninem = parseFloat(getComputedStyle(size).width);
+            let image = new Image(ninem, ninem);
+            image.src = imgurl;
+            image.className = "obj_certificate_banner_img";
+            size.appendChild(image);
             let d = replaceSlots([name, longname, description], raw);
             for (var e of d.children) {
                 holder.appendChild(e);
