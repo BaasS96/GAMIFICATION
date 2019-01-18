@@ -276,7 +276,7 @@ export function replaceSlots(replacees : Array<Element>, targetdocument : Docume
     return <HTMLBodyElement>targetdocument.body;
 }
 
-function displayError(error : string) {
+function displayError(error : string = "Er is iets foutgegaan") {
     let temp = <HTMLTemplateElement>document.getElementById("error");
     let fragment = temp.content.cloneNode(true);
     document.body.innerHTML = "";

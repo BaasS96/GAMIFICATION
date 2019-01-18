@@ -219,7 +219,7 @@ export function replaceSlots(replacees, targetdocument) {
     }
     return targetdocument.body;
 }
-function displayError(error) {
+function displayError(error = "Er is iets foutgegaan") {
     let temp = document.getElementById("error");
     let fragment = temp.content.cloneNode(true);
     document.body.innerHTML = "";
