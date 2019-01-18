@@ -129,6 +129,11 @@ body {
     align-items: center; 
 }
 
+.titlebar.sub {
+    margin-left: 0vw;
+    margin-right: 0vw;
+}
+
 .lastupdate {
     font-size: 1rem;
     font-style: italic;

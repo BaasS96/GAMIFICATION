@@ -38,3 +38,7 @@
 .holder_info:last-child {   
     border-bottom: none;
 }
+
+.game_image {
+    max-width: 100%;
+}

@@ -1,4 +1,4 @@
-import {loadGame, gamepin, setGamePin} from './load';
+import {loadGame, gamepin, setGamePin} from './load.js';
 
 var pinvalid : boolean = false;
 

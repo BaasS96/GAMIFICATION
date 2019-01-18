@@ -6,14 +6,37 @@ export class Game {
 
     element: HTMLElement;
 
+    terminals : Object;
+    qgroups : any;
+
     constructor(data: GameData) {
         this.data = data;
         //@ts-ignore
-        //delete this.data.terminals;
-        //delete this.data.qgroups;
+        this.terminals = this.data.terminals;
+        delete this.data.terminals;
+        this.qgroups = this.data.qgroups;
+        delete this.data.qgroups;
+
+        let imgurl = this.data.image;
+        if (this.data.imagelocation === "main") {
+            imgurl = "../../images/" + imgurl;
+        }
+        else if (this.data.imagelocation === "game") {
+            imgurl = "../../games/" + this.data.id + "/images/" + imgurl;
+        }
+        this.data.image = imgurl;
+
         let date = new Date(this.data.creationtime * 1000);
         this.data.creationtime = <number><unknown>(date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear());
         this.lastupdate = Math.round((new Date()).getTime() / 1000);
+    }
+
+    get getTerminals() {
+        return this.terminals;
+    }
+
+    get getQGroups() {
+        return this.qgroups;
     }
 
     update(newdata: GameData) {
@@ -33,7 +56,12 @@ export class Game {
         for (var p of spans) {
             l += p;
         }   
-        l += "</div></div>";
+        l += `</div>
+        </div>
+        <div class="titlebar sub">
+        Image
+        </div>
+        <img class="game_image" src="` + this.data.image + `"\\>`;
         return l;
     }
 }

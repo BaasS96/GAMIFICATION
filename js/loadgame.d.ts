@@ -8,6 +8,16 @@ export interface GameData {
     creationtime: number;
     qgroups: Array<string>;
 }
+
+export interface GroupData {
+    name : string;
+    id : string;
+    members : string;
+    certificates : Array<string>;
+    terminals : Array<any>;
+    lastactive : number;
+}
+
 export interface QuestionGroup {
     name: string;
     longname: string;
