@@ -1,3 +1,11 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 window.onload = function () {
     initializeTerminal();
     document.getElementsByClassName("holder-v")[0].addEventListener('click', toggleLockState);
@@ -8,6 +16,7 @@ var params;
 var terminaldata, questiondata;
 var inuse = false, locked = true;
 var timeremaining, countdown;
+var givenanswer, answerright;
 function initializeTerminal() {
     params = window.location.search.substr(1);
     let looseparams = params.split("&");
@@ -78,6 +87,63 @@ function getQuestionData() {
         }
     });
 }
+function submitAnswer() {
+    let points = answerright ? questiondata.points : 0;
+    var data = {
+        game: game,
+        group: terminaldata.group,
+        qgroup: terminaldata.questiongroup,
+        question: terminaldata.question,
+        answerdata: {
+            correct: answerright,
+            answer: givenanswer,
+            points: points,
+            timeleft: timeremaining
+        }
+    };
+    ((data) => __awaiter(this, void 0, void 0, function* () {
+        const rawResponse = yield fetch('../game/submitquestion.php', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const content = yield rawResponse.json();
+        //Process content
+        if (!content.succes || content.succes === 0) {
+            alert("Er is iets foutgegaan!");
+            throw new Error("Unexpected response from server while submitting: failure to write data, or no data written.");
+        }
+        //Reset
+        resetTerminal();
+    }))(data);
+}
+function resetTerminal() {
+    clearInterval(countdown);
+    timeremaining = 0;
+    givenanswer = undefined;
+    answerright = undefined;
+    inuse = false;
+    fetch("resetterminal.php", {
+        method: 'POST',
+        body: JSON.stringify({ game: game, terminal: terminaldata.id, group: terminaldata.group })
+    })
+        .then(res => {
+        if (res.ok)
+            return res.json();
+    })
+        .then(res => {
+        if (res.succes) {
+            document.getElementById("contentHolder").innerHTML = "<p class='idletext'>" + terminaldata.text + "</p>";
+        }
+        else {
+            alert("Er is iets foutgegaan!");
+            throw new Error("An error occured while resetting the terminal");
+        }
+    });
+}
 function setupAnswerEnvironment() {
     if (!questiondata) {
         setTimeout(setupAnswerEnvironment, 20);
@@ -105,13 +171,36 @@ function setupAnswerEnvironment() {
                 holder.innerHTML += iInput;
             }
         }
-        var iButton = "<input type='button' class='button' onclick=\"checkQanswer();\"value='Go'>";
+        var iButton = "<input type='button' class='button' onclick=\"checkAnswer();\"value='Go'>";
         holder.innerHTML += iButton;
     }
     else {
         document.getElementById("qcode").value = "";
         document.getElementById("qcode").placeholder = "Try again";
     }
+}
+function checkAnswer() {
+    if (questiondata.qtype == "text") {
+        var qAnswer = document.getElementById("qanswer").value;
+    }
+    else if (questiondata.qtype == "radio") {
+        var qAnswer = document.querySelector('.radio-input:checked').value;
+    }
+    givenanswer = qAnswer;
+    answerright = false;
+    if (questiondata.right_answers.indexOf(qAnswer) > -1) {
+        answerright = true;
+        document.getElementById("feedbackholder-right").style.display = "block";
+        submitAnswer();
+    }
+    else {
+        document.getElementById("feedbackholder-wrong").style.display = "block";
+        var closefeedback = setTimeout(function () { closeFeedback('wrong'); }, 5000);
+    }
+}
+function closeFeedback(type) {
+    var element = "feedbackholder-" + type;
+    document.getElementById(element).style.display = "none";
 }
 function buildImageURI(uri) {
     return "../images/" + uri;
@@ -141,6 +230,9 @@ function countDown() {
     if (timeremaining > 0) {
         timeremaining -= 1000;
         document.getElementById("countdown").innerHTML = secondsToTimeString(Math.round(timeremaining / 1000));
+    }
+    else {
+        //What happens?
     }
 }
 function secondsToTimeString(seconds) {
