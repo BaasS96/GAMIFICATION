@@ -17,6 +17,7 @@ var terminaldata, questiondata;
 var inuse = false, locked = true;
 var timeremaining, countdown;
 var givenanswer, answerright;
+var closeterminaltimer;
 function initializeTerminal() {
     params = window.location.search.substr(1);
     let looseparams = params.split("&");
@@ -192,10 +193,22 @@ function checkAnswer() {
         answerright = true;
         document.getElementById("feedbackholder-right").style.display = "block";
         submitAnswer();
+        closeterminaltimer = setInterval(function () {
+            let obj = document.getElementById("autoclosetime");
+            let timeleft = parseInt(obj.getAttribute("timeleft"));
+            if (timeleft >= 1) {
+                timeleft--;
+                obj.innerHTML = timeleft.toString();
+                obj.setAttribute("timeleft", timeleft.toString());
+            }
+            else {
+                closeFeedback("right");
+                clearInterval(closeterminaltimer);
+            }
+        }, 1000);
     }
     else {
         document.getElementById("feedbackholder-wrong").style.display = "block";
-        var closefeedback = setTimeout(function () { closeFeedback('wrong'); }, 5000);
     }
 }
 function closeFeedback(type) {

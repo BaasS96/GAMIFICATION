@@ -85,7 +85,7 @@ function initializeCurentParameters() {
     });
 }
 
-export function getGroupData() {
+export function getGroupData(init : boolean) {
     fetch('game/groupdata.php?game=' + game + "&group=" + group)
         .then(res => {
             if (res.ok) {
@@ -95,7 +95,7 @@ export function getGroupData() {
         .then(res => {
             if (res.success) {  
                 groupdata = JSON.parse(res.data);
-                initUI(buildUI);
+                if (init) initUI(buildUI);
             } else {
                 alert("Error!");
             }
@@ -112,7 +112,7 @@ export function getGameData() {
         .then(res => {
             if (res.success) {
                 gamedata = JSON.parse(res.data);
-                getGroupData();
+                getGroupData(true);
             } else {
                 alert("Error!");
             }

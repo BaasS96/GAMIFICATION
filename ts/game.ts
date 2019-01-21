@@ -40,7 +40,7 @@ export function openQGroup() {
             answered = cert.hasOwnProperty(question.id);
         }
         createQuestionSimple(question, answered);
-        if (question.useterminal)
+        if (question.useterminal && !answered)
             document.getElementById("request_terminal_" + question.id).addEventListener('click', reserveTerminal.bind(null, question, this));
     }
 }
@@ -192,8 +192,9 @@ function reserveTerminal(question : Question, questiongroup : QuestionGroup) {
         })
         .then(res => {
             if (res.success) {
-                getGroupData();
-                getGameData();
+                setTimeout(() => {
+                    getGroupData(false);
+                }, question.exptime * 1000);
                 alert(res.terminal);
             } else {
                 alert(res.error);

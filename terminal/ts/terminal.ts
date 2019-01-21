@@ -10,6 +10,7 @@ var terminaldata: Terminal, questiondata: Question;
 var inuse: boolean = false, locked: boolean = true;
 var timeremaining: number, countdown: number;
 var givenanswer, answerright : boolean;
+var closeterminaltimer : number;
 
 interface Terminal {
     text: string,
@@ -215,9 +216,20 @@ function checkAnswer() {
         answerright = true;
         document.getElementById("feedbackholder-right").style.display = "block";
         submitAnswer();
+        closeterminaltimer = setInterval(function() {
+            let obj = document.getElementById("autoclosetime");
+            let timeleft = parseInt(obj.getAttribute("timeleft"));
+            if (timeleft >= 1) {
+                timeleft--;
+                obj.innerHTML = timeleft.toString();
+                obj.setAttribute("timeleft", timeleft.toString());
+            } else {
+                closeFeedback("right");
+                clearInterval(closeterminaltimer);
+            }
+        }, 1000);
     } else {
         document.getElementById("feedbackholder-wrong").style.display = "block";
-        var closefeedback = setTimeout(function() { closeFeedback('wrong'); }, 5000);
     }
 }
 

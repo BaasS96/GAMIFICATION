@@ -1,4 +1,4 @@
-import { uitemplates, replaceSlots, gamedata, groupdata, getGroupData, getGameData } from './loadgame.js';
+import { uitemplates, replaceSlots, gamedata, groupdata, getGroupData } from './loadgame.js';
 export function logoff() {
     location.href = "game/logoff.php";
 }
@@ -31,7 +31,7 @@ export function openQGroup() {
             answered = cert.hasOwnProperty(question.id);
         }
         createQuestionSimple(question, answered);
-        if (question.useterminal)
+        if (question.useterminal && !answered)
             document.getElementById("request_terminal_" + question.id).addEventListener('click', reserveTerminal.bind(null, question, this));
     }
 }
@@ -159,8 +159,9 @@ function reserveTerminal(question, questiongroup) {
         })
             .then(res => {
             if (res.success) {
-                getGroupData();
-                getGameData();
+                setTimeout(() => {
+                    getGroupData(false);
+                }, question.exptime * 1000);
                 alert(res.terminal);
             }
             else {

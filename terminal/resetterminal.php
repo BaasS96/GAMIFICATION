@@ -1,5 +1,6 @@
 <?php
     $entityBody = file_get_contents('php://input');
+    $entityBody = json_decode($entityBody);
 
     $basepath = "../games/" . $entityBody->game;
     $terminalpath = $basepath . "/game.json";
@@ -13,7 +14,7 @@
     
     for ($i = 0; $i < count($terminaldata->terminals); $i++) {
         if ($terminaldata->terminals[$i]->id == $entityBody->terminal) {
-            $currentterminal = $terminaldata->terminals[$i];
+            $currentterminal = (object)$terminaldata->terminals[$i] ;
             $index = $i;
             break;
         }
@@ -21,8 +22,8 @@
 
     $terminal = [
         'text' => $currentterminal->text,
-        'questiongroup' => NULL,
-        'question' => NULL,
+        'questiongroup' => $currentterminal->questiongroup,
+        'question' => $currentterminal->question,
         'group' => NULL,
         'activated' => true,
         'inuse' => false,
