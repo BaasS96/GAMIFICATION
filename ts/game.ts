@@ -7,8 +7,12 @@ export function logoff() {
 var questionanswered = "<em>Je hebt deze vraag al beantwoord!</em>",
     reserveterminal = "Om deze vraag te beantwoorden moet je een terminal reserveren. </p><p id='feedbackholder'><button class='input_submit' id='bttn_id'>Reserveer een terminal</button></p>";
 
+var currentquestions;
+var currentqgroup : QuestionGroup;
+
 export function openQGroup() {
     //This is bound to the id of the redirector
+    currentqgroup = this;
     var holder = document.getElementById("holder");
     let frag = createBreadCrumb('Game ' + gamedata.id + ' - Vragengroup ' + this.id, goBack, 'game');
     holder.innerHTML = "";
@@ -25,9 +29,17 @@ export function openQGroup() {
         }
     }
 
+    currentquestions = qs;
+
     for (var i = 0; i < qs.length; i++) {
         let question = qs[i];
-        createQuestionSimple(question);
+        let answered = false;
+        if (groupdata.certificates[this.id]) {
+            //Question answered
+            let cert : Object = groupdata.certificates[this.id];
+            answered = cert.hasOwnProperty(question.id);
+        }
+        createQuestionSimple(question, answered);
         if (question.useterminal)
             document.getElementById("request_terminal_" + question.id).addEventListener('click', reserveTerminal.bind(null, question, this));
     }
@@ -37,7 +49,7 @@ function goBack() {
     //This is bound to the thing to go back to
 }
 
-function createQuestionSimple(question : Question) {
+function createQuestionSimple(question : Question, answered : boolean) {
     var title = document.createElement("h1");
     title.slot = "question_title";
     title.innerHTML = question.title;
@@ -58,20 +70,15 @@ function createQuestionSimple(question : Question) {
     let r = uitemplates.get("question.html");
     let raw = document.implementation.createDocument('http://www.w3.org/1999/xhtml', 'html', null);
     raw.documentElement.appendChild(r.body.cloneNode(true));
-
-    let answered = false;
-
-    if (groupdata.certificates[this]) {
-        //Question answered
-        if (groupdata.certificates[this][question.id]) {
-            answered = true;
-            hold.innerHTML = questionanswered;
-        }
-    }
+    let parentholder = raw.getElementsByTagName("div")[0];
+    parentholder.id = "question_cont_" + question.id;
 
     if (!answered) {
         let parentdiv = raw.getElementById("question_");
         parentdiv.appendChild(createQuestionContents(hold, question));
+    } else {
+        hold.innerHTML = questionanswered;
+        parentholder.classList.add("obj_certificate-YGOT");
     }
 
     let d = replaceSlots([title, description, feedback, hold], raw);
@@ -109,6 +116,7 @@ function createQuestionContents(holder : HTMLElement, question : Question) : HTM
     holder.appendChild(holderdiv);
 
     let inputholder = document.createElement("div");
+    inputholder.id = "holder_q_" + question.id;
     if (question.qtype === "text") {
         inputholder.appendChild(raw.getElementById("qanswer_text").cloneNode());
     } else if (question.qtype === "radio") {
@@ -127,7 +135,14 @@ function createQuestionContents(holder : HTMLElement, question : Question) : HTM
             inputholder.innerHTML += "<br>";
         }
     }
-    inputholder.appendChild(raw.getElementById("submit_bttn"));
+    let feedback = document.createElement("p");
+    feedback.className = "feedback";
+    feedback.id = "questionfeed_back_" + question.id;
+    let a = inputholder.appendChild(raw.getElementById("submit_bttn"));
+    let b = inputholder.appendChild(feedback);
+    a.addEventListener('click', function() {
+        checkAnswer(this);
+    }.bind({q: question, f: feedback}));
     return inputholder;
 }
 
@@ -196,4 +211,65 @@ function groupIsAlreadyUsingTerminal(inuse : Array<string>, assignable : Array<s
         }
     }
     return false;
+}
+
+function checkAnswer(data : {q : Question, f : HTMLElement}) {
+    let question : Question = data.q;
+    let holder = document.getElementById("holder_q_" + question.id);
+    var qanswer;
+    if (question.qtype === "text") {
+        qanswer = holder.querySelector(".text-input").value;
+    } else {
+        qanswer = holder.querySelector('.radio-input:checked').value;
+    }
+
+    if (question.right_answers.indexOf(qanswer) > -1) {
+        data.f.className = "feedback-right";
+        data.f.innerHTML = "<i class='material-icons' title='Antwoord goed'>done</i> Je hebt de vraag goed beantwoord!";
+        setTimeout(() => {
+            submitAnswer(question, qanswer);
+            document.getElementById("question_cont_" + question.id).classList.add("obj_certificate-YGOT");
+            holder.parentElement.innerHTML = questionanswered;
+        }, 5000);
+    } else {
+        data.f.className = "feedback-wrong";
+        data.f.innerHTML = "<i class='material-icons' title='Antwoord fout'>warning</i> Oeps, dat was niet goed. Probeer het nog eens.";
+    }
+}
+
+function submitAnswer(question : Question, answer : any) {
+    var data = {
+        game: gamedata.id,
+        group: groupdata.id,
+        qgroup: currentqgroup.id,
+        question: question.id,
+        answerdata : {
+            correct: true,
+            answer: answer,
+            points: question.points,
+            timeleft: -1
+        }
+    };
+    fetch("game/submitquestion.php", {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }
+    )
+    .then(res => {
+        if (res.ok) {
+            return res.json();
+        } else {
+            throw new Error();
+        }
+    })
+    .then(json => {
+        if (!json.succes || json.succes === 0) {
+            alert("Er is iets foutgegaan!");
+            throw new Error("Unexpected response from server while submitting: failure to write data, or no data written.");
+        }
+    });
 }
