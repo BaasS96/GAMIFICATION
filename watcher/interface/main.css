@@ -12,6 +12,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 }
 
 .gameinput {
@@ -113,7 +114,13 @@ body {
 }
 
 .logout:hover {
-    background: #C8E6C9;
+    background-color: #C8E6C9;
+}
+
+.header_bttns {
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .titlebar {
