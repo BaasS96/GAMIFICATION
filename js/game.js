@@ -44,7 +44,7 @@ function createQuestionSimple(question, answered) {
     title.innerHTML = question.title;
     var description = document.createElement("p");
     description.slot = "question_description";
-    description.innerHTML = question.description;
+    description.innerHTML = musdecode(question.description);
     var feedback = document.createElement("p");
     feedback.slot = "feedback";
     feedback.innerHTML = "GOOD";
@@ -74,7 +74,8 @@ function createQuestionSimple(question, answered) {
 function createQuestionContents(holder, question) {
     let q = document.createElement("em");
     q.innerHTML = question.question;
-    let slots = [];
+    q.slot = "question_txt";
+    let slots = [q];
     if (question.useterminal) {
         holder.innerHTML = reserveterminal.replace("bttn_id", "request_terminal_" + question.id);
         return document.createElement("div");

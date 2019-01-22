@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>
+        Help
+    </title>
+</head>
+
+<body>
+    <h1>Help page</h1>
+    <h2>Creating new games/game elements</h2>
+    <h3 id="creategame">Create game</h3>
+    <p>
+        The following elements are used to create a new game:
+        <ul>
+            <li><strong>Creator name: </strong>The name of the person who creates the game. (Can be anything, e.g.: "BS" or "Bas").</li>
+            <li><strong>Group title: </strong>The name for a group, displayed above or in front of the groupname (e.g.: "Group" or "Restaurant").</li>
+            <li><strong>Image: </strong>URL for the image used as logo for the game.</li>
+            <li><strong>Image location: </strong>The location of the image. If the image is on the internet, use the full URL (e.g.: "https://www.w3schools.com/w3css/img_lights.jpg"). Otherwise, only use the filename (e.g.: "image.jpg").</li>
+        </ul>
+    </p>
+    <h3 id="createquestiongroup">Create questiongroup</h3>
+    <p>
+        The following elements are used to create a new group of questions ("questiongroup"):
+        <ul>
+            <li><strong>Gamepin: </strong>The gamepin is used to determine which game the queston belongs in.</li>
+            <li><strong>Name: </strong>Used to display the short name for the questiongroup, preferably not longer than 20 characters.</li>
+            <li><strong>Long name: </strong>Long name of the group.</li>
+            <li><strong>Description: </strong>The description of the questiongroup. Supports the <a href="#markupsystem">markup system</a>. It is recommended not to use images or to create a long text. Use the description in <a href="#createquestion">questions</a>                for this.</li>
+            <li><strong>Image: </strong>URL for the image used as item-avatar for the questiongroup.</li>
+            <li><strong>Image location: </strong>The location of the image. If the image is on the internet, use the full URL (e.g.: "https://www.w3schools.com/w3css/img_lights.jpg"). Otherwise, only use the filename (e.g.: "image.jpg").</li>
+        </ul>
+    </p>
+    <h3 id="createquestion">Create question</h3>
+    <p>
+        The following elements are used to create a new question:
+        <ul>
+            <li><strong>Gamepin: </strong>The gamepin is used to determine which game the queston belongs in.</li>
+            <li><strong>Questiongroup-id: </strong>The questiongroup-id is used to determine in which question group the question should be placed.</li>
+            <li><strong>Title: </strong>The title contains the name the question gets, e.g.: "Maths: multiplication".</li>
+            <li><strong>Description: </strong>The description of the question. Could be used to for extra information. Supports the <a href="#markupsystem">markup system</a>.</li>
+            <li><strong>Image: </strong>URL for the image used for the question. May be empty.</li>
+            <li><strong>Question type: </strong>The type of question. Question types supported are: text, radio.</li>
+            <li><strong>Question: </strong>The question to answer.</li>
+            <li><strong>Answers: </strong>Possible answers to the question. Only used for questions of type radio. Enter as "question,question".</li>
+            <li><strong>Right answers: </strong>Possible right answers. Enter as "question,question".</li>
+            <li><strong>Use terminal: </strong>If checked, the terminal will be used.</li>
+        </ul>
+    </p>
+    <h2>Beautifying things</h2>
+    <h3 id="markupsystem">Markup system</h3>
+    <p>
+        In the marking system, most markup-tags are opened by [...] and closed by [/...]. They enclose text, which is marked up accordingly. They may be nested, but only like this: [b][i]...[/i][/b].
+        <br /><em>Write your text in an external text editor (one you can save your text in). This editor does not save your input until you send it to the server!</em>
+        <br />These tags are currently supported. An expamle of their uses is given between curly brackets.
+        <ul>
+            <li><strong>[p]...[/p] </strong>Creates a paragraph. A paragraph will create a new line before and after itself! {[p](block of text)[/p]}</li>
+            <li><strong>[b]...[/b] </strong>Bold. {[b]<b>example text</b>[/b]}</li>
+            <li><strong>[i]...[/i] </strong>Italic. {[i]<i>example text</i>[/i]}</li>
+            <li><strong>[u]...[/u] </strong>Underlined. {[u]<u>example text</u>[/u]}</li>
+            <li><strong>[img(URL)(alternative)(tooltip)] </strong>Inserts an image. Alternative is the text shown if the image cannot be found. The tooltip will be displayed when hovering over the image. Aforementioned tags do not support brackets (). The
+                tags MUST be used. {[img(https://www.w3schools.com/w3css/img_lights.jpg)(Northern lights)(The Northern lights)]}</li>
+            <li><strong>[a(URL)(tooltip)]...[/a] </strong>Creates a hyperlink. The tooltip will be displayed when hovering over the image. This tag MUST be used. {[a(https://www.youtube.com/watch?v=dQw4w9WgXcQ)(Click me!)]<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    title="Click me!" target="_blank">example text</a>[/a]} </li>
+        </ul>
+    </p>
+</body>
+
+</html>

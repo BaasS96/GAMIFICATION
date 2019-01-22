@@ -122,7 +122,7 @@ function buildQuestiongroupsUI() {
         longname.innerHTML = qgroup.longname;
         let description = document.createElement("p");
         description.slot = "description";
-        description.innerHTML = qgroup.description;
+        description.innerHTML = musdecode(qgroup.description);
         let imgurl = qgroup.image;
         if (qgroup.imagelocation === "main") {
             imgurl = "images/" + imgurl;
