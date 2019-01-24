@@ -1,12 +1,12 @@
 <?php
     namespace TheRealKS\Watchdog\Logistics;
 
-    require_once('../data/poller.php');
+    require_once('data/poller.php');
     require_once('update.php');
 
     use TheRealKS\Watchdog\Data\Poller;
 
-    require_once("../../vendor/autoload.php");
+    require_once("../vendor/autoload.php");
 
     use Karriere\JsonDecoder\JsonDecoder;
 
@@ -28,9 +28,14 @@
         private $terminals = [];
 
         private $previousupdate;
+        private $lastupdate;
+        private $updateAvailable = false;
+        private $numofupdates = 0;
 
         function __construct($jsondata) {
             $this->jsondata = $jsondata;
+            $this->ParseJson();
+            $this->setupPoller();
         }
 
         function ParseJson() {
@@ -41,11 +46,10 @@
                     $this->data->params = (object)$this->data->params;
                 }
             }
-            //var_dump($this->data);
         }
 
         function setupPoller() {
-            $this->poller = new Poller($this->data->params->game);
+            $this->poller = new Poller($this->data->params->game, $this);
             switch ($this->data->type) {
                 case 'statusbar':
                     //We will only need the files for the statusbar, the questiongroup file and the group file
@@ -56,34 +60,38 @@
                     # code...
                     break;
             }
-            $this->managers = $this->poller->initalize();
         }
 
         function poll() {
-            $this->poller->poll();
+            $res = $this->poller->poll();
+            if (count($res) > 0) {
+                $this->previousupdate = $this->lastupdate;
+                $this->lastupdate = $this->createUpdate($res);
+                $this->updateAvailable = true;
+                $this->numofupdates++;
+            } else {
+                $this->updateAvailable = false;
+            }
         }
 
         function createUpdate($updates) {
-            if ($this->data->type == 'statusbar') {
-                $update;
-                if (count($updates) > 1) {
-                    //Both are updated
-                    
-                } else {
-                    //Only one
-                    if (str_pos($updates[0], 'qgroup')) {
-                        //Qgroup
-                    } else {
-                        //Group
-
-                    }
-                }
-            } else {
-
+            $obj = [];
+            foreach($updates as $u) {
+                array_push($obj, $u);
             }
+            return $obj;
+        }
+
+        function getUpdate() {
+            return $this->lastupdate;
+        }
+
+        function hasUpdate() {
+            return $this->updateAvailable;
+        }
+
+        function getUpdateNum() {
+            return $this->numofupdates;
         }
     }
-
-    $d = new Subscription('{"type": "watcher", "modules": "*", "params": {"game": "5660"}}');
-    $d->ParseJson();
 ?>

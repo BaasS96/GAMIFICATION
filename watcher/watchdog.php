@@ -39,11 +39,20 @@
 
     namespace TheRealKS\Watchdog;
 
-    require('vendor/autoload.php');
+    require('../vendor/autoload.php');
 
     $subscription = $_GET['sub'];
+    $interval = $_GET['interval'];
 
-    $currentsubscription = new SubscriptionManager($subscription); 
+    if (!is_int($interval)) {
+        $interval = 3;
+    }
+
+    require('logistics/subscription.php');
+
+    use TheRealKS\Watchdog\Logistics;
+
+    $currentsubscription = new Logistics\Subscription($subscription); 
 
     use Igorw\EventSource\Stream;
 
@@ -53,6 +62,20 @@
 
     $stream = new Stream();
 
+    while (true) {
+        $currentsubscription->poll();
+        if ($currentsubscription->hasUpdate()) {
+            $json = json_encode($currentsubscription->getUpdate());
+            $id = "source_update_" . $currentsubscription->getUpdateNum();
+            $stream
+                ->event()
+                    ->setId($id)
+                    ->setData($json)
+                ->end()
+                ->flush();    
+        }
 
+        sleep($interval);
+    }
 
 ?>

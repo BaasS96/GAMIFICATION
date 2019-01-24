@@ -1,14 +1,14 @@
 <?php
     namespace TheRealKS\Watchdog\Data;
 
-    require_once("../logistics/datamanager.php");
-    require_once("../logistics/gamemanager.php");
-    require_once("../logistics/groupmanager.php");
-    require_once("../logistics/terminalmanager.php");
+    require_once("logistics/datamanager.php");
+    require_once("logistics/gamemanager.php");
+    require_once("logistics/groupmanager.php");
+    require_once("logistics/terminalmanager.php");
 
     use TheRealKS\Watchdog\Logistics;
 
-    require_once("../../vendor/autoload.php");
+    require_once("../vendor/autoload.php");
 
     use Karriere\JsonDecoder\JsonDecoder;
 
@@ -21,7 +21,7 @@
     class Poller {
         private $subscription;
 
-        private $path = "../../games/";
+        private $path = "../games/";
 
         private $files = [];
         private $previoushashes = [];
@@ -32,13 +32,16 @@
         }
 
         function addFile($file) {
-            array_push($this->files, $path . $file);
-            $hash = sha1_file($path . $file);
-            $this->previoushashes[$path . $file] = $hash;
+            array_push($this->files, $this->path . $file);
+            $hash = sha1_file($this->path . $file);
+            $this->previoushashes[$this->path . $file] = $hash;
         }
 
         function poll() {
-            for ($i = 0; $i < count($files); $i++) {
+            $update = [];
+
+            $result = [];
+            for ($i = 0; $i < count($this->files); $i++) {
                 $file = $this->files[$i];
                 if (isset($this->previoushashes[$file])) {
                     $newhash = sha1_file($file);
@@ -47,10 +50,17 @@
                         //Update required
                         $f = file_get_contents($file);
                         $dec = new JsonDecoder();
-                        $result[$file] = $dec->decode($f, determineClass($file));
-                        if (str_post($file, 'game') !== false) {
+                        $result[$file] = $dec->decode($f, $this->determineClass($file));
+                        if (is_a($result[$file], 'GameManager')) {
                             //Also update terminal?
-                            $result[$file]
+                            $terminals = $result[$file]->getTerminals();
+                            for ($i = 0; $i < count($terminals); $i++) {
+                                if (!$terminals[$i]->compareHash($this->subscription->terminals[$i]->getHash())) {
+                                    array_push($update, $terminals[$i]);
+                                }
+                            }
+                        } else {
+                            array_push($update, $result[$file]);
                         }
                     }
                 } else {
@@ -59,17 +69,14 @@
                     $this->previoushashes[$file] = $hash;
                 }
             }
-            return $result;
-        }
 
-        function initialize() {
-
+            return $update;
         }
 
         function determineClass($file) {
-            if (str_pos($file, 'g_') !== false) {
+            if (strpos($file, 'g_') !== FALSE) {
                 return Logistics\GroupManager::class;
-            } else if (str_pos($file, 'game') !== false) {
+            } else if (strpos($file, 'game') !== FALSE) {
                 return Data\GameManager::class;
             }
             return NULL;

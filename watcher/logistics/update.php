@@ -1,11 +1,13 @@
 <?php
     namespace TheRealKS\Watchdog\Logistics;
 
-    class Update implements JsonSerializable {
-
+    class Update implements \JsonSerializable {
+        function jsonSerialize() {
+            return [];
+        }
     }
 
-    class StatusBarUpdate implements JsonSerializable {
+    class StatusBarUpdate extends Update implements \JsonSerializable {
         private $qa;
         private $tq;
 

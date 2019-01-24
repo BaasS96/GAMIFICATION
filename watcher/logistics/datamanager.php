@@ -6,9 +6,17 @@
         private $datatype;
         private $updated = false;
 
+        function __constructor() {
+            $this->updateHash();
+        }
+
         public function compareHashes($hash) {
             return $hash == $this->currenthash;
         } 
+
+        public function getHash() {
+            return $this->currenthash;
+        }
 
         public function isUpdated() {
             return $this->updated;
