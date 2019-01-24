@@ -1,9 +1,12 @@
 <?php
     namespace TheRealKS\Watchdog\Data;
 
-    require_once("structures.php");
+    require_once("../logistics/datamanager.php");
+    require_once("../logistics/gamemanager.php");
+    require_once("../logistics/groupmanager.php");
+    require_once("../logistics/terminalmanager.php");
 
-    use TheRealKS\Watchdog\Data;
+    use TheRealKS\Watchdog\Logistics;
 
     require_once("../../vendor/autoload.php");
 
@@ -16,13 +19,16 @@
     }
 
     class Poller {
+        private $subscription;
+
         private $path = "../../games/";
 
         private $files = [];
         private $previoushashes = [];
 
-        function __construct($game) {
+        function __construct($game, $subscription) {
             $this->path .= $game . "/";
+            $this->subscription = $subscription;
         }
 
         function addFile($file) {
@@ -32,7 +38,6 @@
         }
 
         function poll() {
-            $result = [];
             for ($i = 0; $i < count($files); $i++) {
                 $file = $this->files[$i];
                 if (isset($this->previoushashes[$file])) {
@@ -43,6 +48,10 @@
                         $f = file_get_contents($file);
                         $dec = new JsonDecoder();
                         $result[$file] = $dec->decode($f, determineClass($file));
+                        if (str_post($file, 'game') !== false) {
+                            //Also update terminal?
+                            $result[$file]
+                        }
                     }
                 } else {
                     //Wait till the next round
@@ -53,13 +62,15 @@
             return $result;
         }
 
+        function initialize() {
+
+        }
+
         function determineClass($file) {
-            if (str_pos($file, 'qgroup') !== false) {
-                return Data\QGroup::class;
-            } else if (str_pos($file, 'g_') !== false) {
-                return Data\Group::class;
+            if (str_pos($file, 'g_') !== false) {
+                return Logistics\GroupManager::class;
             } else if (str_pos($file, 'game') !== false) {
-                return Data\Game::class;
+                return Data\GameManager::class;
             }
             return NULL;
         }

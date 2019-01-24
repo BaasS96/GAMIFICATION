@@ -23,6 +23,9 @@
         private $data;
 
         private $poller;
+        private $gamemanager;
+        private $groups = [];
+        private $terminals = [];
 
         private $previousupdate;
 
@@ -53,6 +56,7 @@
                     # code...
                     break;
             }
+            $this->managers = $this->poller->initalize();
         }
 
         function poll() {
