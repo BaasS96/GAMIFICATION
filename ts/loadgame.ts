@@ -85,7 +85,7 @@ function initializeCurentParameters() {
     });
 }
 
-export function getGroupData() {
+export function getGroupData(init : boolean) {
     fetch('game/groupdata.php?game=' + game + "&group=" + group)
         .then(res => {
             if (res.ok) {
@@ -95,7 +95,7 @@ export function getGroupData() {
         .then(res => {
             if (res.success) {  
                 groupdata = JSON.parse(res.data);
-                initUI(buildUI);
+                if (init) initUI(buildUI);
             } else {
                 alert("Error!");
             }
@@ -112,7 +112,7 @@ export function getGameData() {
         .then(res => {
             if (res.success) {
                 gamedata = JSON.parse(res.data);
-                getGroupData();
+                getGroupData(true);
             } else {
                 alert("Error!");
             }
@@ -171,7 +171,7 @@ function buildQuestiongroupsUI() {
             
             let description = document.createElement("p");
             description.slot = "description";
-            description.innerHTML = qgroup.description;
+            description.innerHTML = musdecode(qgroup.description);
 
             let imgurl = qgroup.image;
             if (qgroup.imagelocation === "main") {
@@ -276,7 +276,7 @@ export function replaceSlots(replacees : Array<Element>, targetdocument : Docume
     return <HTMLBodyElement>targetdocument.body;
 }
 
-function displayError(error : string) {
+function displayError(error : string = "Er is iets foutgegaan") {
     let temp = <HTMLTemplateElement>document.getElementById("error");
     let fragment = temp.content.cloneNode(true);
     document.body.innerHTML = "";

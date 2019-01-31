@@ -50,11 +50,35 @@ function checkGroupCode() {
             setTimeout(nextStage, 100);
         }
         else {
-            if (res.error) {
-                document.getElementById('error').innerHTML = res.error;
+            //@ts-ignore
+            if (res.alreadysetup) {
+                //Continue anyway, the group is already set up
+                setTimeout(function () {
+                    fetch('auth/setsession.php?game=' + gamecode + '&group=' + pin)
+                        .then(res => {
+                        if (res.ok) {
+                            return res.text();
+                        }
+                    })
+                        .then(res => {
+                        if (res === "") {
+                            location.href = "index.php";
+                        }
+                        else {
+                            document.getElementById('error').innerHTML = "Er is iets fout gegaan!";
+                            document.getElementById('submit').innerHTML = "GO!";
+                            document.getElementById('error').style.display = "inline-block";
+                        }
+                    });
+                }, 1000);
             }
-            document.getElementById('submit').innerHTML = "GO!";
-            document.getElementById('error').style.display = "inline-block";
+            else {
+                if (res.error) {
+                    document.getElementById('error').innerHTML = res.error;
+                }
+                document.getElementById('submit').innerHTML = "GO!";
+                document.getElementById('error').style.display = "inline-block";
+            }
         }
     });
 }

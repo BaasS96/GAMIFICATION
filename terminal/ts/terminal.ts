@@ -10,6 +10,7 @@ var terminaldata: Terminal, questiondata: Question;
 var inuse: boolean = false, locked: boolean = true;
 var timeremaining: number, countdown: number;
 var givenanswer, answerright : boolean;
+var closeterminaltimer : number;
 
 interface Terminal {
     text: string,
@@ -110,11 +111,63 @@ function getQuestionData() {
 }
 
 function submitAnswer() {
+    let points = answerright ? questiondata.points : 0;
+    var data = {
+        game: game,
+        group: terminaldata.group,
+        qgroup:  terminaldata.questiongroup,
+        question: terminaldata.question,
+        answerdata : {
+            correct: answerright,
+            answer: givenanswer,
+            points: points,
+            timeleft: timeremaining
+        }
+    };
+    (async (data) => {
+        const rawResponse = await fetch('../game/submitquestion.php', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        const content = await rawResponse.json();
+      
+        //Process content
 
+        if (!content.succes || content.succes === 0) {
+            alert("Er is iets foutgegaan!");
+            throw new Error("Unexpected response from server while submitting: failure to write data, or no data written.");
+        }
+
+        //Reset
+        resetTerminal();
+      })(data);
 }
 
 function resetTerminal() {
-    
+    clearInterval(countdown);
+    timeremaining = 0;
+    givenanswer = undefined;
+    answerright = undefined;
+    inuse = false;
+    fetch("resetterminal.php", {
+        method: 'POST',
+        body: JSON.stringify({game: game, terminal: terminaldata.id, group: terminaldata.group})
+    })
+    .then(res => {
+        if (res.ok) return res.json();
+    })
+    .then(res => {
+        if (res.succes) {
+            document.getElementById("contentHolder").innerHTML = "<p class='idletext'>" + terminaldata.text + "</p>";
+        } else {
+            alert("Er is iets foutgegaan!");
+            throw new Error("An error occured while resetting the terminal");
+        }
+    })
 }
 
 function setupAnswerEnvironment() {
@@ -163,9 +216,20 @@ function checkAnswer() {
         answerright = true;
         document.getElementById("feedbackholder-right").style.display = "block";
         submitAnswer();
+        closeterminaltimer = setInterval(function() {
+            let obj = document.getElementById("autoclosetime");
+            let timeleft = parseInt(obj.getAttribute("timeleft"));
+            if (timeleft >= 1) {
+                timeleft--;
+                obj.innerHTML = timeleft.toString();
+                obj.setAttribute("timeleft", timeleft.toString());
+            } else {
+                closeFeedback("right");
+                clearInterval(closeterminaltimer);
+            }
+        }, 1000);
     } else {
         document.getElementById("feedbackholder-wrong").style.display = "block";
-        var closefeedback = setTimeout(function() { closeFeedback('wrong'); }, 5000);
     }
 }
 
@@ -206,6 +270,8 @@ function countDown() {
     if (timeremaining > 0) {
         timeremaining -= 1000;
         document.getElementById("countdown").innerHTML = secondsToTimeString(Math.round(timeremaining / 1000));
+    } else {
+        //What happens?
     }
 }
 

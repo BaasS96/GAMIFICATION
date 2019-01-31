@@ -23,16 +23,14 @@
 
         for ($i = 0; $i < count($terminals); $i++) {
             $currentterminal = $terminals[$i];
-            if ($currentterminal->id == $_POST['terminalid']) {
-                $terminals[$i]->activated = true;
+            if ($currentterminal['id'] == $_POST['terminalid']) {
+                $terminals[$i]['activated']= true;
                 break;
             }
         }
 
-        var_dump($terminaldata);
-
         $terminaldata['terminals'] = $terminals;
-
+        
         //write the modified data to the terminal file
         $data_json = json_encode($terminaldata);
         file_put_contents($gamepath, $data_json);

@@ -1,0 +1,24 @@
+{
+    "name": "erger",
+    "id": "6c",
+    "members": "erge",
+    "certificates": {
+        "GeF": {
+            "48": {
+                "answer": "Haoi",
+                "correct": true,
+                "points": "1",
+                "timeleft": -1
+            },
+            "66": {
+                "answer": "hallo",
+                "correct": true,
+                "points": "1",
+                "timeleft": 24000
+            }
+        }
+    },
+    "terminals": [
+    ],
+    "lastactive": 1548101050
+}

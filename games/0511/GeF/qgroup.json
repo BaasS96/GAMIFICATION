@@ -1,1 +1,70 @@
-{"name":"Groente en Fruit","longname":"Groente En veggies","description":"Groent etc. etc. etc. etc.","image":"groentefruit.jpg","imagelocation":"main","id":"GeF","questions":{"66":{"id":"66","title":"The question of life","description":"What is love? (Baby don't hurt me)","qtype":"text","q_pswd":"","image":"suiker.jpg","question":"Life questions","answers":[""],"right_answers":[""],"points":"1","exptime":"60","useterminal":true,"terminals":["32"]},"2f":{"id":"2f","title":"The other big question","description":"Who Knows?","qtype":"text","q_pswd":"","image":"smaak.jpg","question":"Never gonna give you up","answers":[""],"right_answers":[""],"points":"1","exptime":"60","useterminal":true,"terminals":[]}}}
+{
+    "name": "Groente en Fruit",
+    "longname": "Groente En veggies",
+    "description": "Groent etc. etc. etc. etc.",
+    "image": "groentefruit.jpg",
+    "imagelocation": "main",
+    "id": "GeF",
+    "questions": {
+        "66": {
+            "id": "66",
+            "title": "The question of life",
+            "description": "What is love? (Baby don't hurt me)",
+            "qtype": "text",
+            "q_pswd": "",
+            "image": "suiker.jpg",
+            "question": "Life questions",
+            "answers": [
+                ""
+            ],
+            "right_answers": [
+                "hallo"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": true,
+            "terminals": [
+                "fb",
+                "17"
+            ]
+        },
+        "2f": {
+            "id": "2f",
+            "title": "The other big question",
+            "description": "Who Knows?",
+            "qtype": "text",
+            "q_pswd": "",
+            "image": "smaak.jpg",
+            "question": "Never gonna give you up",
+            "answers": [
+                ""
+            ],
+            "right_answers": [
+                ""
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": true,
+            "terminals": []
+        },
+        "48": {
+            "id": "48",
+            "title": "fefw",
+            "description": "gwegw",
+            "qtype": "text",
+            "q_pswd": "",
+            "image": "wegwe",
+            "question": "wgegw",
+            "answers": [
+                "Haoi"
+            ],
+            "right_answers": [
+                "Haoi"
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": false,
+            "terminals": []
+        }
+    }
+}

@@ -18,7 +18,7 @@
         $terminalavailable = false;
 
         for ($i = 0; $i < count($terminals); $i++) {
-            $currentterminal = $terminals[$i];
+            $currentterminal = (object)$terminals[$i];
             if ($currentterminal->activated) {
                 if ($currentterminal->questiongroup == $qgid && $currentterminal->question == $qid) {
                     if ($currentterminal->inuse) {

@@ -12,12 +12,13 @@
             } else {
                 $o = [
                     'success' => false,
-                    'error' => "Die groep is al in gebruik!"
+                    'alreadysetup' => true
                 ];
             }
         } else {
             $o = [
-                'success' => false
+                'success' => false,
+                'error' => "Er is iets fout gegaan!"
             ];
         }
         echo json_encode($o);

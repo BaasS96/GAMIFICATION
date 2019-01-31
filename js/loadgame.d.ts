@@ -7,6 +7,7 @@ export interface GameData {
     maxterminals: number;
     creationtime: number;
     qgroups: Array<string>;
+    terminals : Array<any>
 }
 export interface QuestionGroup {
     name: string;
