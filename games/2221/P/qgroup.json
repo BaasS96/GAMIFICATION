@@ -6,27 +6,6 @@
     "imagelocation": "main",
     "id": "P",
     "questions": {
-        "20": {
-            "id": "20",
-            "title": "Vraag 5",
-            "description": "Je tong. Een veelzijdige spier.",
-            "qtype": "radio",
-            "q_pswd": "",
-            "image": "",
-            "question": "Wat kun je naast proeven nog meer met je tong?",
-            "answers": [
-                "Met je tong kun je praten.",
-                "Je kunt met je tong eten verplaatsen in je mond.",
-                "Je kunt met je tong je elleboog aanraken."
-            ],
-            "right_answers": [
-                "Je kunt met je tong eten verplaatsen in je mond."
-            ],
-            "points": "1",
-            "exptime": "60",
-            "useterminal": true,
-            "terminals": []
-        },
         "89": {
             "id": "89",
             "title": "Introductie & vraag 1",
@@ -108,6 +87,27 @@
             "points": "1",
             "exptime": "60",
             "useterminal": false,
+            "terminals": []
+        },
+        "20": {
+            "id": "20",
+            "title": "Vraag 5",
+            "description": "Je tong. Een veelzijdige spier.",
+            "qtype": "radio",
+            "q_pswd": "",
+            "image": "",
+            "question": "Wat kun je naast proeven nog meer met je tong?",
+            "answers": [
+                "Met je tong kun je praten.",
+                "Je kunt met je tong eten verplaatsen in je mond.",
+                "Je kunt met je tong je elleboog aanraken."
+            ],
+            "right_answers": [
+                "Je kunt met je tong eten verplaatsen in je mond."
+            ],
+            "points": "1",
+            "exptime": "60",
+            "useterminal": true,
             "terminals": []
         }
     }
