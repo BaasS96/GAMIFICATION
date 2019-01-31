@@ -6,6 +6,16 @@ body {
     background-color: #f7f7f7;
 }
 
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
 .holder-h {
     justify-content: space-around;
     align-items: center;
@@ -14,7 +24,6 @@ body {
     width: 100vw;
     overflow: hidden;
     z-index: 99;
-    background-color: white;
 }
 
 .holder {
@@ -122,35 +131,83 @@ body {
     width: 12%;
     height: 50%;
     border-radius: 5px;
-  }
-  
-  .dots {
+}
+
+.dots {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     height: 100%;
     width: 100%;
-  }
-  
-  .dot1 {
+}
+
+.dot1 {
     animation: blowup 1500ms infinite;
-  }
-  
-  .dot2 {
+}
+
+.dot2 {
     animation: blowup 1500ms infinite;
     animation-delay: 200ms;
     margin-left: 15px;
-  }
-  
-  .dot3 {
+}
+
+.dot3 {
     animation: blowup 1500ms infinite;
     animation-delay: 400ms;
     margin-left: 15px;
-  }
-  
-  @keyframes blowup {
-    from {width: 12%; height: 50%; border-radius: 5px;}
-    50% {width: 18%; height: 100%; border-radius: 7.5px;}
-    to {width: 12%; height: 50%; border-radius: 5px;}
-  }
+}
+
+@keyframes blowup {
+    from {
+        width: 12%;
+        height: 50%;
+        border-radius: 5px;
+    }
+    50% {
+        width: 18%;
+        height: 100%;
+        border-radius: 7.5px;
+    }
+    to {
+        width: 12%;
+        height: 50%;
+        border-radius: 5px;
+    }
+}
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
